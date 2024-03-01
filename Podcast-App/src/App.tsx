@@ -1,16 +1,24 @@
 import Navbar from './components/NavBar/Navbar.tsx'
 import Home from './pages/Home.tsx'
 import {Route, Routes} from "react-router-dom";
+import {AuthContextProvider} from "./context/AuthContext.tsx";
+import Login from "./pages/Login.tsx";
+import Signup from "./pages/Signup.tsx";
+import Account from "./pages/Account.tsx";
 function App() {
 
   return (
       <>
+          <AuthContextProvider>
           <Navbar />
           < Routes>
               <Route path='/' element={<Home  />} />
 
+              <Route path='/login' element={<Login />}/>
+              <Route path='/signup' element={<Signup />}/>
+              <Route path='/acount' element={<Account />}/>
           </Routes>
-
+          </AuthContextProvider>
       </>
   )
 }
