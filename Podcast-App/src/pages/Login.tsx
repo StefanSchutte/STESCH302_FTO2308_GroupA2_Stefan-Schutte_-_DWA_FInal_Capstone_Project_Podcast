@@ -84,7 +84,7 @@ function Login(): JSX.Element {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
 
-    const { login } = useAuth();
+    const { logIn } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -92,7 +92,7 @@ function Login(): JSX.Element {
         setError('');
 
         try {
-            await login(email, password);
+            await logIn(email, password);
             navigate('/');
         } catch (error) {
             console.log(error);

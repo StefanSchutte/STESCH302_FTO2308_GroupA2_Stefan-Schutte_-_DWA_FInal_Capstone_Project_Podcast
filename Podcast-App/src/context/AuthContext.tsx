@@ -72,7 +72,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     }
 
     async function logIn(email: string, password: string): Promise<void> {
-        const { user, error } = await auth.signIn({ email, password });
+        const { user, error } = await auth.signInWithPassword({ email, password });
         if (error) {
             console.error("Error signing in:", error.message);
             return;

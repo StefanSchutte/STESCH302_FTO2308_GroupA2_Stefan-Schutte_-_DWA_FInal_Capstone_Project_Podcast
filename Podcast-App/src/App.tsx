@@ -16,7 +16,7 @@ function App(): JSX.Element {
 
               <Route path='/login' element={<Login />}/>
               <Route path='/signup' element={<Signup />}/>
-              <Route path='/acount' element={<Account />}/>
+              <Route path='/account' element={<Account />}/>
           </Routes>
           </AuthContextProvider>
       </>
