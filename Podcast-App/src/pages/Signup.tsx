@@ -23,7 +23,7 @@ function Signup() {
             navigate('/')
 
         } catch (error) {
-            console.log(e)
+            console.log(error)
         }
 
     }

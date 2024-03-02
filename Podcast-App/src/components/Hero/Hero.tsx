@@ -22,8 +22,6 @@ function Hero() {
             });
     }, []);
 
-    console.log(podcast);
-
     const truncateString = (str, num) => {
         if(str?.length > num){
            return str.slice(0, num) + '...'
