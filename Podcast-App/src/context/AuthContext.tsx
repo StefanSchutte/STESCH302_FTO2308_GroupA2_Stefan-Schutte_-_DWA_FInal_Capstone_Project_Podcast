@@ -44,6 +44,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from '../supabase.ts';
 
+
 interface User {
     id: string;
     email: string | number;

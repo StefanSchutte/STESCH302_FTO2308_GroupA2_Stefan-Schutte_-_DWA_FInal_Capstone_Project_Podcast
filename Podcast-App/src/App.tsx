@@ -5,6 +5,7 @@ import {AuthContextProvider} from "./context/AuthContext.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Account from "./pages/Account.tsx";
+import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 function App(): JSX.Element {
 
   return (
@@ -16,7 +17,7 @@ function App(): JSX.Element {
 
               <Route path='/login' element={<Login />}/>
               <Route path='/signup' element={<Signup />}/>
-              <Route path='/account' element={<Account />}/>
+              <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>}/>
           </Routes>
           </AuthContextProvider>
       </>
