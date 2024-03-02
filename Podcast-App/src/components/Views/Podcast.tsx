@@ -1,7 +1,15 @@
 import React, {useState} from 'react';
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 
-const Podcast = ({item}) => {
+interface PodcastProps {
+    item: {
+        image: string;
+        title: string;
+        // Add any other properties of the item object here
+    };
+}
+
+const Podcast: React.FC<PodcastProps> = ({item}) => {
 
     const [like, setLike] = useState(false)
 

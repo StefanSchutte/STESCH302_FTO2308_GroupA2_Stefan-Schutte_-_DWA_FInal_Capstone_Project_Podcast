@@ -5,7 +5,7 @@ import {AuthContextProvider} from "./context/AuthContext.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Account from "./pages/Account.tsx";
-function App() {
+function App(): JSX.Element {
 
   return (
       <>

@@ -50,7 +50,7 @@ function Home(): JSX.Element {
             <Hero />
             {/* Render a separate Row component for each genre */}
             {genres.map((genreId, index) => (
-                <Row key={index} rowId={`row-${genreId}`} title={genreMapping[genreId]} fetchURL={`https://podcast-api.netlify.app/shows?.genres=${genreId}`} />
+                <Row  key={index} rowId={`row-${genreId}`} title={genreMapping[genreId]} fetchURL={`https://podcast-api.netlify.app/shows?.genres=${genreId}`} />
             ))}
         </div>
     );
