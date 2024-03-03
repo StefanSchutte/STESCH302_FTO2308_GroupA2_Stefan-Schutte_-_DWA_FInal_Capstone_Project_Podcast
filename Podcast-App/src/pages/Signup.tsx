@@ -88,7 +88,7 @@ function Signup(): JSX.Element {
             <img className='hidden sm:block absolute w-full h-full object-cover ' src={signUpLogo} alt='signuplogo' />
             <div className='bg-black/60 fixed top-0 left-0 w-full h-screen'></div>
             <div className='fixed w-full px-4 py-24 z-50'>
-                <div className='max-w-[450px] h-[600px] mx-auto bg-black/75 text-yellow-400'>
+                <div className='max-w-[450px] h-[500px] mx-auto bg-black/75 text-yellow-400'>
                     <div className='max-w-[320px] mx-auto py-16'>
                         <h1 className='text-5xl font-bold'>Sign Up</h1>
                         <form onSubmit={handleSubmit} className='w-full flex flex-col py-4'>
