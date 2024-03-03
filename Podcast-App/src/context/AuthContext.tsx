@@ -43,7 +43,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from '../supabase.ts';
-
+import {Session} from "@supabase/supabase-js";
 
 interface User {
     id: string;
@@ -58,27 +58,36 @@ interface AuthContextType {
     user: User | null;
 }
 
+interface AuthResponse {
+    data: {
+        user: User;
+        session: Session;
+        // Add other properties of the data object if needed
+    };
+    error: null;
+}
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthContextProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
 
     async function signUp(email: string, password: string): Promise<void> {
-        const { user, error } = await auth.signUp({ email, password });
+        const { user: userData, error } = await auth.signUp({ email, password });
         if (error) {
             console.error("Error signing up:", error.message);
             return;
         }
-        setUser(user);
+        setUser(userData);
     }
 
     async function logIn(email: string, password: string): Promise<void> {
-        const { user, error } = await auth.signInWithPassword({ email, password });
+        const { user: userData, error } = await auth.signInWithPassword({ email, password });
         if (error) {
             console.error("Error signing in:", error.message);
             return;
         }
-        setUser(user);
+        setUser(userData);
     }
 
     async function logOut(): Promise<void> {
@@ -92,7 +101,11 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChange((event, session) => {
-            setUser(session?.user ?? null);
+            if (session) {
+                setUser(session.user);
+            } else {
+                setUser(null);
+            }
         });
         return () => unsubscribe();
     }, []);

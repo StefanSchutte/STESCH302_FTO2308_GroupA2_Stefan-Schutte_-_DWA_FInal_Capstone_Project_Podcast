@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, {useState, FormEvent, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.tsx';
 
@@ -9,20 +9,36 @@ function Login(): JSX.Element {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
 
-    const { logIn } = useAuth();
+    const { user, logIn } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
+    const handleLogin = async (): Promise<void> => {
         setError('');
-
         try {
             await logIn(email, password);
             navigate('/');
         } catch (error) {
-            console.log(error);
             setError(error.message);
         }
+    };
+
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+        setError('');
+        handleLogin();
+        // try {
+        //     await logIn(email, password);
+        //     navigate('/');
+        // } catch (error) {
+        //     console.log(error);
+        //     setError(error.message);
+        // }
     };
 
     return (
