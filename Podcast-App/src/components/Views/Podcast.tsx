@@ -86,7 +86,7 @@ const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
                 </p>
 
                 <button onClick={handleClick}
-                        className="absolute bottom-4 left-4 text-gray-300  bg-green-500 border-none">
+                        className="absolute bottom-4 left-4 border bg-green-500 text-amber-50 border-gray-300 py-2 px-5">
                     See More!
                 </button>
 

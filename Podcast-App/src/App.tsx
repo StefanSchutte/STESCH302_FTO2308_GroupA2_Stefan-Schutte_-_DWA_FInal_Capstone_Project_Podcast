@@ -6,14 +6,20 @@ import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Account from "./pages/Account.tsx";
 import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
+import Filters from "./pages/Filters.tsx";
+//import Menu from "./components/NavBar/Menu.tsx";
 function App(): JSX.Element {
 
   return (
       <>
           <AuthContextProvider>
           <Navbar />
+
           < Routes>
               <Route path='/' element={<Home  />} />
+
+
+              <Route path='/filter' element={<Filters />}/>
 
               <Route path='/login' element={<Login />}/>
               <Route path='/signup' element={<Signup />}/>
