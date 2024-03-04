@@ -61,7 +61,7 @@ interface RowProps {
     rowId: string;
 }
 
-const Row: React.FC<RowProps> = ({ title, fetchURL, rowId }) => {
+const Row: React.FC<RowProps> = ({ title, fetchURL, rowId, openOverlay }) => {
     const [podcasts, setPodcasts] = useState([]);
 
     useEffect(() => {
@@ -94,7 +94,7 @@ const Row: React.FC<RowProps> = ({ title, fetchURL, rowId }) => {
                     className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
                 >
                     {podcasts.map((item: any, id: number) => (
-                        <Podcast key={id} item={item} />
+                        <Podcast key={id} item={item} openOverlay={openOverlay}/>
                     ))}
                 </div>
                 <MdChevronRight

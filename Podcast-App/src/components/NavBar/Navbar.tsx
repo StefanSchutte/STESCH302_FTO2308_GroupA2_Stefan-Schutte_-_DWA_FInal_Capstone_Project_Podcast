@@ -118,13 +118,13 @@
 // //
 // // export default Navbar;
 
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import loginFav from '../../../public/log-in.png'
-import addUserFav from '../../../public/add-user.png'
-import logoutFav from '../../../public/logout.png'
-import accountFav from '../../../public/account.png'
+import loginFav from '/public/log-in.png'
+import addUserFav from '/add-user.png'
+import logoutFav from '/logout.png'
+import accountFav from '/account.png'
 
 interface User {
     email: string;

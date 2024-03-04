@@ -7,7 +7,7 @@ if (!supabaseUrl || !supabaseKey) {
     throw new Error("Supabase URL or Supabase key is not provided in environment variables.");
 }
 
-const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
 
 export const auth = supabase.auth;
 

@@ -52,27 +52,19 @@ interface User {
 }
 
 interface AuthContextType {
-    signUp: (email: string, password: string) => Promise<void>;
-    logIn: (email: string, password: string) => Promise<void>;
+    signUp: (email: string, password: string| number) => Promise<void>;
+    logIn: (email: string, password: string | number) => Promise<void>;
     logOut: () => Promise<void>;
     user: User | null;
 }
 
-interface AuthResponse {
-    data: {
-        user: User;
-        session: Session;
-        // Add other properties of the data object if needed
-    };
-    error: null;
-}
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthContextProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
 
-    async function signUp(email: string, password: string): Promise<void> {
+    async function signUp(email: string, password: string | number): Promise<void> {
         const { user: userData, error } = await auth.signUp({ email, password });
         if (error) {
             console.error("Error signing up:", error.message);
@@ -81,7 +73,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
         setUser(userData);
     }
 
-    async function logIn(email: string, password: string): Promise<void> {
+    async function logIn(email: string, password: string | number): Promise<void> {
         const { user: userData, error } = await auth.signInWithPassword({ email, password });
         if (error) {
             console.error("Error signing in:", error.message);

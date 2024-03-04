@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Hero from '../components/Hero/Hero';
 import Row from '../components/Views/Row';
 import axios from 'axios';
+import Overlay from '../components/Views/Overlay.tsx';
 
 interface Podcast {
     id: number;
@@ -32,6 +33,20 @@ function Home(): JSX.Element {
             });
     }, []);
 
+    const [showOverlay, setShowOverlay] = useState(false);
+    const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null); // State variable for selected podcast data
+
+// Function to open the overlay with the selected podcast data
+    const openOverlay = (podcast: Podcast) => {
+        setSelectedPodcast(podcast);
+        setShowOverlay(true);
+    };
+
+    // Function to close the overlay
+    const closeOverlay = () => {
+        setShowOverlay(false);
+    };
+
     // Genre mapping
     const genreMapping: Record<number, string> = {
         1: 'Personal Growth',
@@ -50,8 +65,13 @@ function Home(): JSX.Element {
             <Hero />
             {/* Render a separate Row component for each genre */}
             {genres.map((genreId, index) => (
-                <Row  key={index} rowId={`row-${genreId}`} title={genreMapping[genreId]} fetchURL={`https://podcast-api.netlify.app/shows?genres=${genreId}`} />
+                <Row  key={index} rowId={`row-${genreId}`}
+                      title={genreMapping[genreId]}
+                      fetchURL={`https://podcast-api.netlify.app/shows?genres=${genreId}`}
+                      openOverlay={openOverlay}/>
             ))}
+            {/* Render the Overlay component conditionally */}
+            {showOverlay && selectedPodcast && <Overlay item={selectedPodcast} showOverlay={showOverlay} closeOverlay={closeOverlay} />}
         </div>
     );
 }

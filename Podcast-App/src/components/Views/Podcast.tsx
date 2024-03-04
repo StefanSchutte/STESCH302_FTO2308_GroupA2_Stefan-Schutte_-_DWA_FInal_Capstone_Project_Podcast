@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useAuth} from "../../context/AuthContext.tsx";
 import supabase from "../../supabase.ts";
+//import Overlay from "./Overlay.tsx";
 
 interface PodcastProps {
     item: {
@@ -9,9 +10,10 @@ interface PodcastProps {
         title: string;
         // Add any other properties of the item object here
     };
+    openOverlay: (podcast: any) => void;
 }
 
-const Podcast: React.FC<PodcastProps> = ({item}) => {
+const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
 
     const [like, setLike] = useState(false)
 
@@ -38,6 +40,18 @@ const Podcast: React.FC<PodcastProps> = ({item}) => {
         } else {
             alert('Log In to save a podcast');
         }
+    };
+
+    const [showOverlay, setShowOverlay] = useState(false);
+    const toggleOverlay = () => {
+        setShowOverlay(!showOverlay);
+    };
+
+
+
+    const handleClick = () => {
+        // When the podcast is clicked, call the openOverlay function with the podcast data
+        openOverlay(item);
     };
     // const podcastID = doc(db, 'users', `${user?.email}`)
     //
@@ -66,16 +80,21 @@ const Podcast: React.FC<PodcastProps> = ({item}) => {
                 <p className='whitespace-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center'>{item?.title}</p>
 
 
-
                 <p onClick={savePodcast}>
                     {like ? <FaHeart className='absolute top-4 left-4 text-gray-300 '/> :
                         <FaRegHeart className='absolute top-4 left-4 text-gray-300 '/>}
                 </p>
 
+                <button onClick={handleClick}
+                        className="absolute bottom-4 left-4 text-gray-300  bg-green-500 border-none">
+                    See More!
+                </button>
+
             </div>
 
         </div>
-    );
+    )
+        ;
 }
 
 export default Podcast;
