@@ -64,10 +64,20 @@ interface RowProps {
 const Row: React.FC<RowProps> = ({ title, fetchURL, rowId, openOverlay }) => {
     const [podcasts, setPodcasts] = useState([]);
 
+    // useEffect(() => {
+    //     axios.get(fetchURL).then((response) => {
+    //         setPodcasts(response.data);
+    //     });
+    // }, [fetchURL]);
+
     useEffect(() => {
-        axios.get(fetchURL).then((response) => {
-            setPodcasts(response.data);
-        });
+        axios.get(fetchURL)
+            .then((response) => {
+                setPodcasts(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     }, [fetchURL]);
 
     const slideLeft = () => {

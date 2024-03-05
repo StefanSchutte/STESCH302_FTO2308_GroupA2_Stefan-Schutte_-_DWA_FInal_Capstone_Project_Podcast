@@ -16,8 +16,7 @@ interface PodcastProps {
 const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
 
     const [like, setLike] = useState(false)
-
-
+    const [showOverlay, setShowOverlay] = useState(false);
      const [saved, setSaved] = useState(false)
      const { user } = useAuth();
 
@@ -42,12 +41,9 @@ const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
         }
     };
 
-    const [showOverlay, setShowOverlay] = useState(false);
     const toggleOverlay = () => {
         setShowOverlay(!showOverlay);
     };
-
-
 
     const handleClick = () => {
         // When the podcast is clicked, call the openOverlay function with the podcast data
@@ -71,7 +67,6 @@ const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
     //     }
     // }
 
-
     return (
         <div className='w-[160px] sm:w-[200px] md:w-[240px] lg:w[240px] inline-block cursor-pointer relative p-2'>
             <img className='w-full h-auto block' src={item?.image} alt={item?.title}/>
@@ -94,7 +89,6 @@ const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
 
         </div>
     )
-        ;
 }
 
 export default Podcast;

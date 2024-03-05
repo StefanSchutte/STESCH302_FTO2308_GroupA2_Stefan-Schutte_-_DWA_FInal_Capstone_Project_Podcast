@@ -1,17 +1,16 @@
-import React, {useState, FormEvent, useEffect} from 'react';
+import {useState, FormEvent, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.tsx'
 
 function Login(): JSX.Element {
+
     const signUpLogo = 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-
     const { user, logIn } = useAuth();
     const navigate = useNavigate();
-
 
     useEffect(() => {
         if (user) {

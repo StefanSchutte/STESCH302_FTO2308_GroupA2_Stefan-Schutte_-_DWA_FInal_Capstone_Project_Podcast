@@ -22,24 +22,24 @@ function Home(): JSX.Element {
     const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null); // State variable for selected podcast data
 
 
-    useEffect(() => {
-
-
-        // Fetch data from the API to extract genres
-        axios.get<Podcast[]>('https://podcast-api.netlify.app/shows')
-            .then(response => {
-                 //Once data is fetched, extract the genres
-                //const podcastsData = response.data;
-                //const genresData = podcastsData.flatMap(podcast => podcast.genres);
-                //const uniqueGenres = [...new Set(genresData)];
-                 //Set the genres in the state
-                //setGenres(uniqueGenres);
-                setPodcasts(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
+    // useEffect(() => {
+    //
+    //
+    //     // Fetch data from the API to extract genres
+    //     axios.get<Podcast[]>('https://podcast-api.netlify.app/shows')
+    //         .then(response => {
+    //              //Once data is fetched, extract the genres
+    //             //const podcastsData = response.data;
+    //             //const genresData = podcastsData.flatMap(podcast => podcast.genres);
+    //             //const uniqueGenres = [...new Set(genresData)];
+    //              //Set the genres in the state
+    //             //setGenres(uniqueGenres);
+    //             setPodcasts(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
 
 
 // Function to open the overlay with the selected podcast data
