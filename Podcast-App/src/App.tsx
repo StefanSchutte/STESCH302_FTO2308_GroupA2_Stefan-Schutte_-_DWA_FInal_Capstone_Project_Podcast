@@ -7,6 +7,7 @@ import Signup from "./pages/Signup.tsx";
 import Account from "./pages/Account.tsx";
 import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 import Filters from "./pages/Filters.tsx";
+//import AudioPlayer from "./components/Views/AudioPlayer.tsx";
 //import Menu from "./components/NavBar/Menu.tsx";
 function App(): JSX.Element {
 
@@ -17,6 +18,7 @@ function App(): JSX.Element {
 
           < Routes>
               <Route path='/' element={<Home  />} />
+
 
 
               <Route path='/filter' element={<Filters />}/>

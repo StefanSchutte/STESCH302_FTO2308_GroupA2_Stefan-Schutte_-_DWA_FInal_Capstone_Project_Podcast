@@ -3,7 +3,7 @@ import Hero from '../components/Hero/Hero';
 import Row from '../components/Views/Row';
 import axios from 'axios';
 import Overlay from '../components/Views/Overlay.tsx';
-import Menu from "../components/NavBar/Menu.tsx";
+import Menu from "./Menu.tsx";
 
 interface Podcast {
     id: number;

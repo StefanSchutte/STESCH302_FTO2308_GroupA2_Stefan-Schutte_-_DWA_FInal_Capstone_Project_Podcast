@@ -41,10 +41,6 @@ const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
         }
     };
 
-    const toggleOverlay = () => {
-        setShowOverlay(!showOverlay);
-    };
-
     const handleClick = () => {
         // When the podcast is clicked, call the openOverlay function with the podcast data
         openOverlay(item);

@@ -8,7 +8,7 @@ import closeFav from '/close.png'
 import menuFav from "/menu.png";
 import accountFav from "/account.png";
 import logoutFav from '/logout.png'
-import {useAuth} from "../../context/AuthContext.tsx";
+import {useAuth} from "../context/AuthContext.tsx";
 
 const Menu = ({ closeOverlay }) => {
 
@@ -48,36 +48,36 @@ const Menu = ({ closeOverlay }) => {
                         <h2 className="mb-4 p-4 col-span-2 flex justify-center">
                             <img src={menuFav} alt="Menu"/>
                         </h2>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <ul className="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <li className='p-4 flex '>
                                 <Link to="/" onClick={handleLinkClick}>
-                                    <img src={homeLogo} alt="account" className='w-12 h-12 ml-2'/>
+                                    <img src={homeLogo} alt="account" className='w-14 h-14 ml-2'/>
                                 </Link>
                             </li>
                             <li className='p-4'>
                                 <Link to="/filter" onClick={handleLinkClick}>
-                                    <img src={settingLogo} alt="account" className='w-12 h-12 ml-2'/>
+                                    <img src={settingLogo} alt="account" className='w-14 h-14 ml-2'/>
                                 </Link>
                             </li>
                             <li className='p-4'>
                                 {isLoggedIn ? (
                                     <Link to="/account" onClick={handleLinkClick}>
-                                        <img src={accountFav} alt="account" className='w-12 h-12 ml-2'/>
+                                        <img src={accountFav} alt="account" className='w-14 h-14 ml-2'/>
                                     </Link>
                                 ) : (
                                     <Link to="/login" onClick={handleLinkClick}>
-                                        <img src={loginFav} alt="account" className='w-12 h-12 ml-2'/>
+                                        <img src={loginFav} alt="account" className='w-14 h-14 ml-2'/>
                                     </Link>
                                 )}
                             </li>
                             <li className='p-4'>
                                 {isLoggedIn ? (
                                     <button onClick={handleLogout}>
-                                        <img src={logoutFav} alt="logout" className='w-12 h-12 ml-2'/>
+                                        <img src={logoutFav} alt="logout" className='w-14 h-14 ml-2'/>
                                     </button>
                                 ):(
                                     <Link to="/signup" onClick={handleLinkClick}>
-                                    <img src={addUserFav} alt="account" className='w-12 h-12 ml-2'/>
+                                    <img src={addUserFav} alt="account" className='w-14 h-14 ml-2'/>
                                     </Link>
                                 )}
                             </li>
@@ -85,7 +85,7 @@ const Menu = ({ closeOverlay }) => {
                         <div className="col-span-2 flex justify-center">
                             <div className='p-4'>
                                 <button className="py-2 px-5" onClick={closeOverlay}>
-                                    <img src={closeFav} alt="close" className='w-16 h-16 ml-2'/>
+                                    <img src={closeFav} alt="close" className='w-18 h-18 ml-2'/>
                                 </button>
                             </div>
                         </div>

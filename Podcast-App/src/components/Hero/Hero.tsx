@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Menu from "../NavBar/Menu.tsx";
+import Menu from "../../pages/Menu.tsx";
 
 interface Podcast {
     title: string;

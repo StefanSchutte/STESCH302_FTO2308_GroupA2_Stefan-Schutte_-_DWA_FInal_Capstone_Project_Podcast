@@ -1,0 +1,37 @@
+import React, { useState } from 'react';
+import AudioPlayer from "./Views/AudioPlayer.tsx";
+import playFav from '/play-button.png'
+
+interface PlayButtonProps {
+    audioUrl: string;
+    showId: string; // Add the showId prop
+    episodeId: string; // Add the episodeId prop
+}
+
+const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) => {
+    const [showAudioPlayer, setShowAudioPlayer] = useState<boolean>(false);
+
+    const handlePlayButtonClick = () => {
+
+        // Store the last listened show and episode in local storage
+        localStorage.setItem('lastListenedShow', showId);
+        localStorage.setItem('lastListenedEpisode', episodeId);
+        setShowAudioPlayer(true);
+    };
+
+    return (
+        <>
+            <button
+                className="py-2 px-5 absolute top-4 right-16 "
+                onClick={handlePlayButtonClick}
+            >
+                <img src={playFav} alt='Play'/>
+            </button>
+            {showAudioPlayer && (
+                <AudioPlayer audioUrl={audioUrl} />
+            )}
+        </>
+    );
+};
+
+export default PlayButton;

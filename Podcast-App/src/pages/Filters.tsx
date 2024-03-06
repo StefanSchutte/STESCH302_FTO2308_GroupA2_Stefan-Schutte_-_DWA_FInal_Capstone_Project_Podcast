@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js'; // Import Fuse.js for fuzzy searching
 import getShowsFromAPI from '../components/api.ts';
-import Navbar from "../components/NavBar/Navbar.tsx";
 import Overlay from '../components/Views/Overlay.tsx'
-import Row from "../components/Views/Row.tsx";
-import axios from "axios";
-import Podcast from "../components/Views/Podcast.tsx";
+
 
 const Filters = () => {
 
@@ -72,57 +69,78 @@ const Filters = () => {
         setFilteredShows(sortedShows);
     };
 
-
-    // useEffect(() => {
-    //     axios.get(fetchURL).then((response) => {
-    //         setPodcasts(response.data);
-    //     });
-    // }, [fetchURL]);
-
-
-
     return (
-        <div className='w-full h-screen'>
-
-            <div className='w-full  px-4 py-24 flex items-center'>
+        <div className='w-full h-full' >
+            <div className='w-full  px-4 py-24 '>
                 <div>
-                    <div className='flex items-center mt-4'>
+                    <div className='flex flex-col mt-4'>
+                        <div className='flex items-center mt-4 mb-4'>
                         {/* Search input */}
-                        <div>Search:</div>
-                        <div className="mr-4 flex items-center">
+                            <div className='text-yellow-400 mr-2'>Search:</div>
+                            <div className="mr-4 flex items-center">
                             <input type="text" value={searchTerm} onChange={handleSearchChange}
                                    placeholder="Search by title"
                                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500"/>
+                            </div>
                         </div>
                         {/* Sorting options */}
-                        <div className="mr-4 flex items-center">
-                            <div>Filter:</div>
-                            <select onChange={handleSortChange}
-                                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500">
-                                <option value="az">Title A-Z</option>
-                                <option value="za">Title Z-A</option>
-                                <option value="asc">Date Ascending</option>
-                                <option value="desc">Date Descending</option>
-                            </select>
+                        <div>
+                            <div className="mr-4 flex items-center mb-4">
+                                <div className='text-yellow-400 mr-2'>Filter:</div>
+                                <select onChange={handleSortChange}
+                                        className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500">
+                                    <option value="az">Title A-Z</option>
+                                    <option value="za">Title Z-A</option>
+                                    <option value="asc">Date Ascending</option>
+                                    <option value="desc">Date Descending</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     {/* Show list */}
-                    <div className='font-bold mt-4'>Results:</div>
-                    <ul className="mt-2">
+                    <div className='font-bold text-4xl mt-4 text-yellow-400'>Results:</div>
+                    {/* change m to 2 */}
+                    <ul className="mt-2 cursor-pointer grid grid-cols-1 sm:grid-cols-2 gap-x-2 ">
                         {filteredShows.map((show) => (
-                            <li key={show.id} className="border-b border-gray-300 py-2"
-                                onClick={() => handlePodcastClick(show)}>{show.title}</li>
+                            <li onClick={() => handlePodcastClick(show)} key={show.id}
+                                className="border border-gray-300 rounded-md bg-black my-1 p-4 py-3 text-yellow-400 flex items-center ">
+
+                                <div className="flex flex-col  ">
+                                    <div className="grid grid-cols-2 gap-1">
+                                    <div>
+                                        <img src={show.image} alt={show.title}
+                                             className="w-[150px] sm:w-[200px] md:w-[200px] lg:w[240px]  "/>
+                                    </div>
+                                        <div className='text-base sm:text-lg md:text-xl xs:text-xs'>
+                                            <div className="flex items-center font-bold">
+                                                <h1 className='text-amber-50 pr-4'>Title:</h1>
+                                                <div >{show.title}</div>
+                                            </div>
+
+                                            <div className="flex items-center ">
+                                                <p className='text-amber-50 pr-4'>Seasons:</p>
+                                                <div className='text-gray-400'>{show.seasons}</div>
+                                            </div>
+
+                                            <div className="flex items-center ">
+                                                <p className='text-amber-50 pr-4'>Last
+                                                    updated:</p>
+                                                <div className='text-gray-400'>{new Date(show.updated).toLocaleDateString()}</div>
+                                            </div>
+
+                                            <div className="flex items-center ">
+                                                <p className='text-amber-50 pr-4'>Genres:</p>
+                                                <div className='text-gray-400'>{show.genres.join(', ')}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
                         ))}
                     </ul>
-
-
-
                 </div>
-                {/* Render Overlay component */}
                 <Overlay item={selectedPodcast} showOverlay={selectedPodcast !== null} closeOverlay={closeOverlay}/>
-
             </div>
-
         </div>
     );
 };
