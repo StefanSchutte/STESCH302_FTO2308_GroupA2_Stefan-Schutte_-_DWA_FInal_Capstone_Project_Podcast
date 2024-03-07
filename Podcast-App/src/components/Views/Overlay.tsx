@@ -74,7 +74,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, podc
 
                                         <div className="flex items-center mb-4">
                                             <div className="mr-4">
-                                                <img src={item.image} className='w-40 h-40 object-cover '/>
+                                                <img src={item.image} className='max-w-40 h-40 object-cover '/>
                                             </div>
 
                                             <div className='font-bold text-yellow-400 flex items-center'>
@@ -143,8 +143,8 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, podc
                                         </div>
                                     )}
 
-                                    <button className="absolute top-4 right-4 " onClick={closeOverlay}><img
-                                        src={closeFav} alt="close" className='w-18 h-18 ml-2'/></button>
+                                    <button className="absolute top-4 right-3 " onClick={closeOverlay}><img
+                                        src={closeFav} alt="close" className='w-15 h-15 ml-2'/></button>
 
                                 </div>
                                 </div>

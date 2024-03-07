@@ -1,6 +1,6 @@
 import { useState} from 'react';
 import { Link, } from 'react-router-dom';
-import Menu from "../../pages/Menu.tsx";
+import Menu from "./Menu.tsx";
 import menuFav from '/menu.png'
 
 function Navbar(): JSX.Element {

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Menu from "../../pages/Menu.tsx";
+import playButtonDub from '/play-button.png';
+import saveButton from '/save.png'
 
 interface Podcast {
     title: string;
@@ -55,9 +56,8 @@ function Hero(): JSX.Element {
                     <h1 className="text-3xl md:text-5xl font-bold">{podcast?.title}</h1>
 
                     <div className="my-4">
-                        <button className="border bg-green-500 text-amber-50 border-gray-300 py-2 px-5">Play</button>
-                        <button className="border bg-blue-500 text-amber-50 border-gray-300 py-2 px-5 ml-4">Listen
-                            later
+                        <button className="py-2 px-5"><img src={playButtonDub} alt='Play'/></button>
+                        <button className="py-2 px-5 "><img src={saveButton} alt='Save'/>
                         </button>
                     </div>
 

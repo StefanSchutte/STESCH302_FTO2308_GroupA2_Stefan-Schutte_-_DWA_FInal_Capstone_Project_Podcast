@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useAuth} from "../../context/AuthContext.tsx";
 import supabase from "../../supabase.ts";
-//import Overlay from "./Overlay.tsx";
+import playButtonDub from "/play-button.png";
+import removeBtnFav from '/remove.png';
+import saveBtnFav from '/save.png'
+
 
 interface PodcastProps {
     item: {
@@ -72,13 +74,13 @@ const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
 
 
                 <p onClick={savePodcast}>
-                    {like ? <FaHeart className='absolute top-4 left-4 text-gray-300 '/> :
-                        <FaRegHeart className='absolute top-4 left-4 text-gray-300 '/>}
+                    {like ?  <img src={removeBtnFav} className='absolute top-4 left-4 w-10 h-10 '/> :
+                        <img src={saveBtnFav} className='absolute top-4 left-4 w-10 h-10'/>}
                 </p>
 
                 <button onClick={handleClick}
-                        className="absolute bottom-4 left-4 border bg-green-500 text-amber-50 border-gray-300 py-2 px-5">
-                    See More!
+                        className="absolute bottom-2 py-2 px-5">
+                    <img src={playButtonDub} alt='Play'/>
                 </button>
 
             </div>

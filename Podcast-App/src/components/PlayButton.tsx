@@ -22,7 +22,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) 
     return (
         <>
             <button
-                className="py-2 px-5 absolute top-4 right-16 "
+                className="py-2 px-5 absolute top-2 right-16 w-15 h-15"
                 onClick={handlePlayButtonClick}
             >
                 <img src={playFav} alt='Play'/>

@@ -8,7 +8,7 @@ import closeFav from '/close.png'
 import menuFav from "/menu.png";
 import accountFav from "/account.png";
 import logoutFav from '/logout.png'
-import {useAuth} from "../context/AuthContext.tsx";
+import {useAuth} from "../../context/AuthContext.tsx";
 
 const Menu = ({ closeOverlay }) => {
 
@@ -97,3 +97,15 @@ const Menu = ({ closeOverlay }) => {
 };
 
 export default Menu;
+
+// etValue(newVlasue)
+// setValue((oldValue) => newValue)
+// Che Overmeyer
+// 2:13 PM
+// func () {
+//     value === 3
+//     setValue(5)
+//     value === 3
+//     setValue((oldValue) => 7)
+//     value === 7
+// }

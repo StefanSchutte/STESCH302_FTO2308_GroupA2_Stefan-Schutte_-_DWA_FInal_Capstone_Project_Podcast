@@ -100,18 +100,20 @@ const Filters = () => {
                     {/* Show list */}
                     <div className='font-bold text-4xl mt-4 text-yellow-400'>Results:</div>
                     {/* change m to 2 */}
-                    <ul className="mt-2 cursor-pointer grid grid-cols-1 sm:grid-cols-2 gap-x-2 ">
+                    <ul className="w-full mt-2 cursor-pointer grid grid-cols-1 sm:grid-cols-2 gap-x-2 ">
                         {filteredShows.map((show) => (
                             <li onClick={() => handlePodcastClick(show)} key={show.id}
                                 className="border border-gray-300 rounded-md bg-black my-1 p-4 py-3 text-yellow-400 flex items-center ">
 
-                                <div className="flex flex-col  ">
-                                    <div className="grid grid-cols-2 gap-1">
-                                    <div>
+                                <div className="flex flex-col  w-full">
+                                    <div className="grid grid-cols-3 gap-1">
+                                    <div className=" col-span-1 aspect-w-1 aspect-h-1 mb-2">
                                         <img src={show.image} alt={show.title}
-                                             className="w-[150px] sm:w-[200px] md:w-[200px] lg:w[240px]  "/>
+                                             className=" object-cover w-40 h-40"
+                                        />
                                     </div>
-                                        <div className='text-base sm:text-lg md:text-xl xs:text-xs'>
+                                        <div className="col-span-2 flex flex-col justify-between">
+                                        <div className='text-base sm:text-lg md:text-xl xs:text-xs '>
                                             <div className="flex items-center font-bold">
                                                 <h1 className='text-amber-50 pr-4'>Title:</h1>
                                                 <div >{show.title}</div>
@@ -133,6 +135,7 @@ const Filters = () => {
                                                 <div className='text-gray-400'>{show.genres.join(', ')}</div>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             </li>
