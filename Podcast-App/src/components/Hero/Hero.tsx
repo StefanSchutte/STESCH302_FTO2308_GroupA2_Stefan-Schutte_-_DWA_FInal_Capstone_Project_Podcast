@@ -53,7 +53,7 @@ function Hero(): JSX.Element {
                 <img className="w-full h-full object-cover" src={podcast?.image} alt={podcast?.title}/>
 
                 <div className="absolute w-full top-[20%] p-4 md:p-8">
-                    <h1 className="text-3xl md:text-5xl font-bold">{podcast?.title}</h1>
+                    <h1 className="text-3xl md:text-5xl font-bold text-yellow-400">{podcast?.title}</h1>
 
                     <div className="my-4">
                         <button className="py-2 px-5"><img src={playButtonDub} alt='Play'/></button>
@@ -62,7 +62,7 @@ function Hero(): JSX.Element {
                     </div>
 
                     <p className="text-gray-300 text-sm">Released: {podcast?.updated}</p>
-                    <p className="w-full md:max-w-[60%] lg:max-w-[70%] xl:max-w-[80%] text-gray-100">
+                    <p className="w-full md:max-w-[60%] lg:max-w-[70%] xl:max-w-[80%] text-yellow-400">
                         {truncateString(podcast?.description || '', 300)}
                     </p>
                 </div>

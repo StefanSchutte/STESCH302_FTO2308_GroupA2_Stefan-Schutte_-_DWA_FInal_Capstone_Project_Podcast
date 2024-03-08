@@ -112,7 +112,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, podc
                                                 <select
                                                     value={selectedSeason || ''}
                                                     onChange={(e) => handleSeasonSelect(parseInt(e.target.value))}
-                                                    className='p-3 my-2 bg-gray-600 rounded'
+                                                    className='p-3 my-2 bg-gray-600 rounded w-2/3 pr-2'
                                                 >
                                                     <option value="">Choose Season</option>
                                                     {Array.from({length: item.seasons}, (_, i) => (
@@ -126,7 +126,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, podc
                                                 <select
                                                     value={selectedEpisode || ''}
                                                     onChange={(e) => handleEpisodeSelect(parseInt(e.target.value))}
-                                                    className='p-3 my-2 bg-gray-600 rounded'
+                                                    className='p-3 my-2 bg-gray-600 rounded w-2/3'
                                                 >
                                                     <option value="">Choose Episode</option>
                                                     {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode: any, index: number) => (
