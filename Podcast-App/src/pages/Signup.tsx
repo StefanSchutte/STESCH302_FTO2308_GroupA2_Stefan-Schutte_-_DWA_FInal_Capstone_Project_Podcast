@@ -1,16 +1,25 @@
 import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.tsx';
-import signupFav from '/add-user.png'
+import signupFav from '/add-user.png';
+
+/**
+* Functional component representing the signup form.
+* @returns JSX.Element
+*/
 function Signup(): JSX.Element {
 
     const signUpLogo = 'https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const { signUp } = useAuth();
     const navigate = useNavigate();
 
+    /**
+     * Handles form submission.
+     * @param {FormEvent<HTMLFormElement>} e - Form event
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
@@ -34,8 +43,8 @@ function Signup(): JSX.Element {
                             <input onChange={(e) => setEmail(e.target.value)} className='p-3 my-2 bg-gray-600 rounded' type='email' placeholder='Email' autoComplete='email' />
                             <input onChange={(e) => setPassword(e.target.value)} className='p-3 my-2 bg-gray-600 rounded' type='password' placeholder='Password' autoComplete='current-password' />
                             <button className='bg-green-500 py-3 my-6 rounded font-bold text-amber-50 flex justify-center items-center'>
-                                <img src={signupFav} alt='Sign Up' className='w-10 h-10'/></button>
-
+                                <img src={signupFav} alt='Sign Up' className='w-10 h-10'/>
+                            </button>
                             <p className='py-8 text-amber-50'>
                                 <span className='text-sm text-yellow-400'>Already Subscribed?</span>{' '}
                                 <Link to='/login'>

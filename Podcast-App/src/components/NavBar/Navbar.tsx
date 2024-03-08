@@ -3,14 +3,24 @@ import { Link, } from 'react-router-dom';
 import Menu from "./Menu.tsx";
 import menuFav from '/menu.png'
 
+/**
+ * Functional component representing the navigation bar.
+ * @returns JSX.Element
+ */
 function Navbar(): JSX.Element {
 
     const [showOverlay, setShowOverlay] = useState(false);
 
+    /**
+     * Toggles the menu overlay visibility.
+     */
     const handleMenuClick = () => {
         setShowOverlay(!showOverlay);
     };
 
+    /**
+     * Closes the menu overlay.
+     */
     const closeOverlay = () => {
         setShowOverlay(false);
     };
