@@ -1,60 +1,91 @@
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js'; // Import Fuse.js for fuzzy searching
-import getShowsFromAPI from '../components/api.ts';
+import getShowsFromAPI from '../API/api.ts';
 import Overlay from '../components/Views/Overlay.tsx'
+import { useShows } from "../API/ShowsContext.tsx";
+
+interface Podcast {
+    id: string;
+    title: string;
+    image: string;
+    seasons: number;
+    updated: string;
+    genres: string[];
+}
+
+/**
+ * Filters component to manage searching, filtering, and sorting of podcasts.
+ * @returns JSX.Element
+ */
+const Filters: React.FC = () => {
+    const { podcasts } = useShows(); // Use the useShows hook to access pod
+    /** State variable to store shows fetched from API */
+    //const [shows, setShows] = useState<Podcast[]>([]);
+    /** State variable to store filtered shows */
+    const [filteredShows, setFilteredShows] = useState<Podcast[]>([]);
+    /** State variable to store search term */
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    /** State variable to track selected podcast */
+    const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null);
 
 
-const Filters = () => {
-
-
-
-    const [shows, setShows] = useState([]); // State variable to store shows fetched from API
-    const [filteredShows, setFilteredShows] = useState([]); // State variable to store filtered shows
-    const [searchTerm, setSearchTerm] = useState(''); // State variable to store search term
-
-    const [selectedPodcast, setSelectedPodcast] = useState(null); // State variable to track selected podcast
-
-
-    // Fetch shows from API on component mount
+    /**
+     * Fetch shows from API on component mount.
+     * Initially set filtered shows to all shows.
+     */
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const data = await getShowsFromAPI();
+    //         setShows(data);
+    //         setFilteredShows(data);
+    //     }
+    //     fetchData();
+    // }, []);
     useEffect(() => {
-        async function fetchData() {
-            const data = await getShowsFromAPI();
-            setShows(data);
-            setFilteredShows(data); // Initially set filtered shows to all shows
-        }
-        fetchData();
-    }, []);
+        setFilteredShows(podcasts); // Initialize filteredShows with the fetched podcasts
+    }, [podcasts]);
 
-    // Function to handle search input change
-    const handleSearchChange = (e) => {
+    /**
+     * Function to handle search input change
+     */
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setSearchTerm(e.target.value);
         filterShows(e.target.value);
     };
 
-    // Function to filter shows based on search term
-    const filterShows = (term) => {
+    /**
+     * Function to filter shows based on search term.
+     * If search term is empty, show all shows
+     */
+    const filterShows = (term: string): void => {
         if (term === '') {
-            setFilteredShows(shows); // If search term is empty, show all shows
+            setFilteredShows(/*shows*/ podcasts);
         } else {
-            const fuse = new Fuse(shows, { keys: ['title'] });
+            const fuse = new Fuse(/*shows*/podcasts, { keys: ['title'] });
             const result = fuse.search(term);
-            setFilteredShows(result.map((item) => item.item));
+            setFilteredShows(result.map((item: Fuse.FuseResult<Podcast>) => item.item));
         }
     };
 
-    // Function to handle podcast item click
-    const handlePodcastClick = (podcast) => {
+    /**
+     * Function to handle podcast item click
+     */
+    const handlePodcastClick = (podcast: Podcast): void => {
         setSelectedPodcast(podcast);
 
     };
 
-    // Function to close overlay
-    const closeOverlay = () => {
+    /**
+     * Function to close overlay.
+     */
+    const closeOverlay = (): void => {
         setSelectedPodcast(null);
     };
 
-    // Function to handle sorting
-    const handleSortChange = (e) => {
+    /**
+     * Function to handle sorting.
+     */
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         const value = e.target.value;
         let sortedShows = [...filteredShows];
         if (value === 'az') {
@@ -62,9 +93,9 @@ const Filters = () => {
         } else if (value === 'za') {
             sortedShows.sort((a, b) => b.title.localeCompare(a.title));
         } else if (value === 'asc') {
-            sortedShows.sort((a, b) => new Date(a.updated) - new Date(b.updated));
+            sortedShows.sort((a, b) => new Date(a.updated).getTime() - new Date(b.updated).getTime());
         } else if (value === 'desc') {
-            sortedShows.sort((a, b) => new Date(b.updated) - new Date(a.updated));
+            sortedShows.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
         }
         setFilteredShows(sortedShows);
     };
@@ -76,24 +107,28 @@ const Filters = () => {
                     <div className='flex flex-col mt-4'>
                         <div className='flex items-center mt-4 mb-4'>
                         {/* Search input */}
-                            <div className='text-yellow-400 mr-2'>Search:</div>
-                            <div className="mr-4 flex items-center">
+                            <div className='text-purple-500 mr-2 pr-4'>Search:</div>
+                            <div className="mr-4 flex items-center text-yellow-400">
                             <input type="text" value={searchTerm} onChange={handleSearchChange}
                                    placeholder="Search by title"
-                                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500"/>
+                                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-600"/>
                             </div>
                         </div>
                         {/* Sorting options */}
                         <div>
                             <div className="mr-4 flex items-center mb-4">
-                                <div className='text-yellow-400 mr-2'>Filter:</div>
+                                <div className='text-purple-500 mr-2 pr-4'>Filter:</div>
+                                <div className=''>
                                 <select onChange={handleSortChange}
-                                        className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500">
+                                        className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500
+                                        bg-gray-600 text-yellow-400
+                                        ">
                                     <option value="az">Title A-Z</option>
                                     <option value="za">Title Z-A</option>
                                     <option value="asc">Date Ascending</option>
                                     <option value="desc">Date Descending</option>
                                 </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -142,7 +177,9 @@ const Filters = () => {
                         ))}
                     </ul>
                 </div>
-                <Overlay item={selectedPodcast} showOverlay={selectedPodcast !== null} closeOverlay={closeOverlay}/>
+                {selectedPodcast && (
+                <Overlay item={selectedPodcast} showOverlay={true} closeOverlay={closeOverlay}/>
+                )}
             </div>
         </div>
     );

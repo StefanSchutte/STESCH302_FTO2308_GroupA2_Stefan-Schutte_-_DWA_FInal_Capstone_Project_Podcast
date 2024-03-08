@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import playButtonDub from '/play-button.png';
 import saveButton from '/save.png'
+import { useShows } from '../../API/ShowsContext.tsx';
 
 interface Podcast {
     title: string;
@@ -11,23 +12,25 @@ interface Podcast {
 }
 
 function Hero(): JSX.Element {
-    const apiUrl = 'https://podcast-api.netlify.app/shows';
+    //const apiUrl = 'https://podcast-api.netlify.app/shows';
 
-    const [podcasts, setPodcasts] = useState<Podcast[]>([]);
+    //const [podcasts, setPodcasts] = useState<Podcast[]>([]);
     const [podcast, setPodcast] = useState<Podcast | undefined>();
 
-    useEffect(() => {
-        axios
-            .get<Podcast[]>(apiUrl)
-            .then((response) => {
-                // Update component state with the fetched data
-                setPodcasts(response.data);
-            })
-            .catch((error) => {
-                // Handle any errors that occur during the fetch request
-                console.error('Error fetching data:', error);
-            });
-    }, []);
+    const { podcasts } = useShows(); // Use the useShows hook to access the fetched data
+
+    // useEffect(() => {
+    //     axios
+    //         .get<Podcast[]>(apiUrl)
+    //         .then((response) => {
+    //             // Update component state with the fetched data
+    //             setPodcasts(response.data);
+    //         })
+    //         .catch((error) => {
+    //             // Handle any errors that occur during the fetch request
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
 
     useEffect(() => {
         if (podcasts.length > 0) {

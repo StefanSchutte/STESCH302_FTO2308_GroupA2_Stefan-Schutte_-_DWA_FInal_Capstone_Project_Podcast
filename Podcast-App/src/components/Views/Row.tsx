@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import Podcast from './Podcast';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import {useShows} from "../../API/ShowsContext.tsx";
 
 interface RowProps {
     /** The title of the row. */
@@ -21,17 +22,18 @@ interface RowProps {
  */
 const Row: React.FC<RowProps> = ({ title, fetchURL, rowId, openOverlay }) => {
 
-    const [podcasts, setPodcasts] = useState<any[]>([]);
+    //const [podcasts, setPodcasts] = useState<any[]>([]);
+    const { podcasts } = useShows();
 
-    useEffect(() => {
-        axios.get(fetchURL)
-            .then((response) => {
-                setPodcasts(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
-    }, [fetchURL]);
+    // useEffect(() => {
+    //     axios.get(fetchURL)
+    //         .then((response) => {
+    //             setPodcasts(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, [fetchURL]);
 
     /**
      * Handles sliding the row to the left.
