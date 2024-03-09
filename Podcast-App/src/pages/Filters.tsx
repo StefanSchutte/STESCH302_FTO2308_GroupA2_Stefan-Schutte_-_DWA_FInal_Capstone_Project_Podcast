@@ -94,9 +94,15 @@ const Filters: React.FC = () => {
     const handleGenreClick = (genre: string): void => {
         const genreIndex = ['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].indexOf(genre);
         if (genreIndex !== -1) { // Check if the genre is valid
-            const filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex));
+            let filteredByGenre: Podcast[] = [];
+            if (genreIndex === 0) {
+                // If 'All' is selected, show all podcasts
+                filteredByGenre = podcasts;
+            } else {
+                // Filter by the selected genre
+                filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex));
+            }
             setFilteredShows(filteredByGenre);
-            console.log('Filtered by genre:', genre);
         } else {
             console.error('Invalid genre:', genre);
         }
@@ -107,24 +113,23 @@ const Filters: React.FC = () => {
             <div className='w-full  px-4 py-24 '>
                 <div>
                     <div className='flex flex-col mt-4'>
-                        <div className='flex items-center mt-4 mb-4'>
+                        <div className='w-full flex items-center mt-4 mb-4'>
                             {/* Search input */}
                             <div className='text-purple-500 mr-2 pr-4'>Search:</div>
-                            <div className="mr-4 flex items-center text-yellow-400">
+                            <div className="mr-4 flex-grow flex items-center text-yellow-400">
                                 <input type="text" value={searchTerm} onChange={handleSearchChange}
                                        placeholder="Search by title"
-                                       className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-600"/>
+                                       className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-600 w-full"/>
                             </div>
                         </div>
                         {/* Sorting options */}
                         <div>
                             <div className="mr-4 flex items-center mb-4">
                                 <div className='text-purple-500 mr-2 pr-4'>Filter:</div>
-                                <div className=''>
+                                <div className='flex-grow'>
                                     <select onChange={handleSortChange}
                                             className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500
-                                        bg-gray-600 text-yellow-400
-                                        ">
+                                        bg-gray-600 text-yellow-400 w-full">
                                         <option value="az">Title A-Z</option>
                                         <option value="za">Title Z-A</option>
                                         <option value="asc">Date Ascending</option>
@@ -138,10 +143,9 @@ const Filters: React.FC = () => {
                         <div>
                             <div className="mr-4 flex items-center mb-4">
                                 <div className='text-purple-500 mr-2 pr-4'>Genre:</div>
-                                <div className='flex flex-wrap'>
+                                <div className='flex flex-wrap text-blue-500'>
                                     {['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].map(genre => (
-                                        <label key={genre} className="cursor-pointer mr-4">
-                                            <input type="checkbox" onClick={() => handleGenreClick(genre)} />
+                                        <label key={genre} onClick={() => handleGenreClick(genre)} className="cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2">
                                             {genre}
                                         </label>
                                     ))}

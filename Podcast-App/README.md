@@ -210,7 +210,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User can find shows based on fuzzy matching of strings (you can use something like https://fusejs.io/)
 
- Automatically filter shows by genre if the genre label is clicked on
+✅  Automatically filter shows by genre if the genre label is clicked on
 
  User sees the date and time that an episode was added to their favourites list
 

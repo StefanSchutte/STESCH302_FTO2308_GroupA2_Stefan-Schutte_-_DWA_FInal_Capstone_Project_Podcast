@@ -3,6 +3,10 @@ import closeFav from "/close.png";
 import PlayButton from '../../helpers/PlayButton.tsx'
 import { useShows } from "../../API/ShowsContext.tsx";
 import Genres from "../../helpers/Genres.tsx";
+import seeMoreFav from '/seeMore.png'
+import EpisodeList from "../../pages/List.tsx";
+import { Link } from 'react-router-dom';
+
 
 interface OverlayProps {
     item: {
@@ -34,6 +38,10 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
     const [lastListenedShow, setLastListenedShow] = useState<string | null>(null);
     const [lastListenedEpisode, setLastListenedEpisode] = useState<string | null>(null);
 
+    const [showAllEpisodes, setShowAllEpisodes] = useState(false);
+    const [showEpisodeList, setShowEpisodeList] = useState(false);
+
+    const [seeMore, setSeeMore] = useState(false)
 
     /**
      * Fetches podcast data from API and sets it in the state.
@@ -100,6 +108,10 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
         setSelectedEpisode(episodeNumber);
     };
 
+    const handleSeeMoreClick = () => {
+        setSeeMore(true)
+    };
+
     /**
      * Conditional rendering of the overlay based on the visibility flag
      */
@@ -157,7 +169,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                     ) : (
 
                                     podcastData && (
-                                        <div>
+                                        <div >
                                             <div className='flex items-center'>
                                                 {/* Choose Season dropdown */}
                                                 <div className='pr-6 text-purple-500'>Select Season:</div>
@@ -192,17 +204,25 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                             </div>
                                             {/* Play button */}
                                             {/* Render the PlayButton component */}
-                                            <PlayButton audioUrl={selectedSeason && selectedEpisode && podcastData && podcastData.seasons[selectedSeason - 1].episodes[selectedEpisode - 1].file}
-                                                        showId={item.id}
+                                            <PlayButton
+                                                audioUrl={selectedSeason && selectedEpisode && podcastData && podcastData.seasons[selectedSeason - 1].episodes[selectedEpisode - 1].file}
+                                                showId={item.id}
 
                                             />
+
+
+
+                                            <Link to="/episodeList">
+                                                <img src={seeMoreFav} alt='See More' className='' />
+                                            </Link>
+
                                         </div>
                                     )
                                     )}
 
-                                    <button className="absolute top-4 right-4 " onClick={closeOverlay}><img
-                                        src={closeFav} alt="close" className='w-15 h-15 ml-2'/></button>
-
+                                    <button className="absolute top-4 right-4 " onClick={closeOverlay}>
+                                    <img src={closeFav} alt="close" className='w-15 h-15 ml-2'/>
+                                    </button>
                                 </div>
                                 </div>
                             </div>

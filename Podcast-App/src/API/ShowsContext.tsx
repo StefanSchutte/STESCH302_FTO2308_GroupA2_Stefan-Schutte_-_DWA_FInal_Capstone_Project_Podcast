@@ -17,10 +17,13 @@ interface Podcast {
 interface ShowsContextType {
     podcasts: Podcast[];
     loading: boolean;
+    selectedSeason: number | null;
+    selectSeason: (seasonNumber: number) => void;
 }
 
 /** Context for managing podcasts data. */
-const ShowsContext = createContext<ShowsContextType>({ podcasts: [], loading: true });
+const ShowsContext = createContext<ShowsContextType>({ podcasts: [], loading: true, selectedSeason: null,
+    selectSeason: () => {}, });
 
 /** Custom hook for accessing the ShowsContext. */
 export const useShows = () => useContext(ShowsContext);
@@ -32,6 +35,8 @@ export const useShows = () => useContext(ShowsContext);
 export const ShowsProvider: React.FC = ({ children }) => {
     const [podcasts, setPodcasts] = useState<Podcast[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,8 +53,12 @@ export const ShowsProvider: React.FC = ({ children }) => {
         fetchData();
     }, []);
 
+    const selectSeason = (seasonNumber: number) => {
+        setSelectedSeason(seasonNumber);
+    };
+
     return (
-        <ShowsContext.Provider value={{ podcasts, loading }}>
+        <ShowsContext.Provider value={{ podcasts, loading, selectedSeason, selectSeason }}>
             {loading ? (
                 <div className="flex justify-center items-center h-screen">
                     <div className="text-blue-500 text-5xl">Loading...</div>
