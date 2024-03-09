@@ -40,44 +40,44 @@ const Menu = ({ closeOverlay }) => {
     return (
         <>
             <div className="fixed top-0 left-0 w-full h-full   z-[90] ">
-                <img className='hidden sm:block absolute w-full h-full object-cover ' src={filterLogo}
+                <img className='absolute w-full h-full object-cover ' src={filterLogo}
                 alt='filterlogo'/>
 
-                <div className="fixed top-0 left0 w-screen h-screen flex flex-col justify-center items-center bg-black bg-opacity-60 z-[100]">
-                    <div className="p-4 m-4 rounded-lg max-w-screen h-screen flex-col justify-center ">
+                <div className="fixed top-0 left0 w-full h-full flex flex-col justify-center items-center bg-black bg-opacity-60 z-[100]">
+                    <div className="absolute p-4 m-4  rounded-lg max-w-screen h-screen flex-col justify-center " style={{ top: '15%' }}>
                         <h2 className="mb-4 p-4 col-span-2 flex justify-center">
                             <img src={menuFav} alt="Menu"/>
                         </h2>
-                        <ul className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <li className='p-4 flex '>
+                        <ul className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
+                            <li className='p-4 flex'>
                                 <Link to="/" onClick={handleLinkClick}>
-                                    <img src={homeLogo} alt="account" className='w-14 h-14 ml-2'/>
+                                    <img src={homeLogo} alt="account" className='w-16 h-16 ml-2'/>
                                 </Link>
                             </li>
                             <li className='p-4'>
                                 <Link to="/filter" onClick={handleLinkClick}>
-                                    <img src={settingLogo} alt="account" className='w-14 h-14 ml-2'/>
+                                    <img src={settingLogo} alt="account" className='w-16 h-16 ml-2'/>
                                 </Link>
                             </li>
                             <li className='p-4'>
                                 {isLoggedIn ? (
                                     <Link to="/account" onClick={handleLinkClick}>
-                                        <img src={accountFav} alt="account" className='w-14 h-14 ml-2'/>
+                                        <img src={accountFav} alt="account" className='w-16 h-16 ml-2'/>
                                     </Link>
                                 ) : (
                                     <Link to="/login" onClick={handleLinkClick}>
-                                        <img src={loginFav} alt="account" className='w-14 h-14 ml-2'/>
+                                        <img src={loginFav} alt="account" className='w-16 h-16 ml-2'/>
                                     </Link>
                                 )}
                             </li>
                             <li className='p-4'>
                                 {isLoggedIn ? (
                                     <button onClick={handleLogout}>
-                                        <img src={logoutFav} alt="logout" className='w-14 h-14 ml-2'/>
+                                        <img src={logoutFav} alt="logout" className='w-16 h-16 ml-2'/>
                                     </button>
                                 ):(
                                     <Link to="/signup" onClick={handleLinkClick}>
-                                    <img src={addUserFav} alt="account" className='w-14 h-14 ml-2'/>
+                                    <img src={addUserFav} alt="account" className='w-16 h-16 ml-2'/>
                                     </Link>
                                 )}
                             </li>
@@ -100,8 +100,7 @@ export default Menu;
 
 // etValue(newVlasue)
 // setValue((oldValue) => newValue)
-// Che Overmeyer
-// 2:13 PM
+
 // func () {
 //     value === 3
 //     setValue(5)

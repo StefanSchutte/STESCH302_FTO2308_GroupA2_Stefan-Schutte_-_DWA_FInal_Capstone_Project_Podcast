@@ -3,6 +3,7 @@ import Fuse from 'fuse.js'; // Import Fuse.js for fuzzy searching
 import getShowsFromAPI from '../API/api.ts';
 import Overlay from '../components/Views/Overlay.tsx'
 import { useShows } from "../API/ShowsContext.tsx";
+import Genres from "../helpers/Genres.tsx";
 
 interface Podcast {
     id: string;
@@ -159,7 +160,7 @@ const Filters: React.FC = () => {
 
                                             <div className="flex items-center ">
                                                 <p className='text-amber-50 pr-4'>Genres:</p>
-                                                <div className='text-gray-400'>{show.genres.join(', ')}</div>
+                                                <div className='text-gray-400 text-base flex flex-wrap'><Genres genres={show.genres} /></div>
                                             </div>
                                         </div>
                                     </div>

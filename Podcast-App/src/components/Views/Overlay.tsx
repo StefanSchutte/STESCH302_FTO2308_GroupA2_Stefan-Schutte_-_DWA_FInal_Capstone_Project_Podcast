@@ -35,8 +35,6 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
     const [lastListenedEpisode, setLastListenedEpisode] = useState<string | null>(null);
 
 
-
-
     /**
      * Fetches podcast data from API and sets it in the state.
      */
@@ -134,8 +132,6 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                         </div>
 
                                     <div className='mb-4 '>
-                                        {/* Render the Genres component and pass the genres array */}
-
                                         <div className='flex items-center mb-4 mt-8'>
                                             <Genres genres={item.genres} />
                                         </div>

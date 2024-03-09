@@ -28,15 +28,14 @@ const Genres: React.FC<GenresProps> = ({ genres }) => {
     };
 
     return (
-        <div className='text-gray-400 flex items-center mb-4'>
+        <div className='text-gray-400'>
             {genres.map((genreId, index) => (
-                <React.Fragment key={index}>
-                    <span style={{ marginLeft: '0.5em' }}>{genreMapping[genreId]}</span>
+                <span key={index}>
+                    {genreMapping[genreId]}
                     {index < genres.length - 2 && ', '}
-                    {index === genres.length - 2 && ' '}
-                    {index === genres.length - 2 && ', and '}
-                    {index === genres.length - 1 && ' '}
-                </React.Fragment>
+                    {index === genres.length - 2 && ' and '}
+                    {index === genres.length - 1 && ''}
+                </span>
             ))}
         </div>
     );

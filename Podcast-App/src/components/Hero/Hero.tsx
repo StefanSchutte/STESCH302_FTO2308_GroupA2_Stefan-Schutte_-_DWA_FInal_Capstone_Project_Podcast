@@ -1,47 +1,69 @@
 import { useEffect, useState } from 'react';
 import playButtonDub from '/play-button.png';
-import saveButton from '/save.png'
 import { useShows } from '../../API/ShowsContext.tsx';
+import Overlay from "../Views/Overlay.tsx";
+import Genres from "../../helpers/Genres.tsx";
 
 interface Podcast {
     title: string;
     image: string;
     updated: string;
     description: string;
+    id: string;
+    genres: string[];
 }
 
+/**
+ * Functional component representing the hero section of the application.
+ */
 function Hero(): JSX.Element {
-    //const apiUrl = 'https://podcast-api.netlify.app/shows';
-    //const [podcasts, setPodcasts] = useState<Podcast[]>([]);
+
     const [podcast, setPodcast] = useState<Podcast | undefined>();
     const { podcasts } = useShows(); // Use the useShows hook to access the fetched data
-
-    // useEffect(() => {
-    //     axios
-    //         .get<Podcast[]>(apiUrl)
-    //         .then((response) => {
-    //             // Update component state with the fetched data
-    //             setPodcasts(response.data);
-    //         })
-    //         .catch((error) => {
-    //             // Handle any errors that occur during the fetch request
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, []);
+    const [showOverlay, setShowOverlay] = useState<boolean>(false);
 
     useEffect(() => {
-        if (podcasts.length > 0) {
-            const randomPodcast = podcasts[Math.floor(Math.random() * podcasts.length)];
-            setPodcast(randomPodcast);
+        const changeHero = () => {
+            if (podcasts.length > 0) {
+                const randomPodcast = podcasts[Math.floor(Math.random() * podcasts.length)];
+                setPodcast(randomPodcast);
+            }
         }
+        // Call changeHero initially and then every 2 minutes
+        changeHero();
+        const interval = setInterval(changeHero,60 * 1000);
+
+        // Cleanup function to clear the interval when the component unmounts or the podcasts change
+        return () => clearInterval(interval);
+
     }, [podcasts]);
 
+    /**
+     * Truncate a string to a specified length.
+     * @param str - The string to truncate.
+     * @param num - The maximum length of the truncated string.
+     * @returns The truncated string.
+     */
     const truncateString = (str: string, num: number): string => {
         if (str.length > num) {
             return str.slice(0, num) + '...';
         } else {
             return str;
         }
+    };
+
+    /**
+     * Function to handle the click event on the play button.
+     */
+    const handlePlayButtonClick = () => {
+        setShowOverlay(true);
+    };
+
+    /**
+     * Function to close the overlay.
+     */
+    const closeOverlay = () => {
+        setShowOverlay(false);
     };
 
     return (
@@ -56,20 +78,16 @@ function Hero(): JSX.Element {
                     <h1 className="text-3xl md:text-5xl font-bold text-yellow-400">{podcast?.title}</h1>
 
                     <div className="my-4">
-                        <button className="py-2 px-5"><img src={playButtonDub} alt='Play'/></button>
-                        <button className="py-2 px-5"><img src={saveButton} alt='Save'/>
-                        </button>
+                        <button className="py-2 px-5"><img src={playButtonDub} alt='Play' onClick={handlePlayButtonClick}/></button>
                     </div>
-
-                    <p className="text-gray-300 text-sm">Released: {podcast?.updated}</p>
-                    <p className="w-full md:max-w-[60%] lg:max-w-[70%] xl:max-w-[80%] text-yellow-400">
+                    <span className="text-gray-300 text-sm"><Genres genres={podcast?.genres || []} /></span>
+                    <p className="w-full md:max-w-[60%] lg:max-w-[70%] xl:max-w-[80%] text-yellow-400 mt-4">
                         {truncateString(podcast?.description || '', 300)}
                     </p>
                 </div>
             </div>
+            {showOverlay && <Overlay item={podcast} showOverlay={showOverlay} closeOverlay={closeOverlay} />}
         </div>
-
-
     );
 }
 
