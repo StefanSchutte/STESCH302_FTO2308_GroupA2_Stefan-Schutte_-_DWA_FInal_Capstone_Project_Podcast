@@ -20,8 +20,6 @@ interface Podcast {
  */
 const Filters: React.FC = () => {
     const { podcasts } = useShows(); // Use the useShows hook to access pod
-    /** State variable to store shows fetched from API */
-    //const [shows, setShows] = useState<Podcast[]>([]);
     /** State variable to store filtered shows */
     const [filteredShows, setFilteredShows] = useState<Podcast[]>([]);
     /** State variable to store search term */
@@ -91,6 +89,17 @@ const Filters: React.FC = () => {
             sortedShows.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
         }
         setFilteredShows(sortedShows);
+
+    }
+    const handleGenreClick = (genre: string): void => {
+        const genreIndex = ['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].indexOf(genre);
+        if (genreIndex !== -1) { // Check if the genre is valid
+            const filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex));
+            setFilteredShows(filteredByGenre);
+            console.log('Filtered by genre:', genre);
+        } else {
+            console.error('Invalid genre:', genre);
+        }
     };
 
     return (
@@ -99,12 +108,12 @@ const Filters: React.FC = () => {
                 <div>
                     <div className='flex flex-col mt-4'>
                         <div className='flex items-center mt-4 mb-4'>
-                        {/* Search input */}
+                            {/* Search input */}
                             <div className='text-purple-500 mr-2 pr-4'>Search:</div>
                             <div className="mr-4 flex items-center text-yellow-400">
-                            <input type="text" value={searchTerm} onChange={handleSearchChange}
-                                   placeholder="Search by title"
-                                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-600"/>
+                                <input type="text" value={searchTerm} onChange={handleSearchChange}
+                                       placeholder="Search by title"
+                                       className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-600"/>
                             </div>
                         </div>
                         {/* Sorting options */}
@@ -112,18 +121,34 @@ const Filters: React.FC = () => {
                             <div className="mr-4 flex items-center mb-4">
                                 <div className='text-purple-500 mr-2 pr-4'>Filter:</div>
                                 <div className=''>
-                                <select onChange={handleSortChange}
-                                        className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500
+                                    <select onChange={handleSortChange}
+                                            className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500
                                         bg-gray-600 text-yellow-400
                                         ">
-                                    <option value="az">Title A-Z</option>
-                                    <option value="za">Title Z-A</option>
-                                    <option value="asc">Date Ascending</option>
-                                    <option value="desc">Date Descending</option>
-                                </select>
+                                        <option value="az">Title A-Z</option>
+                                        <option value="za">Title Z-A</option>
+                                        <option value="asc">Date Ascending</option>
+                                        <option value="desc">Date Descending</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+
+
+                        <div>
+                            <div className="mr-4 flex items-center mb-4">
+                                <div className='text-purple-500 mr-2 pr-4'>Genre:</div>
+                                <div className='flex flex-wrap'>
+                                    {['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].map(genre => (
+                                        <label key={genre} className="cursor-pointer mr-4">
+                                            <input type="checkbox" onClick={() => handleGenreClick(genre)} />
+                                            {genre}
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     {/* Show list */}
                     <div className='font-bold text-4xl mt-4 text-yellow-400'>Results:</div>
@@ -135,9 +160,9 @@ const Filters: React.FC = () => {
 
                                 <div className="flex flex-col  w-full">
                                     <div className="grid grid-cols-3 gap-1">
-                                    <div className=" col-span-1 aspect-w-1 aspect-h-1 mb-2">
-                                        <img src={show.image} alt={show.title}
-                                             className=" object-cover w-40 h-40"
+                                        <div className=" col-span-1 aspect-w-1 aspect-h-1 mb-2">
+                                            <img src={show.image} alt={show.title}
+                                                 className=" object-cover w-40 h-40"
                                         />
                                     </div>
                                         <div className="col-span-2 flex flex-col justify-between">
