@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import closeFav from "/close.png";
-import PlayButton from '../PlayButton.tsx'
+import PlayButton from '../../helpers/PlayButton.tsx'
 import { useShows } from "../../API/ShowsContext.tsx";
+import Genres from "../../helpers/Genres.tsx";
 
 interface OverlayProps {
     item: {
@@ -133,8 +134,10 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                         </div>
 
                                     <div className='mb-4 '>
-                                        <div className='text-yellow-400 flex items-center mb-4'>
-                                                {item.genres}
+                                        {/* Render the Genres component and pass the genres array */}
+
+                                        <div className='flex items-center mb-4 mt-8'>
+                                            <Genres genres={item.genres} />
                                         </div>
 
                                         <div className='text-gray-500 flex items-center mb-4'>

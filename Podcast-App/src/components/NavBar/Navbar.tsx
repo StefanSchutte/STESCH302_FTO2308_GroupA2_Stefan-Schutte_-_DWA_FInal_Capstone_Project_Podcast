@@ -31,8 +31,8 @@ function Navbar(): JSX.Element {
                 <h1 className="text-amber-50 text-4xl sm:text-5xl md:text-6xl font-bold cursor-pointer ">
                     PODCASTED</h1>
             </Link>
-            <button onClick={handleMenuClick} className="cursor-pointer flex items-center">
-                <img src={menuFav} alt="Menu"/>
+            <button onClick={handleMenuClick} className="cursor-pointer flex items-center ">
+                <img src={menuFav} alt="Menu" />
             </button>
             {showOverlay && <Menu closeOverlay={closeOverlay}/>}
         </div>

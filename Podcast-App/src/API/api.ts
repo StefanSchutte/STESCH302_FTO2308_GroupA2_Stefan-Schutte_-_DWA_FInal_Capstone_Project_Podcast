@@ -1,4 +1,4 @@
-const API_URL = 'https://podcast-api.netlify.app/shows'; // Replace this with your API endpoint
+const API_URL = 'https://podcast-api.netlify.app/shows';
 
 const getShowsFromAPI = async () => {
     try {

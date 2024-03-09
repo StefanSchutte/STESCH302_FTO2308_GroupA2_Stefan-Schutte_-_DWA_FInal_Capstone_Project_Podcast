@@ -31,18 +31,10 @@ const Filters: React.FC = () => {
 
     /**
      * Fetch shows from API on component mount.
-     * Initially set filtered shows to all shows.
+     * Initialize filteredShows with the fetched podcasts
      */
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const data = await getShowsFromAPI();
-    //         setShows(data);
-    //         setFilteredShows(data);
-    //     }
-    //     fetchData();
-    // }, []);
     useEffect(() => {
-        setFilteredShows(podcasts); // Initialize filteredShows with the fetched podcasts
+        setFilteredShows(podcasts);
     }, [podcasts]);
 
     /**

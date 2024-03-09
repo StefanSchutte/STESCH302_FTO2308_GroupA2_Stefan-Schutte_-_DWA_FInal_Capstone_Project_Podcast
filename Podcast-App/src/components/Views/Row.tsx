@@ -54,7 +54,7 @@ const Row: React.FC<RowProps> = ({ title, fetchURL, rowId, openOverlay }) => {
     return (
         <div>
             <h2 className="text-white font-bold md:text-xl p-4">{title}</h2>
-            <div className="relative flex items-center group">
+            <div className="relative flex items-center group ">
                 <MdChevronLeft
                     onClick={slideLeft}
                     size={60}

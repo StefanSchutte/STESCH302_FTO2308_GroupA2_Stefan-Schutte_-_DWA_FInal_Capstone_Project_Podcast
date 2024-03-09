@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import playButtonDub from '/play-button.png';
 import saveButton from '/save.png'
 import { useShows } from '../../API/ShowsContext.tsx';
@@ -13,10 +12,8 @@ interface Podcast {
 
 function Hero(): JSX.Element {
     //const apiUrl = 'https://podcast-api.netlify.app/shows';
-
     //const [podcasts, setPodcasts] = useState<Podcast[]>([]);
     const [podcast, setPodcast] = useState<Podcast | undefined>();
-
     const { podcasts } = useShows(); // Use the useShows hook to access the fetched data
 
     // useEffect(() => {
@@ -51,8 +48,8 @@ function Hero(): JSX.Element {
 
         <div className="flex">
             {/*<Menu/> */}
-            <div className="w-full h-[550px] relative">
-                <div className="absolute w-full h-[550px] bg-gradient-to-r from-black"></div>
+            <div className="w-full h-[600px] relative">
+                <div className="absolute w-full h-[600px] bg-gradient-to-r from-black"></div>
                 <img className="w-full h-full object-cover" src={podcast?.image} alt={podcast?.title}/>
 
                 <div className="absolute w-full top-[20%] p-4 md:p-8">
@@ -60,7 +57,7 @@ function Hero(): JSX.Element {
 
                     <div className="my-4">
                         <button className="py-2 px-5"><img src={playButtonDub} alt='Play'/></button>
-                        <button className="py-2 px-5 "><img src={saveButton} alt='Save'/>
+                        <button className="py-2 px-5"><img src={saveButton} alt='Save'/>
                         </button>
                     </div>
 
