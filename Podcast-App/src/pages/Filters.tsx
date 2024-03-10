@@ -143,7 +143,7 @@ const Filters: React.FC = () => {
                         <div>
                             <div className="mr-4 flex items-center mb-4">
                                 <div className='text-purple-500 mr-2 pr-4'>Genre:</div>
-                                <div className='flex flex-wrap text-blue-500'>
+                                <div className='flex flex-wrap text-yellow-400'>
                                     {['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].map(genre => (
                                         <label key={genre} onClick={() => handleGenreClick(genre)} className="cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2">
                                             {genre}
