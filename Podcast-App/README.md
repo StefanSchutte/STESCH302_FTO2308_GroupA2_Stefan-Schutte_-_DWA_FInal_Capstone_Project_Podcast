@@ -177,7 +177,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User sees what genres (as genre titles) a show is associated with when browsing
 
- User sees a preview image of seasons for a specific show
+✅ User sees a preview image of seasons for a specific show
 
 ✅ User sees the amount of episodes in a season as a number
 

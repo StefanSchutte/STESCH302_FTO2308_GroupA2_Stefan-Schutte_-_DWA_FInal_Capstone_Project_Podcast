@@ -108,6 +108,37 @@ const Filters: React.FC = () => {
         }
     };
 
+    const handleSaveEpisode = async (episodeId, seasonId) => {
+        try {
+            //const id = episodeId
+            // Perform an API call or database operation to save the episode data
+            const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any necessary headers, such as authorization token
+                },
+                body: JSON.stringify({
+                    episodeId: episodeId,
+                    seasonId: seasonId,
+                    // Include any other data you want to save
+                }),
+            });
+
+            // Check if the request was successful
+            if (response.ok) {
+                // Handle success
+                console.log('Episode saved successfully!');
+            } else {
+                // Handle errors
+                console.error('Failed to save episode:', response.statusText);
+            }
+        } catch (error) {
+            // Handle network errors or exceptions
+            console.error('Error saving episode:', error.message);
+        }
+    };
+
     return (
         <div className='w-full h-full' >
             <div className='w-full  px-4 py-24 '>
@@ -200,7 +231,7 @@ const Filters: React.FC = () => {
                     </ul>
                 </div>
                 {selectedPodcast && (
-                <Overlay item={selectedPodcast} showOverlay={true} closeOverlay={closeOverlay}/>
+                <Overlay item={selectedPodcast} showOverlay={true} closeOverlay={closeOverlay} onSave={handleSaveEpisode}/>
                 )}
             </div>
         </div>

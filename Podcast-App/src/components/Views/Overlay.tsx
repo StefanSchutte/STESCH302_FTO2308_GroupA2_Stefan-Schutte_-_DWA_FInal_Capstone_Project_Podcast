@@ -17,6 +17,7 @@ interface OverlayProps {
     };
     showOverlay: boolean;
     closeOverlay: () => void;
+    onSave: (episodeId: string, seasonId: string | null) => void;
 }
 
 /**
@@ -25,12 +26,13 @@ interface OverlayProps {
  * @param showOverlay - Boolean to control the visibility of the overlay.
  * @param closeOverlay - Function to close the overlay.
  */
-const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) => {
+const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSave}) => {
 
     const [podcastData, setPodcastData] = useState<any>(null);
     const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
     const [selectedEpisode, setSelectedEpisode] = useState<number | null>(null);
-    const formattedUpdated = new Date(item.updated).toISOString().split('T')[0].replace(/-/g, '/');
+    const formattedUpdated = item && item.updated ? new Date(item.updated).toISOString().split('T')[0].replace(/-/g, '/') : '';
+    //const formattedUpdated = new Date(item.updated).toISOString().split('T')[0].replace(/-/g, '/');
     const [loading, setLoading] = useState(false); // Initialize loading state
 
     const [expanded, setExpanded] = useState(false);
@@ -69,7 +71,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                         const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`);
                         const data = await response.json();
                         setPodcastData(data);
-                        console.log(data)
+                        //console.log(data)
                     } catch (error) {
                         console.error('Error fetching podcast data:', error);
                     } finally {
@@ -186,8 +188,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                                     </select>
                                                     {/* See More button */}
                                                     <button className="ml-3 w-12 h-12" onClick={toggleSeasonExpanded}>
-                                                        {seasonExpanded ? <img src={closeFav}/> :
-                                                            <img src={seeMoreFav}/>}
+                                                        {seasonExpanded ? <img src={closeFav}/> : <img src={seeMoreFav}/>}
                                                     </button>
                                                 </div>
 
@@ -196,14 +197,20 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                                         {Array.from({length: item.seasons}, (_, i) => (
                                                             <li key={i + 1}
                                                                 className="py-2 px-4 border-b border-gray-700 flex justify-between items-center">
-
                                                                 <div className="flex items-center">
-                                                                    {/*<img src={item.seasons.image}*/}
-                                                                    {/*     alt={`SeasonImage`}*/}
-                                                                    {/*     className="w-12 h-12 mr-4"/>*/}
+                                                                    <img
+                                                                        src={podcastData.seasons[i]?.image}
+                                                                        alt={`Season ${i + 1} Image`}
+                                                                        className="w-16 h-16 mr-4"
+                                                                    />
                                                                     <button
-                                                                        onClick={() => handleSeasonSelect(i + 1)}>Season {i + 1}</button>
+                                                                        onClick={() => handleSeasonSelect(i + 1)}>
+                                                                        Season {i + 1}
+                                                                    </button>
                                                                 </div>
+                                                                <button className='w-12 h-12' onClick={() => onSave(episode.id, selectedSeason ? String(selectedSeason) : null)}>
+                                                                <img src={saveBtnFav} alt='Save'/>
+                                                                </button>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -252,7 +259,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                                                             {tooltipText}
                                                                         </div>
                                                                     )}
-                                                                    <button className='w-12 h-12'>
+                                                                    <button className='w-12 h-12' onClick={() => onSave(episode.id, selectedSeason ? String(selectedSeason) : null)}>
                                                                         <img src={saveBtnFav} alt='Save'/>
                                                                     </button>
                                                                 </li>

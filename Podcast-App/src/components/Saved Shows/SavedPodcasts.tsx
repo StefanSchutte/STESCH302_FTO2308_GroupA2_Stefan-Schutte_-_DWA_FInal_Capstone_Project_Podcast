@@ -1,12 +1,13 @@
-import React, {useStae, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {MdChevronLeft, MdChevronRight} from "react-icons/md";
 import {useAuth} from "../../context/AuthContext.tsx";
 import { AiOutlineClose } from 'react-icons/ai'
+import supabase from "../../supabase.ts";
+import Overlay from "../Views/Overlay.tsx";
 
 //import {updateDoc, doc, onSnapshot} from '@supabase/supabase-js'
 function SavedPodcasts() {
-    const [podcasts, setPodcasts] = useState([])
-    const {user} = useAuth()
+     const [podcasts, setPodcasts] = useState([])
 
     const slideLeft = () => {
         let slider = document.getElementById('slider' );
@@ -17,31 +18,61 @@ function SavedPodcasts() {
         let slider = document.getElementById('slider' );
         if (slider) slider.scrollLeft = slider.scrollLeft + 500;
     };
+    const [favorites, setFavorites] = useState([]);
+    const { user } = useAuth();
 
-    //firebase logic
+    useEffect(() => {
+        if (user) {
+            fetchFavorites();
+        }
+    }, [user]);
 
-    // useEffect(() => {
-    //     onSnapshot(doc(db, 'users', `${user?.email}`, (doc)=> {
-    //         setPodcasts(doc.data()?.savedPodcasts)
-    //     } ))
-    // }, [user?.email])
+    const fetchFavorites = async () => {
+        try {
+            const userId = BigInt("0x" + user.id.replace(/-/g, ""));
+            const { data, error } = await supabase
+                .from('favorites')
+                .select('*')
+                .eq('user_id', user.id);
+            if (error) {
+                throw error;
+            }
+            setFavorites(data || []);
+        } catch (error) {
+            console.error('Error fetching favorites:', error.message);
+        }
+    };
 
-    // const podcastRef = doc(db, 'users', `${user?.email}`)
-    // const deleteShow = async (passedID) => {
-    //     try {
-    //         const result = podcast.filter((item) => item.id !== passedID)
-    //         await updateDoc(movieRef, {
-    //             savedPodcasts: result,
-    //         })
-    //     }catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    const deletePodcast = async (id) => {
+        try {
+            const { error } = await supabase
+                .from('favorites')
+                .delete()
+                .eq('id', id);
+            if (error) {
+                throw error;
+            }
+            // Update state or perform any necessary actions after deletion
+            // For example, you can remove the deleted item from the favorites array
+            setFavorites(favorites.filter(favorite => favorite.id !== id));
+        } catch (error) {
+            console.error('Error deleting podcast:', error.message);
+        }
+    };
+
+    const savePodcast = (episodeId: string, seasonId: string | null) => {
+        console.log("Saving Episode:", episodeId);
+        console.log("Saving Season:", seasonId);
+        // Add logic to save the episode or season to favorites
+        // You can make a request to your backend or directly interact with Supabase here
+    };
 
     return (
         <>
             <div>
                 <h2 className="text-white font-bold md:text-xl p-4">Saved for Later</h2>
+
+
                 <div className="relative flex items-center group">
                     <MdChevronLeft
                         onClick={slideLeft}
@@ -77,7 +108,7 @@ function SavedPodcasts() {
                     />
                 </div>
             </div>
-
+            <Overlay item={item} showOverlay={true} closeOverlay={() => {}} onSave={savePodcast} />
         </>
     );
 }
