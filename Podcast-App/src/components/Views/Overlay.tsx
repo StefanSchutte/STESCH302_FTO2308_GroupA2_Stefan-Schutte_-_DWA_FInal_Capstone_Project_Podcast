@@ -104,6 +104,21 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
         setSeasonExpanded(!seasonExpanded);
     };
 
+    /// Define state to hold tooltip text and index
+    const [tooltipText, setTooltipText] = useState('');
+    const [tooltipIndex, setTooltipIndex] = useState(-1);
+
+// Function to handle mouse enter
+    const handleMouseEnter = (index: number, description: string) => {
+        setTooltipIndex(index); // Set index of hovered episode
+        setTooltipText(description); // Set description to display
+    };
+
+// Function to handle mouse leave
+    const handleMouseLeave = () => {
+        setTooltipIndex(-1); // Reset index
+        setTooltipText(''); // Clear description
+    };
     /**
      * Conditional rendering of the overlay based on the visibility flag
      */
@@ -123,12 +138,10 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                             <div className="mr-4">
                                                 <img src={item.image} className='max-w-40 h-40 object-cover '/>
                                             </div>
-
                                             <div className='font-bold text-yellow-400 flex items-center'>
                                                 <h2 className='text-4xl underline'>
                                                     {item.title}
                                                 </h2>
-
                                             </div>
                                         </div>
 
@@ -136,15 +149,12 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                         <div className='flex items-center mb-4 mt-8'>
                                             <Genres genres={item.genres} />
                                         </div>
-
                                         <div className='text-gray-500 flex items-center mb-4'>
                                             {formattedUpdated}
                                         </div>
-
                                         <div className="whitespace-pre-wrap flex items-center mb-4">
                                             {item.description}
                                         </div>
-
                                         <div className='text-yellow-400 flex items-center mb-4'>
                                             <p className='text-amber-50'>
                                                 Seasons:
@@ -156,7 +166,6 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                             <div className="text-blue-500 text-5xl">Loading...</div>
                                         </div>
                                     ) : (
-
                                     podcastData && (
                                         <div >
                                             <div className='grid-cols-2'>
@@ -170,18 +179,16 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                                     >
                                                         <option value="">Choose Season</option>
                                                         {Array.from({length: item.seasons}, (_, i) => (
-                                                            <option key={i + 1} value={i + 1}>Season {i + 1}
-
+                                                            <option key={i + 1} value={i + 1}>
+                                                                Season {i + 1}
                                                             </option>
                                                         ))}
                                                     </select>
                                                     {/* See More button */}
-
                                                     <button className="ml-3 w-12 h-12" onClick={toggleSeasonExpanded}>
                                                         {seasonExpanded ? <img src={closeFav}/> :
                                                             <img src={seeMoreFav}/>}
                                                     </button>
-
                                                 </div>
 
                                                 <div className={`w-full ${seasonExpanded ? 'block' : 'hidden'}`}>
@@ -202,10 +209,11 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                                     </ul>
                                                 </div>
 
-
                                                 <div className=''>
                                                     <div className='flex items-center'>
-                                                        <div className='pr-4 text-purple-500'>Select Episode:</div>
+                                                        <div className='pr-4 text-purple-500'>
+                                                            Select Episode:
+                                                        </div>
                                                         {/* Choose Episode dropdown */}
                                                         <select
                                                             value={selectedEpisode || ''}
@@ -214,8 +222,9 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                                         >
                                                             <option value="">Choose Episode</option>
                                                             {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode: any, index: number) => (
-                                                                <option key={index + 1}
-                                                                        value={index + 1}>{episode.title}</option>
+                                                                <option key={index + 1} value={index + 1}>
+                                                                    {episode.title}
+                                                                </option>
                                                             ))}
                                                         </select>
                                                         {/* See More button */}
@@ -227,39 +236,47 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, }) =
                                                     <div className={`w-full ${expanded ? 'block' : 'hidden'}`}>
                                                         <ul className="p-3 my-2 bg-gray-600 rounded">
                                                             {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode, index) => (
-                                                                <li key={index + 1}
-                                                                    className="py-2 px-4 border-b border-gray-700 flex justify-between items-center">
+                                                                <li
+                                                                    key={index + 1}
+                                                                    className="py-2 px-4 border-b border-gray-700 flex justify-between items-center relative"
+                                                                    onMouseEnter={() => handleMouseEnter(index, episode.description)}
+                                                                    onMouseLeave={() => handleMouseLeave()}
+                                                                >
                                                                     <button
-                                                                        onClick={() => handleEpisodeSelect(index + 1)}>{episode.title}</button>
-                                                                    <button className='w-12 h-12'><img src={saveBtnFav}
-                                                                                                       alt='Save'/>
+                                                                        onClick={() => handleEpisodeSelect(index + 1)}>
+                                                                        {episode.title}
+                                                                    </button>
+                                                                    {tooltipIndex === index && (
+                                                                        <div
+                                                                            className="absolute left-0 mt-8 ml-2 bg-black text-amber-50 p-2 rounded z-20" style={{ top: '50%', left: '0' }}>
+                                                                            {tooltipText}
+                                                                        </div>
+                                                                    )}
+                                                                    <button className='w-12 h-12'>
+                                                                        <img src={saveBtnFav} alt='Save'/>
                                                                     </button>
                                                                 </li>
                                                             ))}
                                                         </ul>
                                                     </div>
                                                 </div>
-
                                             </div>
-                                            <PlayButton
-                                                audioUrl={selectedSeason && selectedEpisode && podcastData && podcastData.seasons[selectedSeason - 1].episodes[selectedEpisode - 1].file}
-                                                showId={item.id}
-                                            />
+                                        <PlayButton
+                                        audioUrl={selectedSeason && selectedEpisode && podcastData && podcastData.seasons[selectedSeason - 1].episodes[selectedEpisode - 1].file}
+                                        showId={item.id}
+                                        />
                                         </div>
                                     )
                                     )}
-                                    <button className="absolute top-4 right-4 " onClick={closeOverlay}>
-                                        <img src={closeFav} alt="close" className='w-15 h-15 ml-2'/>
+                            <button className="absolute top-4 right-4 " onClick={closeOverlay}>
+                                <img src={closeFav} alt="close" className='w-15 h-15 ml-2'/>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </>
     );
 };
 
 export default Overlay;
-
-

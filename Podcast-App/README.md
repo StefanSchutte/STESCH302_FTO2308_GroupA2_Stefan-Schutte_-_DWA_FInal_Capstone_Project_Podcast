@@ -30,11 +30,6 @@ export default {
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
 Capstone Project
-Outline
-
-
-Congratulations! You have reached the final capstone project in the CodeSpace Software Development Program.
-
 
 
 For your final DWA project, your goal is to build a podcast app allowing users to browse various podcast shows, play episodes, and track their favourite episodes.
@@ -168,7 +163,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User can listen to any episode in a season of a show
 
- User can see a view where only episodes for a specifically selected season are shown
+- User can see a view where only episodes for a specifically selected season are shown
 
 ✅ User can toggle between different seasons for the same show
 
@@ -186,7 +181,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User sees the amount of episodes in a season as a number
 
- User can go back to a show view from a season-specific view
+? User can go back to a show view from a season-specific view
 
  User can mark specific episodes as favourites to find them again
 
