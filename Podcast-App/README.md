@@ -242,4 +242,36 @@ Project is deployed to a custom Netlify URL
  User favourites are automatically synced when logged in, ensuring that they share favourites between devices
 
  Users can share their favourites as a publicly accessible URL
+
+-- Users table to store user information
+create table users (
+id uuid primary key default uuid_generate_v4(),
+email text not null unique,
+-- Add other user attributes as needed
+);
+
+-- Episodes table to store episode information
+create table episodes (
+id uuid primary key default uuid_generate_v4(),
+title text not null,
+description text,
+-- Add other episode attributes as needed
+);
+
+-- Seasons table to store season information
+create table seasons (
+id uuid primary key default uuid_generate_v4(),
+number integer not null,
+description text,
+-- Add other season attributes as needed
+);
+
+-- Favorites table to store user's favorite episodes
+create table favorites (
+id uuid primary key default uuid_generate_v4(),
+user_id uuid references users(id) not null,
+episode_id uuid references episodes(id) not null,
+season_id uuid references seasons(id),
+-- Add other attributes as needed
+);
  

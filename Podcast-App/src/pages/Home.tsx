@@ -3,6 +3,7 @@ import Hero from '../components/Hero/Hero';
 import Row from '../components/Views/Row';
 import Overlay from '../components/Views/Overlay.tsx';
 import { useShows } from "../API/ShowsContext.tsx";
+import supabase from "../supabase.ts";
 
 interface Podcast {
     id: number;
@@ -15,32 +16,12 @@ interface Podcast {
 }
 
 function Home(): JSX.Element {
-
+    console.log(supabase)
     const { podcasts } = useShows();
 
     //const [podcasts, setPodcasts] = useState<Podcast[]>([]);
     const [showOverlay, setShowOverlay] = useState(false);
     const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null); // State variable for selected podcast data
-
-
-    // useEffect(() => {
-    //
-    //
-    //     // Fetch data from the API to extract genres
-    //     axios.get<Podcast[]>('https://podcast-api.netlify.app/shows')
-    //         .then(response => {
-    //              //Once data is fetched, extract the genres
-    //             //const podcastsData = response.data;
-    //             //const genresData = podcastsData.flatMap(podcast => podcast.genres);
-    //             //const uniqueGenres = [...new Set(genresData)];
-    //              //Set the genres in the state
-    //             //setGenres(uniqueGenres);
-    //             setPodcasts(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, []);
 
 
 // Function to open the overlay with the selected podcast data
@@ -52,18 +33,11 @@ function Home(): JSX.Element {
         setShowOverlay(false);
     };
 
-    // Genre mapping
-    // const genreMapping: Record<number, string> = {
-    //     1: 'Personal Growth',
-    //     2: 'True Crime and Investigative Journalism',
-    //     3: 'History',
-    //     4: 'Comedy',
-    //     5: 'Entertainment',
-    //     6: 'Business',
-    //     7: 'Fiction',
-    //     8: 'News',
-    //     9: 'Kids and Family'
-    // };
+    // Function to handle saving the podcast
+    const handleSave = (episodeId: string, seasonId: string | null) => {
+        // Add your logic to save the podcast here
+        console.log('Saving podcast:', episodeId, seasonId);
+    }
 
     return (
         <div>
@@ -72,7 +46,7 @@ function Home(): JSX.Element {
             <Row  rowId="all-shows" title="Browse All Shows" podcasts={podcasts} openOverlay={openOverlay} />
 
             {/* Render the Overlay component conditionally */}
-            {showOverlay && selectedPodcast && <Overlay item={selectedPodcast} showOverlay={showOverlay} closeOverlay={closeOverlay} />}
+            {showOverlay && selectedPodcast && <Overlay item={selectedPodcast} showOverlay={showOverlay} closeOverlay={closeOverlay} onSave={handleSave} />}
         </div>
     );
 }

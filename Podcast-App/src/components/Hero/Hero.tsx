@@ -15,6 +15,9 @@ interface Podcast {
 
 /**
  * Functional component representing the hero section of the application.
+ * Sets up state variables using the useState hook:
+ * 'podcast' state to hold the currently displayed podcast.
+ * 'showOverlay' state to manage whether the overlay is visible or not.
  */
 function Hero(): JSX.Element {
 
@@ -22,6 +25,12 @@ function Hero(): JSX.Element {
     const { podcasts } = useShows(); // Use the useShows hook to access the fetched data
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
 
+    /**
+     * Effect runs when the component mounts ([] dependency array), and whenever the podcasts state changes.
+     * Selects a random podcast from the fetched podcasts and updates the podcast state.
+     * Interval is set up to change the displayed podcast.
+     * Cleanup function to clear the interval when the component unmounts or the podcasts change.
+     */
     useEffect(() => {
         const changeHero = () => {
             if (podcasts.length > 0) {
@@ -29,13 +38,9 @@ function Hero(): JSX.Element {
                 setPodcast(randomPodcast);
             }
         }
-        // Call changeHero initially and then every 2 minutes
         changeHero();
         const interval = setInterval(changeHero,60 * 1000);
-
-        // Cleanup function to clear the interval when the component unmounts or the podcasts change
         return () => clearInterval(interval);
-
     }, [podcasts]);
 
     /**
@@ -54,6 +59,7 @@ function Hero(): JSX.Element {
 
     /**
      * Function to handle the click event on the play button.
+     * Sets the showOverlay state to true.
      */
     const handlePlayButtonClick = () => {
         setShowOverlay(true);
@@ -61,10 +67,19 @@ function Hero(): JSX.Element {
 
     /**
      * Function to close the overlay.
+     * Set the showOverlay state to false.
      */
     const closeOverlay = () => {
         setShowOverlay(false);
     };
+
+    /**
+     * A function to handle saving the podcast.
+     */
+    const handleSave = (episodeId: string, seasonId: string | null) => {
+        //logic to save the podcast here
+        console.log('Saving podcast:', episodeId, seasonId);
+    }
 
     return (
 
@@ -86,7 +101,7 @@ function Hero(): JSX.Element {
                     </p>
                 </div>
             </div>
-            {showOverlay && <Overlay item={podcast} showOverlay={showOverlay} closeOverlay={closeOverlay} />}
+            {showOverlay && <Overlay item={podcast} showOverlay={showOverlay} closeOverlay={closeOverlay} onSave={handleSave}/>}
         </div>
     );
 }

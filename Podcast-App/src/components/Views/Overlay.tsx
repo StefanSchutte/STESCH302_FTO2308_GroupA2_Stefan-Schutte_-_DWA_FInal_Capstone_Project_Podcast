@@ -5,12 +5,15 @@ import Genres from "../../helpers/Genres.tsx";
 import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
 
+/**
+ * Props interface for the Overlay component.
+ */
 interface OverlayProps {
     item: {
         id: string,
         image: string;
         title: string;
-        updated: string; // Add other necessary properties
+        updated: string;
         description: string;
         genres: string;
         seasons: number;
@@ -22,24 +25,37 @@ interface OverlayProps {
 
 /**
  * Overlay component to display detailed information about a podcast.
+ * The Overlay component is a functional component that takes OverlayProps as its props.
  * @param item - The podcast item containing details.
  * @param showOverlay - Boolean to control the visibility of the overlay.
  * @param closeOverlay - Function to close the overlay.
+ * @param onSave
  */
 const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSave}) => {
 
+    /**
+     * State Initialization.
+     * Initialized using the useState hook:
+     * podcastData: Holds podcast-related data fetched asynchronously.
+     * selectedSeason: Represents the selected season.
+     * selectedEpisode: Represents the selected episode.
+     * formattedUpdated: Formats the date of the podcast's last update.
+     * loading: Indicates whether podcast data is being loaded.
+     * expanded and seasonExpanded: Control the visibility of additional content sections.
+     */
     const [podcastData, setPodcastData] = useState<any>(null);
     const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
     const [selectedEpisode, setSelectedEpisode] = useState<number | null>(null);
     const formattedUpdated = item && item.updated ? new Date(item.updated).toISOString().split('T')[0].replace(/-/g, '/') : '';
-    //const formattedUpdated = new Date(item.updated).toISOString().split('T')[0].replace(/-/g, '/');
     const [loading, setLoading] = useState(false); // Initialize loading state
-
     const [expanded, setExpanded] = useState(false);
     const [seasonExpanded, setSeasonExpanded] = useState(false);
+    const [tooltipText, setTooltipText] = useState('');
+    const [tooltipIndex, setTooltipIndex] = useState(-1);
 
     /**
      * Fetches podcast data from API and sets it in the state.
+     * Manages the body overflow and fetches podcast data based on changes in item and showOverlay.
      */
     useEffect(() => {
 
@@ -63,6 +79,9 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSa
 
         }, [item, showOverlay]);
 
+    /**
+     * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
+     */
         useEffect(() => {
             if (showOverlay && item) {
                 const fetchPodcastData = async () => {
@@ -106,23 +125,42 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSa
         setSeasonExpanded(!seasonExpanded);
     };
 
-    /// Define state to hold tooltip text and index
-    const [tooltipText, setTooltipText] = useState('');
-    const [tooltipIndex, setTooltipIndex] = useState(-1);
-
-// Function to handle mouse enter
-    const handleMouseEnter = (index: number, description: string) => {
-        setTooltipIndex(index); // Set index of hovered episode
-        setTooltipText(description); // Set description to display
-    };
-
-// Function to handle mouse leave
-    const handleMouseLeave = () => {
-        setTooltipIndex(-1); // Reset index
-        setTooltipText(''); // Clear description
-    };
     /**
-     * Conditional rendering of the overlay based on the visibility flag
+     * Function to handle mouse enter.
+     * Set index of hovered episode.
+     * Set description to display
+     * @param index
+     * @param description
+     */
+    const handleMouseEnter = (index: number, description: string) => {
+        setTooltipIndex(index);
+        setTooltipText(description);
+    };
+
+    /**
+     * Function to handle mouse leave.
+     * Reset index and clear description.
+     *
+     */
+    const handleMouseLeave = () => {
+        setTooltipIndex(-1);
+        setTooltipText('');
+    };
+
+    /**
+     * Handles saving of podcast episodes.
+     */
+    const handleSave = () => {
+        if (selectedSeason !== null) {
+            const episodeId = selectedEpisode ? podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.id : '';
+            const seasonId = selectedSeason ? String(selectedSeason) : null;
+            onSave(episodeId, seasonId);
+        }
+    }
+
+    /**
+     * Conditional rendering of the overlay based on the visibility flag.(showOverlay)
+     * Renders the podcast details, loading indicator, season/episode selectors, and a button to close the overlay.
      */
     if (!showOverlay) return null;
 
@@ -208,9 +246,9 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSa
                                                                         Season {i + 1}
                                                                     </button>
                                                                 </div>
-                                                                <button className='w-12 h-12' onClick={() => onSave(episode.id, selectedSeason ? String(selectedSeason) : null)}>
-                                                                <img src={saveBtnFav} alt='Save'/>
-                                                                </button>
+                                                                {/*<button className='w-12 h-12' onClick={() => onSave(episode.id, selectedSeason ? String(selectedSeason) : null)}>*/}
+                                                                {/*<img src={saveBtnFav} alt='Save'/>*/}
+                                                                {/*</button>*/}
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -255,13 +293,12 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSa
                                                                     </button>
                                                                     {tooltipIndex === index && (
                                                                         <div
-                                                                            className="absolute left-0 mt-8 ml-2 bg-black text-amber-50 p-2 rounded z-20" style={{ top: '50%', left: '0' }}>
+                                                                            className="absolute left-0 mt-8 ml-2 bg-black text-amber-50 p-2 rounded z-20"
+                                                                            style={{top: '50%', left: '0'}}>
                                                                             {tooltipText}
                                                                         </div>
                                                                     )}
-                                                                    <button className='w-12 h-12' onClick={() => onSave(episode.id, selectedSeason ? String(selectedSeason) : null)}>
-                                                                        <img src={saveBtnFav} alt='Save'/>
-                                                                    </button>
+                                                                    <button onClick={handleSave}>Save Podcast</button>
                                                                 </li>
                                                             ))}
                                                         </ul>
