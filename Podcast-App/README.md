@@ -243,6 +243,8 @@ Project is deployed to a custom Netlify URL
 
  Users can share their favourites as a publicly accessible URL
 
+//supabase tables
+
 -- Users table to store user information
 create table users (
 id uuid primary key default uuid_generate_v4(),
