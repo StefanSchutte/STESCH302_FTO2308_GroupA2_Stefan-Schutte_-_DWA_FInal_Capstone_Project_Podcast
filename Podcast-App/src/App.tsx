@@ -40,7 +40,9 @@ function App(): JSX.Element {
 
               <Route path='/overlay' element={<PodcastInfo onSave={onSave} />}/>
 
-              <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>}/>
+              <Route path='/account' element={<Account />}/>
+
+              {/*<Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>}/>*/}
           </Routes>
           </AuthContextProvider>
       </>

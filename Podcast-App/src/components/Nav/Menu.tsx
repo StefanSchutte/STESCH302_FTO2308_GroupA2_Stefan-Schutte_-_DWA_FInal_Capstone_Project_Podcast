@@ -129,8 +129,6 @@ const Menu = ({ closeOverlay }: { closeOverlay: () => void }): JSX.Element => {
 
 export default Menu;
 
-// etValue(newVlasue)
-// setValue((oldValue) => newValue)
 
 // func () {
 //     value === 3

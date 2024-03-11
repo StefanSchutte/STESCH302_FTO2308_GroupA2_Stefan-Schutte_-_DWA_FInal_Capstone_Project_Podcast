@@ -7,7 +7,7 @@ import {Session} from "@supabase/supabase-js";
  */
 interface User {
     id: string;
-    email: string | number;
+    email?: string | undefined;
 }
 
 /**
@@ -42,7 +42,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
      * @param email - User's email address.
      * @param password - User's password.
      */
-    async function signUp(email: string, password: string | number): Promise<void> {
+    async function signUp(email: string | undefined, password: string | number | undefined): Promise<void> {
         const { user: userData, error } = await auth.signUp({ email, password });
         if (error) {
             console.error("Error signing up:", error.message);
@@ -56,7 +56,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
      * @param email - User's email address.
      * @param password - User's password.
      */
-    async function logIn(email: string, password: string | number): Promise<void> {
+    async function logIn(email: string | undefined, password: string | number | undefined): Promise<void> {
         const { user: userData, error } = await auth.signInWithPassword({ email, password });
         if (error) {
             console.error("Error signing in:", error.message);
