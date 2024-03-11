@@ -9,12 +9,22 @@ import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 import Filters from "./pages/Filters.tsx";
 import PodcastInfo from "./pages/PodcastInfo.tsx";
 
-// Define the onSave function to be passed to the PodcastInfo component
+/**
+ * Function to handle saving podcast information.
+ * Define the onSave function to be passed to the PodcastInfo component
+ * @param {string} episodeId - ID of the episode
+ * @param {string | null} seasonId - ID of the season (nullable)
+ * @returns {void}
+ */
 const onSave = (episodeId: string, seasonId: string | null) => {
     // Implement the onSave logic here
     console.log('Save logic executed:', episodeId, seasonId);
 };
 
+/**
+ * Main application component.
+ * @returns {JSX.Element}
+ */
 function App(): JSX.Element {
 
   return (

@@ -147,16 +147,33 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
         setTooltipText('');
     };
 
+    // /**
+    //  * Handles saving of podcast episodes.
+    //  */
+    // const handleSave = () => {
+    //     if (selectedSeason !== null) {
+    //         const episodeId = selectedEpisode ? podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.id : '';
+    //         const seasonId = selectedSeason ? String(selectedSeason) : null;
+    //         onSave(episodeId, seasonId);
+    //     }
+    // }
+
     /**
      * Handles saving of podcast episodes.
      */
     const handleSave = () => {
-        if (selectedSeason !== null) {
-            const episodeId = selectedEpisode ? podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.id : '';
-            const seasonId = selectedSeason ? String(selectedSeason) : null;
-            onSave(episodeId, seasonId);
+        if (selectedSeason !== null && selectedEpisode !== null && podcastData) {
+            const episode = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
+            if (episode) {
+                //onSave(episode.id, String(selectedSeason));
+                onSave(episode)
+            } else {
+                console.error('Selected episode not found.');
+            }
+        } else {
+            console.error('Selected season or episode is null, or podcast data is not available.');
         }
-    }
+    };
 
     /**
      * Conditional rendering of the overlay based on the visibility flag.(showOverlay)

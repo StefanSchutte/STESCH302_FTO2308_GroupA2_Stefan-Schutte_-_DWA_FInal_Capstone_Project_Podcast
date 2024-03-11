@@ -17,7 +17,7 @@ interface Podcast {
  *
  * @returns JSX.Element
  */
-function SavedPodcasts(): JSX.Element {
+function SavedPodcasts({ savedEpisode }: { savedEpisode: Podcast[] }): JSX.Element {
     const [favorites, setFavorites] = useState<Podcast[]>([]);
     const { user } = useAuth();
 
@@ -74,6 +74,8 @@ function SavedPodcasts(): JSX.Element {
 
     /**
      * Saves a podcast episode to the user's favorites.
+     * Save logic here, making an api call or interacting with Supabase.
+     * After successfully saving the podcast, fetch the updated favorites.
      * @param episodeId - The ID of the podcast episode.
      * @param seasonId - The ID of the podcast season.
      * @param podcastData - Data of the podcast episode to be saved.
@@ -90,7 +92,6 @@ function SavedPodcasts(): JSX.Element {
             }
             console.log('Podcast saved successfully:', data);
 
-// After successfully saving the podcast, fetch the updated favorites
             fetchFavorites();
             console.log("Saving Episode:", episodeId);
             console.log("Saving Season:", seasonId);
@@ -107,22 +108,28 @@ function SavedPodcasts(): JSX.Element {
      */
     return (
         <>
-            <div>
+            <div className='flex items-center justify-center'>
                 <h2 className="text-white font-bold md:text-xl p-4">Saved for Later</h2>
+
+
                 {/* Render each saved podcast item */}
                 {favorites.map((podcastItem, index) => (
-                    <div key={index} className='w-[160px] sm:w-[200px] md:w-[240px] lg:w[240px] inline-block cursor-pointer relative p-2'>
+                    <div key={index}
+                         className='w-[160px] sm:w-[200px] md:w-[240px] lg:w[240px] inline-block cursor-pointer relative p-2'>
                         {/* Display podcast item content */}
                         <img className='w-full h-auto block' src={podcastItem?.image} alt={podcastItem?.title}/>
-                        <div className='absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-amber-50'>
+                        <div
+                            className='absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-amber-50'>
                             <p className='whitespace-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center'>{podcastItem?.title}</p>
                             {/* Add a button to delete the podcast item */}
-                            <p onClick={() => deletePodcast(podcastItem.id)} className='absolute text-gray-300 top-4 right-4'><AiOutlineClose/></p>
+                            <p onClick={() => deletePodcast(podcastItem.id)}
+                               className='absolute text-gray-300 top-4 right-4'><AiOutlineClose/></p>
                             {/* Pass onSave function to the PodcastInfo component */}
                             <PodcastInfo
                                 item={podcastItem}
                                 showOverlay={true}
-                                closeOverlay={() => {}}
+                                closeOverlay={() => {
+                                }}
                                 onSave={savePodcast}
                             />
                         </div>
