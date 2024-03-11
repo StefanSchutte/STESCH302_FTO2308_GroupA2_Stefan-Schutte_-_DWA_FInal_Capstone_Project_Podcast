@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import closeFav from "/close.png";
-import PlayButton from '../../helpers/PlayButton.tsx'
-import Genres from "../../helpers/Genres.tsx";
+import PlayButton from '../helpers/PlayButton.tsx'
+import Genres from "../helpers/Genres.tsx";
 import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
 
 /**
- * Props interface for the Overlay component.
+ * Props interface for the PodcastInfo component.
  */
 interface OverlayProps {
     item: {
@@ -24,14 +24,14 @@ interface OverlayProps {
 }
 
 /**
- * Overlay component to display detailed information about a podcast.
- * The Overlay component is a functional component that takes OverlayProps as its props.
+ * PodcastInfo component to display detailed information about a podcast.
+ * The PodcastInfo component is a functional component that takes OverlayProps as its props.
  * @param item - The podcast item containing details.
  * @param showOverlay - Boolean to control the visibility of the overlay.
  * @param closeOverlay - Function to close the overlay.
  * @param onSave
  */
-const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSave}) => {
+const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSave}) => {
 
     /**
      * State Initialization.
@@ -54,7 +54,7 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSa
     const [tooltipIndex, setTooltipIndex] = useState(-1);
 
     /**
-     * Fetches podcast data from API and sets it in the state.
+     * Fetches podcast data from api and sets it in the state.
      * Manages the body overflow and fetches podcast data based on changes in item and showOverlay.
      */
     useEffect(() => {
@@ -323,4 +323,4 @@ const Overlay: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSa
     );
 };
 
-export default Overlay;
+export default PodcastInfo;

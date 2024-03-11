@@ -1,69 +1,47 @@
-// // import { createContext, useContext, useEffect, useState } from "react";
-// // import { auth } from '../supabase.ts'
-// // import {createUserNameWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from 'supabase/auth'
-// //
-// // const AuthContext = createContext()
-// //
-// // export function AuthContextProvider({children}){
-// //
-// //     const [user, setUser] = useState({})
-// //
-// //     function signUp(email, password){
-// //         return createUserNameWithEmailAndPassword(auth, email, password)
-// //     }
-// //
-// //     function logIn (email, password){
-// //         return signInWithEmailAndPassword(auth, email, password)
-// //     }
-// //
-// //     function logOut() {
-// //         return signOut(auth)
-// //     }
-// //
-// //     useEffect(()=> {
-// //         const unsubscribe = onAuthStateChanged(auth, (currentUser)=> {
-// //             setUser(currentUser)
-// //         })
-// //         return () => {
-// //             unsubscribe()
-// //         }
-// //     })
-// //
-// //     return (
-// //         <AuthContext.Provider value={signUp, user}>
-// //             {children}
-// //             </AuthContext.Provider>
-// //     )
-// // }
-// //
-// // export function UserAuth() {
-// //     return useContext(AuthContext)
-// // }
-
-
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from '../supabase.ts';
 import {Session} from "@supabase/supabase-js";
 
+/**
+ * Interface representing the user object.
+ */
 interface User {
     id: string;
     email: string | number;
-    // Add any other user properties here
 }
 
+/**
+ * Interface representing the authentication auth.
+ */
 interface AuthContextType {
-    signUp: (email: string, password: string| number) => Promise<void>;
+    signUp: (email: string, password: string | number) => Promise<void>;
     logIn: (email: string, password: string | number) => Promise<void>;
     logOut: () => Promise<void>;
     user: User | null;
 }
 
-
+/**
+ * Authentication auth for managing user authentication state.
+ * Creates a auth for managing authentication-related data and functions. It's initialized with a type of AuthContextType.
+ */
 const AuthContext = createContext<AuthContextType | null>(null);
 
+/**
+ * Authentication auth provider component.
+ * This component wraps its children with the authentication auth provider.
+ * It maintains the current user state (user) using the useState hook.
+ * Defines functions (signUp, logIn, logOut) to handle user authentication using Supabase methods.
+ * Sets up an effect using useEffect to listen for changes in authentication state (onAuthStateChange) and update the user state accordingly.
+ * @param children - Child components to be wrapped by the provider.
+ */
 export function AuthContextProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
 
+    /**
+     * Signs up a new user.
+     * @param email - User's email address.
+     * @param password - User's password.
+     */
     async function signUp(email: string, password: string | number): Promise<void> {
         const { user: userData, error } = await auth.signUp({ email, password });
         if (error) {
@@ -73,6 +51,11 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
         setUser(userData);
     }
 
+    /**
+     * Logs in an existing user.
+     * @param email - User's email address.
+     * @param password - User's password.
+     */
     async function logIn(email: string, password: string | number): Promise<void> {
         const { user: userData, error } = await auth.signInWithPassword({ email, password });
         if (error) {
@@ -82,6 +65,9 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
         setUser(userData);
     }
 
+    /**
+     * Logs out the current user.
+     */
     async function logOut(): Promise<void> {
         const { error } = await auth.signOut();
         if (error) {
@@ -109,6 +95,10 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     );
 }
 
+/**
+ * Custom hook for accessing the authentication auth.
+ * @returns The authentication auth, using the useContext hook.
+ */
 export function useAuth(): AuthContextType {
     const context = useContext(AuthContext);
     if (!context) {

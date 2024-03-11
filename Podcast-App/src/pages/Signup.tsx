@@ -1,10 +1,11 @@
 import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.tsx';
+import { useAuth } from '../auth/AuthContext.tsx';
 import signupFav from '/add-user.png';
 
 /**
 * Functional component representing the signup form.
+ * Defies local state variables using the useState hook, including email and password to manage form input.
 * @returns JSX.Element
 */
 function Signup(): JSX.Element {
@@ -12,11 +13,21 @@ function Signup(): JSX.Element {
     const signUpLogo = 'https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    /**
+     * Used to access authentication-related functionality, specifically the signUp function.
+     */
     const { signUp } = useAuth();
+    /**
+     * Used to navigate to different routes within the application.
+     */
     const navigate = useNavigate();
 
     /**
      * Handles form submission.
+     * prevents the default form submission behavior.
+     * Attempts to sign up the user using the signUp function from the useAuth hook.
+     * Redirects the user to the home page ('/') upon successful signup.
+     * If an error occurs during the signup process, it logs the error to the console.
      * @param {FormEvent<HTMLFormElement>} e - Form event
      * @returns {Promise<void>}
      */
@@ -31,6 +42,12 @@ function Signup(): JSX.Element {
         }
     };
 
+    /**
+     * Signup form UI.
+     * It includes input fields for email and password, a submit button, a link to the login page (/login), and a background image.
+     * Input field changes (onChange event) are handled by updating the email and password states.
+     * Form submission (onSubmit event) is handled by the handleSubmit function.
+     */
     return (
         <div className='w-full h-screen'>
             <img className='hidden sm:block absolute w-full h-full object-cover ' src={signUpLogo} alt='signuplogo' />

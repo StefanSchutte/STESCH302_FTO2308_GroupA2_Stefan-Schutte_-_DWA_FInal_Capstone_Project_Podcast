@@ -12,7 +12,7 @@ interface Podcast {
 }
 
 /**
- * Interface representing the context value for the ShowsContext.
+ * Interface representing the auth value for the ShowsContext.
  */
 interface ShowsContextType {
     podcasts: Podcast[];
@@ -23,8 +23,8 @@ interface ShowsContextType {
 
 /**
  * Context for managing podcasts data.
- * creates a context named ShowsContext using createContext.
- * The initial context value includes an empty array for podcasts, loading set to true, selectedSeason set to null, and a dummy selectSeason function.
+ * creates a auth named ShowsContext using createContext.
+ * The initial auth value includes an empty array for podcasts, loading set to true, selectedSeason set to null, and a dummy selectSeason function.
  */
 const ShowsContext = createContext<ShowsContextType>({ podcasts: [], loading: true, selectedSeason: null,
     selectSeason: () => {}, });
@@ -48,8 +48,8 @@ export const ShowsProvider: React.FC = ({ children }) => {
     const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
 
     /**
-     * Fetching data from the API when the component mounts (empty dependency array [] ensures it runs only once).
-     * FetchData is defined, fetches data from the API using getShowsFromAPI function.
+     * Fetching data from the api when the component mounts (empty dependency array [] ensures it runs only once).
+     * FetchData is defined, fetches data from the api using getShowsFromAPI function.
      */
     useEffect(() => {
         const fetchData = async () => {

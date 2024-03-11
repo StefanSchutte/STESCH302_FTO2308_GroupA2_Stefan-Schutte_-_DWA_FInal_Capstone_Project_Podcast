@@ -1,10 +1,11 @@
 import {useState, FormEvent, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.tsx'
+import { useAuth } from '../auth/AuthContext.tsx'
 import loginFav from "/log-in.png";
 
 /**
  * Functional component representing the login form.
+ * Defies local state variables using the useState hook, including email, password, and error to manage form input and error messages.
  * @returns JSX.Element
  */
 function Login(): JSX.Element {
@@ -13,9 +14,18 @@ function Login(): JSX.Element {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    /**
+     * Access authentication-related functionality, such as logging in (logIn) and accessing the current user (user).
+     */
     const { user, logIn } = useAuth();
+    /**
+     * Navigate to different routes within the application.
+     */
     const navigate = useNavigate();
 
+    /**
+     * Redirect the user to the account page if they are already logged in (user is not null).
+     */
     useEffect(() => {
         if (user) {
             navigate('/account');
@@ -24,6 +34,11 @@ function Login(): JSX.Element {
 
     /**
      * Handles form submission.
+     * Prevents the default form submission behavior.
+     * Clears any existing error messages.
+     * Attempts to log in the user using the logIn function from the useAuth hook.
+     * Redirects the user to the home page ('/') upon successful login.
+     * If an error occurs during the login process, it sets the error state with the error message.
      * @param {FormEvent<HTMLFormElement>} e - Form event
      * @returns {Promise<void>}
      */
@@ -40,6 +55,14 @@ function Login(): JSX.Element {
         }
     };
 
+    /**
+     * Login form UI.
+     * Includes input fields for email and password, a submit button, a link to the signup page (/signup), and a background image.
+     * The component conditionally renders an error message if error state is not empty.
+     * It also conditionally renders a background image using an img element.
+     * Input field changes (onChange event) are handled by updating the email and password states.
+     * Form submission (onSubmit event) is handled by the handleSubmit function.
+     */
     return (
         <div className='w-full h-screen'>
             <img className='hidden sm:block absolute w-full h-full object-cover ' src={signUpLogo} alt='signuplogo' />
@@ -85,8 +108,3 @@ function Login(): JSX.Element {
 }
 
 export default Login;
-
-
-
-
-

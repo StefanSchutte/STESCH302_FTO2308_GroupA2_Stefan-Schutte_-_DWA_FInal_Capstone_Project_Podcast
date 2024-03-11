@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
-import Overlay from '../components/Views/Overlay.tsx'
-import { useShows } from "../API/ShowsContext.tsx";
+import PodcastInfo from './PodcastInfo.tsx'
+import { useShows } from "../api/ShowsContext.tsx";
 import Genres from "../helpers/Genres.tsx";
 
 interface Podcast {
@@ -18,7 +18,8 @@ interface Podcast {
  * @returns JSX.Element
  */
 const Filters: React.FC = () => {
-    const { podcasts } = useShows(); // Use the useShows hook to access pod
+    /** Use the useShows hook to access podcasts. */
+    const { podcasts } = useShows();
     /** State variable to store filtered shows */
     const [filteredShows, setFilteredShows] = useState<Podcast[]>([]);
     /** State variable to store search term */
@@ -28,7 +29,7 @@ const Filters: React.FC = () => {
 
 
     /**
-     * Fetch shows from API on component mount.
+     * Fetch shows from api on component mount.
      * Initialize filteredShows with the fetched podcasts
      */
     useEffect(() => {
@@ -36,7 +37,8 @@ const Filters: React.FC = () => {
     }, [podcasts]);
 
     /**
-     * Function to handle search input change
+     * Function to handle search input change.
+     * @param {React.ChangeEvent<HTMLInputElement>} e - Change event
      */
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setSearchTerm(e.target.value);
@@ -45,24 +47,25 @@ const Filters: React.FC = () => {
 
     /**
      * Function to filter shows based on search term.
-     * If search term is empty, show all shows
+     * If search term is empty, show all shows.
+     * @param {string} term - Search term
      */
     const filterShows = (term: string): void => {
         if (term === '') {
-            setFilteredShows(/*shows*/ podcasts);
+            setFilteredShows(podcasts);
         } else {
-            const fuse = new Fuse(/*shows*/podcasts, { keys: ['title'] });
+            const fuse = new Fuse(podcasts, { keys: ['title'] });
             const result = fuse.search(term);
             setFilteredShows(result.map((item: Fuse.FuseResult<Podcast>) => item.item));
         }
     };
 
     /**
-     * Function to handle podcast item click
+     * Function to handle podcast item click.
+     * @param {Podcast} podcast - Selected podcast
      */
     const handlePodcastClick = (podcast: Podcast): void => {
         setSelectedPodcast(podcast);
-
     };
 
     /**
@@ -74,6 +77,7 @@ const Filters: React.FC = () => {
 
     /**
      * Function to handle sorting.
+     * @param {React.ChangeEvent<HTMLSelectElement>} e - Change event
      */
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         const value = e.target.value;
@@ -88,8 +92,12 @@ const Filters: React.FC = () => {
             sortedShows.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
         }
         setFilteredShows(sortedShows);
-
     }
+
+    /**
+     * Function to handle genre click.
+     * @param {string} genre - Selected genre
+     */
     const handleGenreClick = (genre: string): void => {
         const genreIndex = ['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].indexOf(genre);
         if (genreIndex !== -1) { // Check if the genre is valid
@@ -107,12 +115,22 @@ const Filters: React.FC = () => {
         }
     };
 
-    // Function to handle saving the podcast
+    /**
+     * Function to handle saving the podcast
+     * @param episodeId
+     * @param seasonId
+     */
     const handleSave = (episodeId: string, seasonId: string | null) => {
         // Add your logic to save the podcast here
         console.log('Saving podcast:', episodeId, seasonId);
     };
 
+    /**
+     * Renders the search input field, sorting options, genre labels, and the list of filtered shows.
+     * Each podcast item in the list displays its title, image, number of seasons, last updated date, and genres.
+     * Clicking on a podcast item opens an overlay with additional details and options to save the podcast.
+     * Renders an overlay when a podcast is selected, providing more details and options to save the podcast.
+     */
     return (
         <div className='w-full h-full' >
             <div className='w-full  px-4 py-24 '>
@@ -205,7 +223,7 @@ const Filters: React.FC = () => {
                     </ul>
                 </div>
                 {selectedPodcast && (
-                <Overlay item={selectedPodcast} showOverlay={true} closeOverlay={closeOverlay} onSave={handleSave} />
+                <PodcastInfo item={selectedPodcast} showOverlay={true} closeOverlay={closeOverlay} onSave={handleSave} />
                 )}
             </div>
         </div>

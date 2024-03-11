@@ -8,7 +8,7 @@ import closeFav from '/close.png'
 import menuFav from "/menu.png";
 import accountFav from "/account.png";
 import logoutFav from '/logout.png'
-import {useAuth} from "../../context/AuthContext.tsx";
+import {useAuth} from "../../auth/AuthContext.tsx";
 
 /**
  * Functional component representing the menu overlay.

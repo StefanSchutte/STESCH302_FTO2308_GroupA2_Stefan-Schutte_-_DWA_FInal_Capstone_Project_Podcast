@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
+import React from 'react';
 import Podcast from './Podcast';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import {useShows} from "../../API/ShowsContext.tsx";
+import {useShows} from "../../api/ShowsContext.tsx";
 
 interface RowProps {
     /** The title of the row. */
@@ -17,23 +16,13 @@ interface RowProps {
 
 /**
  * Row component to display a horizontal row of podcasts.
+ * useShows hook is used to access the podcasts data.
  * @param {RowProps} props - Props for the Row component.
  * @returns {JSX.Element} Row component.
  */
 const Row: React.FC<RowProps> = ({ title, fetchURL, rowId, openOverlay }) => {
 
-    //const [podcasts, setPodcasts] = useState<any[]>([]);
     const { podcasts } = useShows();
-
-    // useEffect(() => {
-    //     axios.get(fetchURL)
-    //         .then((response) => {
-    //             setPodcasts(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, [fetchURL]);
 
     /**
      * Handles sliding the row to the left.
@@ -51,6 +40,12 @@ const Row: React.FC<RowProps> = ({ title, fetchURL, rowId, openOverlay }) => {
         if (slider) slider.scrollLeft = slider.scrollLeft + 500;
     };
 
+    /**
+     * Returned to render the row:
+     * It includes the row title and a container to display podcasts horizontally.
+     * Podcasts are mapped over and rendered using the Podcast component.
+     * Chevron icons are provided to slide the row left and right, and their onClick handlers are set to call the corresponding functions.
+     */
     return (
         <div>
             <h2 className="text-white font-bold md:text-xl p-4">{title}</h2>

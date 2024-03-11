@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from "../../context/AuthContext.tsx";
+import { useAuth } from "../../auth/AuthContext.tsx";
 
 /**
  * Functional component representing a protected route that redirects to the home page if the user is not authenticated.

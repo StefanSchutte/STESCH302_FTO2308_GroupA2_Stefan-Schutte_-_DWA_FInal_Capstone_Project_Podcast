@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from "../../context/AuthContext.tsx";
+import { useAuth } from "../../auth/AuthContext.tsx";
 import { AiOutlineClose } from 'react-icons/ai';
 import supabase from "../../supabase.ts";
-import Overlay from "../Views/Overlay.tsx";
+import PodcastInfo from "../../pages/PodcastInfo.tsx";
 
 interface Podcast {
     id: string;
@@ -80,7 +80,7 @@ function SavedPodcasts(): JSX.Element {
      */
     const savePodcast = async (episodeId: string, seasonId: string | null, podcastData: any) => {
         try {
-            // save logic here, such as making an API call or interacting with Supabase
+            // save logic here, such as making an api call or interacting with Supabase
 
             const { data, error } = await supabase
                 .from('podcasts')
@@ -103,7 +103,7 @@ function SavedPodcasts(): JSX.Element {
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.
      * Each podcast item is displayed with its image and title.
      * It provides a delete button for each podcast item, allowing users to remove it from their favorites.
-     * The Overlay component is used to provide additional functionality for each podcast item, such as saving the episode.
+     * The PodcastInfo component is used to provide additional functionality for each podcast item, such as saving the episode.
      */
     return (
         <>
@@ -118,8 +118,8 @@ function SavedPodcasts(): JSX.Element {
                             <p className='whitespace-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center'>{podcastItem?.title}</p>
                             {/* Add a button to delete the podcast item */}
                             <p onClick={() => deletePodcast(podcastItem.id)} className='absolute text-gray-300 top-4 right-4'><AiOutlineClose/></p>
-                            {/* Pass onSave function to the Overlay component */}
-                            <Overlay
+                            {/* Pass onSave function to the PodcastInfo component */}
+                            <PodcastInfo
                                 item={podcastItem}
                                 showOverlay={true}
                                 closeOverlay={() => {}}

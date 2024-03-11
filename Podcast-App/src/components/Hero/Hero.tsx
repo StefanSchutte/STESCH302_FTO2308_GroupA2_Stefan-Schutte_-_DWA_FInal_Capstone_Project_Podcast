@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import playButtonDub from '/play-button.png';
-import { useShows } from '../../API/ShowsContext.tsx';
-import Overlay from "../Views/Overlay.tsx";
+import { useShows } from '../../api/ShowsContext.tsx';
+import PodcastInfo from "../../pages/PodcastInfo.tsx";
 import Genres from "../../helpers/Genres.tsx";
 
 interface Podcast {
@@ -101,7 +101,7 @@ function Hero(): JSX.Element {
                     </p>
                 </div>
             </div>
-            {showOverlay && <Overlay item={podcast} showOverlay={showOverlay} closeOverlay={closeOverlay} onSave={handleSave}/>}
+            {showOverlay && <PodcastInfo item={podcast} showOverlay={showOverlay} closeOverlay={closeOverlay} onSave={handleSave}/>}
         </div>
     );
 }

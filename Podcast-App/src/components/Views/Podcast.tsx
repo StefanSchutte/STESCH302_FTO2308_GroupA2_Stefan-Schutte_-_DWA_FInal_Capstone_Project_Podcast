@@ -1,66 +1,40 @@
-import React, {useState} from 'react';
-import {useAuth} from "../../context/AuthContext.tsx";
+import React from 'react';
 import playButtonDub from "/play-button.png";
 
+/**
+ * Props for the Podcast component.
+ */
 interface PodcastProps {
     item: {
         image: string;
         title: string;
-        // Add any other properties of the item object here
     };
     openOverlay: (podcast: any) => void;
 }
 
+/**
+ * Functional component representing a podcast card.
+ * Invokes the openOverlay function with the item prop as its argument when the card is clicked.
+ * @param {PodcastProps} item - The podcast item containing image and title.
+ * @param {Function} openOverlay - Function to open the overlay with podcast data.
+ * @returns {JSX.Element} The rendered podcast card.
+ */
 const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
 
-    // const [like, setLike] = useState(false)
-    // const [showOverlay, setShowOverlay] = useState(false);
-    //  const [saved, setSaved] = useState(false)
-    //  const { user } = useAuth();
-
-    // const savePodcast = async () => {
-    //     if (user?.email) {
-    //         setLike(!like);
-    //         setSaved(true);
-    //
-    //         const updatedPodcasts = [...(user.savedPodcasts || []), item];
-    //
-    //         const { data, error } = await supabase
-    //             .from('users')
-    //             .update({ savedPodcasts: updatedPodcasts })
-    //             .match({ email: user.email });
-    //         if (error) {
-    //             console.error('Error saving podcast:', error.message);
-    //         } else {
-    //             console.log('Podcast saved successfully:', data);
-    //         }
-    //     } else {
-    //         alert('Log In to save a podcast');
-    //     }
-    // };
-
+    /**
+     * Handles the click event on the podcast card.
+     * When the podcast is clicked, call the openOverlay function with the podcast data.
+     */
     const handleClick = () => {
-        // When the podcast is clicked, call the openOverlay function with the podcast data
         openOverlay(item);
     };
-    // const podcastID = doc(db, 'users', `${user?.email}`)
-    //
-    // const savePodcast = async() => {
-    //     if(user?.email) {
-    //         setLike(!like)
-    //         setSaved(true)
-    //         await updateDoc(podcastID, {
-    //             savedPodcasts: arrayUnion({
-    //                 id: item.id,
-    //                 title: item.title,
-    //                 image: item.image,
-    //             })
-    //         })
-    //     } else {
-    //         alert('Log In to save a podcast')
-    //     }
-    // }
 
+    /**
+     * Returns JSX representing a podcast card:
+     * It displays the podcast image and title.
+     * The image and title are conditionally rendered using optional chaining (?.) to avoid errors if the item prop is null or undefined.
+     * A button is provided to play the podcast, and the handleClick function is attached to its onClick event handler.
+     */
     return (
         <div className='w-[160px] sm:w-[200px] md:w-[240px] lg:w[240px] inline-block cursor-pointer relative p-2'>
             <img className='w-full h-auto block' src={item?.image} alt={item?.title}/>
