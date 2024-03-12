@@ -148,7 +148,7 @@ const Filters: React.FC = () => {
         if (error) {
             throw error;
         }
-
+//save id of episode.//item.id so that i dont have to rename id in rendering of favorites
         // LEES VAN TABLES
         const dataAll = supabase.from("favorites").select()
 

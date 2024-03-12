@@ -20,7 +20,6 @@ interface Podcast {
  * @returns {JSX.Element} JSX representation of the Home component.
  */
 function Home(): JSX.Element {
-    console.log(supabase)
     const { podcasts } = useShows();
     /**
      * Manage the state of whether the overlay is shown or not.

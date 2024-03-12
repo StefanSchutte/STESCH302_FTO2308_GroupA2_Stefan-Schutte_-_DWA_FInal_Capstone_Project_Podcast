@@ -15,7 +15,7 @@ function Account() {
                 </div>
 
             </div>
-            <SavedPodcasts></SavedPodcasts>
+            <SavedPodcasts/>
         </>
     );
 }
