@@ -3,6 +3,9 @@ import Fuse from 'fuse.js';
 import PodcastInfo from './PodcastInfo.tsx'
 import { useShows } from "../api/ShowsContext.tsx";
 import Genres from "../helpers/Genres.tsx";
+import supabase, {auth} from "../supabase.ts";
+import {useAuth} from "../auth/AuthContext.tsx";
+//import {savePodcast} from '../components/Saved Shows/SavedPodcasts.tsx'
 
 interface Podcast {
     id: string;
@@ -28,12 +31,16 @@ const Filters: React.FC = () => {
     const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null);
 
 
+
     /**
      * Fetch shows from api on component mount.
      * Initialize filteredShows with the fetched podcasts
      */
     useEffect(() => {
         setFilteredShows(podcasts);
+
+
+
     }, [podcasts]);
 
     /**
@@ -116,13 +123,37 @@ const Filters: React.FC = () => {
     };
 
     /**
-     * Function to handle saving the podcast
+     * Function to handle saving the podcast--------------------------
      * @param episodeId
      * @param seasonId
      */
-    const handleSave = (episodeId: string, seasonId: string | null) => {
+
+    const { user } = useAuth();
+
+    const handleSave = async (episode: string, seasonId: string | null) => {
         // Add your logic to save the podcast here
-        console.log('Saving podcast:', episodeId, seasonId);
+        console.log('Filters =  Saving podcast:', episode, seasonId);
+
+        console.log("data", [user, episode])
+
+        if (!user) {
+            console.error('User is not authenticated');
+            return;
+        }
+
+        // INSERT IN N TABLE
+        const { data, error } = await supabase
+            .from('favorites')
+            .insert([{  user_id: user.id, episode_id: episode['episode'], season_id: seasonId,}]);
+        if (error) {
+            throw error;
+        }
+
+        // LEES VAN TABLES
+        const dataAll = supabase.from("favorites").select()
+
+        console.log("data", [data,dataAll])
+
     };
 
     /**

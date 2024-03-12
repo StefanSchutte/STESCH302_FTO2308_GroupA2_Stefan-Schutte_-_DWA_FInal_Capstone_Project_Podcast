@@ -189,7 +189,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
 
                             <div className="w-full h-full bg-cover bg-center rounded-t-lg " style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${item.image})`}}>
 
-                                <div className="p-4 m-4 rounded-lg max-w-screen h-screen  overflow-auto">
+                                <div className="p-4 m-4 rounded-lg max-w-screen h-screen  overflow-auto scrollbar-hide">
 
                                         <div className="flex items-center mb-4">
                                             <div className="mr-4">
@@ -315,7 +315,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                                                                             {tooltipText}
                                                                         </div>
                                                                     )}
-                                                                    <button onClick={handleSave}>Save Podcast</button>
+                                                                    <button onClick={handleSave} className='w-12 h-12'><img src={saveBtnFav} alt='Save'/></button>
                                                                 </li>
                                                             ))}
                                                         </ul>

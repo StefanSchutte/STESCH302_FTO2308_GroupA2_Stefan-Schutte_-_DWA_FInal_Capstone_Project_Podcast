@@ -80,13 +80,14 @@ function SavedPodcasts({ savedEpisode }: { savedEpisode: Podcast[] }): JSX.Eleme
      * @param seasonId - The ID of the podcast season.
      * @param podcastData - Data of the podcast episode to be saved.
      */
-    const savePodcast = async (episodeId: string, seasonId: string | null, podcastData: any) => {
+    const savePodcast = async (episodeId: string, seasonId: string | null, podcastData: Podcast) => {
         try {
             // save logic here, such as making an api call or interacting with Supabase
 
             const { data, error } = await supabase
-                .from('podcasts')
-                .insert(podcastData);
+                .from('favorites')
+                //.insert(podcastData);
+                .insert([{ user_id: user.id, episode_id: episodeId, season_id: seasonId, ...podcastData }]);
             if (error) {
                 throw error;
             }
@@ -99,6 +100,8 @@ function SavedPodcasts({ savedEpisode }: { savedEpisode: Podcast[] }): JSX.Eleme
             console.error('Error saving episode:', error.message);
         }
     };
+
+
 
     /**
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.

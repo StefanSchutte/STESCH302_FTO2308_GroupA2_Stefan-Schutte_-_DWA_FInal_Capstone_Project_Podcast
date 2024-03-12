@@ -16,6 +16,10 @@ interface GenresProps {
  */
 const Genres: React.FC<GenresProps> = ({ genres }) => {
 
+    if (!genres) {
+        return null; // or any fallback UI you prefer
+    }
+
     const genreMapping: Record<string, string> = {
         '1': 'Personal Growth',
         '2': 'True Crime and Investigative Journalism',

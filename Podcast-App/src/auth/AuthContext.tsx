@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from '../supabase.ts';
+import supabase, { auth } from '../supabase.ts';
 import {Session} from "@supabase/supabase-js";
 
 /**
@@ -26,6 +26,7 @@ interface AuthContextType {
  */
 const AuthContext = createContext<AuthContextType | null>(null);
 
+
 /**
  * Authentication auth provider component.
  * This component wraps its children with the authentication auth provider.
@@ -35,21 +36,36 @@ const AuthContext = createContext<AuthContextType | null>(null);
  * @param children - Child components to be wrapped by the provider.
  */
 export function AuthContextProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
-
+     const [user, setUser] = useState<User | null>(null);
+    // useEffect(() => {
+    //     const currentUser = supabase.auth.user();
+    //     setUser(currentUser)
+    //     const authListener = supabase.auth.onAuthStateChange((event, session) => {
+    //         setUser(session?.user ?? null)
+    //     })
+    //     return () => {
+    //         authListener.unsubscribe();
+    //     }
+    //     },[])
     /**
      * Signs up a new user.
      * @param email - User's email address.
      * @param password - User's password.
      */
     async function signUp(email: string | undefined, password: string | number | undefined): Promise<void> {
-        const { user: userData, error } = await auth.signUp({ email, password });
+        const { data: userData, error } = await supabase.auth.signUp({ email, password });
         if (error) {
             console.error("Error signing up:", error.message);
             return;
         }
         setUser(userData);
     }
+// i changed user to data
+    // USER SIGNUP
+    // let { data, error } = await supabase.auth.signUp({
+    //     email: 'someone@email.com',
+    //     password: 'HOOxpIoRNBAGtFiIoCYW'
+    // })
 
     /**
      * Logs in an existing user.
@@ -57,13 +73,19 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
      * @param password - User's password.
      */
     async function logIn(email: string | undefined, password: string | number | undefined): Promise<void> {
-        const { user: userData, error } = await auth.signInWithPassword({ email, password });
+        const { data: userData, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
             console.error("Error signing in:", error.message);
             return;
         }
         setUser(userData);
     }
+
+    // USER LOGIN
+     //let { data, error } = await supabase.auth.signInWithPassword({
+    //     email: 'someone@email.com',
+    //     password: 'HOOxpIoRNBAGtFiIoCYW'
+     //})
 
     /**
      * Logs out the current user.
