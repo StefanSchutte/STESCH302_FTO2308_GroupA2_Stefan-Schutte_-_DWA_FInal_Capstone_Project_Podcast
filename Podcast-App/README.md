@@ -221,7 +221,7 @@ Project is deployed to a custom Netlify URL
 
  Audio player is always visible, so the user can listen to episodes while they browse
 
- User is prompted to confirm they want to close the page when audio is playing
+ +User is prompted to confirm they want to close the page when audio is playing
 
  App remembers which show and episode the user listened to last when returning to the platform
 
@@ -235,7 +235,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User is presented with a sliding carousel of possible shows they might be interested in on the landing page
 
-- User can log in via https://app.supabase.com authentication
+✅  User can log in via https://app.supabase.com authentication
 
 ✅ User favourites are stored in the https://app.supabase.com database
 

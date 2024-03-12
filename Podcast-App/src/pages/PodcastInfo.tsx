@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import closeFav from "/close.png";
-import PlayButton from '../helpers/PlayButton.tsx'
+import PlayButton from '../components/audio/PlayButton.tsx'
 import Genres from "../helpers/Genres.tsx";
 import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";

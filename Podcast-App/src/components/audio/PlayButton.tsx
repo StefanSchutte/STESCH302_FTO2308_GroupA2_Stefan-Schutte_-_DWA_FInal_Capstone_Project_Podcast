@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AudioPlayer from "../components/Views/AudioPlayer.tsx";
+import AudioPlayer from "./AudioPlayer.tsx";
 import playFav from '/play-button.png'
 
 interface PlayButtonProps {
