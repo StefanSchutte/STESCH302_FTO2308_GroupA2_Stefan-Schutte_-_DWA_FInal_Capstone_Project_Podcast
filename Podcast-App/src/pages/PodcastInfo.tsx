@@ -191,12 +191,12 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
 
                                 <div className="p-4 m-4 rounded-lg max-w-screen h-screen  overflow-auto scrollbar-hide">
 
-                                        <div className="flex items-center mb-4">
+                                        <div className="flex items-center flex-col mb-4 sm:flex-row sm:items-center sm:justify-start">
                                             <div className="mr-4">
                                                 <img src={item.image} className='max-w-40 h-40 object-cover '/>
                                             </div>
                                             <div className='font-bold text-yellow-400 flex items-center'>
-                                                <h2 className='text-4xl underline'>
+                                                <h2 className='text-4xl underline mt-3'>
                                                     {item.title}
                                                 </h2>
                                             </div>

@@ -30,7 +30,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose }) => {
      * Invokes the onClose callback provided as a prop whenever the close button is clicked.
      */
     const handleClose = () => {
-        onClose();
+        const confirmPrompt = window.confirm('Are you sure you want to close the Audio Player?');
+
+        if (confirmPrompt) {
+            onClose();
+        }
     };
 
     /**
