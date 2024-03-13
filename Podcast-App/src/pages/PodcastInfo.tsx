@@ -87,6 +87,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
             if (showOverlay && item) {
                 const fetchPodcastData = async () => {
                     setLoading(true);
+                    console.log('item:', item)
                     try {
                         const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`);
                         const data = await response.json();

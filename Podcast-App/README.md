@@ -29,119 +29,128 @@ export default {
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
-Capstone Project
+# Podcast-App
+### ( PODCASTED )
+
+#### developed by Stefan Schutte.
+STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_18_Final_Capstone
+
+## Intro
+
+A podcast app that allows users to browse various podcasts shows, play episodes and track their favorite episodes.
+
+## How to use PODCASTED App:
+On loading into the deployed site you will arrive at the Home page, which has a 'Hero' section and a 
+
+## Deployment:
+The app is deployed to a custom Netlify URL, ensuring accessibility to users across various devices and platforms.
+LINKHERE
+
+## Technologies used:
+- React
+- React Router Dom
+- Vite
+- TypeScript
+- TailwindCSS and postcss
+- Supabase
+- Fuse.js
+- ES Lint
+- Webstorm
+
+### Technologies reasoning:
+1. React.
+- Reacts component-based architecture allows for creation of reusable and modular UI components.
+- React consists of a large ecosystem of libraries and tools, making it easier to find solutions and extending the project's functionality.
+- Virtual DOM updates DOM by only re-rendering components that have changed, which results in better performance.
+
+2. Vite.
+- Vite is a fast development server that provides hot module replacement, meaning changes is seen in real-time.
+- Vite leverages ES modules for faster build times.
+- Vite offers build-in support for TypeScript.
+
+3. Tailwind Css.
+- Allows for rapid prototyping by providing a set of utility classes, that is applied directly on HTML elements.
+- Makes it easier to maintain a consistent style across project.
+- Tailwind offers extensive customization options.
+- Makes me excited.
+
+4. TypeScript.
+- Helps catching errors at compile-time by enforcing static types, reducing possibilities of runtime errors.
+- TypeScript's static types serves as documentation, enhancing code readability.
+- Tooling support like autocompletion, type inference, refactoring tools.
 
 
-For your final DWA project, your goal is to build a podcast app allowing users to browse various podcast shows, play episodes, and track their favourite episodes.
+### API
 
+#### API Endpoints:
+- Preview objects - https://podcast-api.netlify.app/shows
+- Show object with seasons and episodes - https://podcast-api.netlify.app/id/<ID>
 
+#### API DATA
+- Episode - Corresponds to a specific MP3 file. 
+- Season - A collection of Episodes, released across a specific timespan.
+- Show - A podcast that contains seasons.
+- Preview - A summarised version of a show, that do not contain the season or episode data.
 
-Technology
+#### API Relationships
 
+- 'Episodes' make up a 'Season'.
+- 'Seasons' make up a 'Show'.
+- 'Show' and 'Preview' are different forms of same data, but related by ID property.
+- 'Show' and 'Preview' have a property name 'Genre'.
+- 'Genre' inside 'Preview' is an array of numbers called the id.
+- 'Genre' inside 'Show' is an array of strings called title.
 
-If you feel confident enough, you may attempt to build this project using plain JavaScript; however, using a framework and/or build process is strongly advised to manage all complexity involved.
-
-
-
-This project allows you to use any technology/framework set you are comfortable with, for example, Next.js, Create React App (CRA) or Vue.js. You are recommended to use TypeScript; however, you are not required to use TypeScript if you do not feel comfortable using it yet.
-
-
-
-Please note during your final live assessment; you will have to discuss why you used the chosen frameworks and technology sets to build your final capstone project. Your understanding of chosen technologies and ability to talk through your code will factor into obtaining successful outcomes.
-
-
-
-Data
-
-
-Data consists of three basic semantic units:
-
-EPISODE: Corresponds to a specific MP3 file that a user can listen to
-SEASON: A collection of EPISODE released across a specific timespan
-SHOW: A specific podcast that contains a single or several SEASON
-
-
-However, the following information is also exposed via the API:
-
-PREVIEW: A summarised version of a SHOW that only contains basic data, but no SEASON or EPISODE
-
-
-Endpoints
-
-
-Data can be called via a fetch request to the following two endpoints. Note that there is not always a one-to-one mapping between endpoints and actual data structures. Also, note that <ID> indicates where the dynamic ID for the requested item should be placed. For example: https://podcast-api.netlify.app/id/10716
-
-
-
-Endpoint URL	Description
-https://podcast-api.netlify.app/shows	Returns an array of PREVIEW objects
-https://podcast-api.netlify.app/id/<ID>	Returns a single SHOW object with several SEASON objects and EPISODE objects directly embedded within
-
-
-Relationships
-
-
-The various types of data used in this project are all related to each other: EPISODE, SEASON, SHOW, PREVIEW and GENRE. When you explore the data provided by the endpoints described in the previous section, you’ll discover the following relationships.
-
-
-
-One or more EPISODE make up a SEASON
-One or more SEASON make up a SHOW
-SHOW and PREVIEW are different forms of the same data; these two types of data are related by the id property
-SHOW and PREVIEW both have a property named GENRE
-GENRE inside PREVIEW is an array of numbers called the id
-GENRE inside SHOW is an array of strings called the title
-The relationship between GENRE id and the title is described in the next section
-
-
-The following chart indicates the relations between units of data. It uses Entity Relationship mapping. To understand the meaning of symbols in the chart, please read the overview of the Mermaid.js documentation.
-
-
-
+##### Entity Relationship Mapping
+gecopy
 Note that the text between the units indicates what properties map to one another. It is separated using three underscores (___). The value before the underscores is the mapping from the parent object, whereas the values after the underscore are the mapping from the child object.
-
-
-
 PLEASE NOTE: In some cases, there is no way to infer the parent from the child itself; in those cases, just the parent map is noted, with no value after the underscores.
+![img.png](img.png)
+[Mermaid.js Docs](https://mermaid.js.org/syntax/entityRelationshipDiagram.html)
+### Genre Mapping:
+Genre array IDs are assigned titles as follow:
+- 1 -	Personal Growth
+- 2 -	True Crime and Investigative Journalism
+- 3	- History
+- 4	- Comedy
+- 5	- Entertainment
+- 6	- Business
+- 7	- Fiction
+- 8	- News
+- 9	- Kids and Family
 
+## Features:
+#### Browsing Shows and Episodes.
+- Users can explore a wide range of podcast shows available on the platform.
+- Preview images and genre information provide a glimpse into each show's content.
+- Human-readable dates indicate when each show was last updated, keeping users informed about the latest content.
 
+#### Detailed Show View
+- Users can dive deeper into their favorite shows, viewing detailed information broken down into seasons.
+- Each season is sorted, making it easy to navigate through the show's episodes.
 
+#### Listening Experience
+- Seamless dummy audio listening experience, allows users to play episodes within platform.
+- An audio player, displays current progress and episode length as timestamps for user convenience.
 
-Genre Titles
+#### Advanced Functionality
+- Sorting and filtering options enable users to arrange shows and episodes based on various criteria, such as title and date updated.
+- Fuzzy matching of strings facilitates quick and accurate search results, enhancing the browsing experience.
 
+#### User Authentication and Data Syncing
+- Users can log in via secure authentication provided by Supabase.
+- Favorite episodes are stored in the Supabase database and automatically synced when logged in, ensuring a seamless experience across devices.
+- Users can share their favorite episodes using a publicly accessible URL, fostering community engagement and sharing.
 
-Since genre information is exposed on PREVIEW only as specific GENRE ids, it is recommended that you include the mapping between GENRE ids and titles in your code itself:
+#### Favorite Episodes
+- Users can mark specific episodes as favorites, making it easy to revisit them later.
+- Favorite episodes are grouped by season and show, allowing for organized and efficient management.
 
+#### Personalization
+- The app remembers the user's listening history, including the last show and episode listened to, and the timestamp progress of any episode started.
+- Users can reset their listening progress if desired, effectively clearing their history.
 
-
-ID   	Title
-1	Personal Growth
-2	True Crime and Investigative Journalism
-3	History
-4	Comedy
-5	Entertainment
-6	Business
-7	Fiction
-8	News
-9	Kids and Family
-
-User Stories
-
-
-Your goal is to successfully meet the requirements of the 50 User Stories below, ensuring they are fully functional and work together as a fully functional podcast app.
-
-
-Please note that user stories can be completed in any order. If you are stuck on a specific one, could you try completing another instead?
-
-
-
-Your final project will be assessed according to how many user stories you have completed, the overall user-experience provided by your app and the quality of your live presentation and Git commit messages.
-
-
-
-Once you have completed your project and are happy with the result, please submit your code to Github and submit the Github Link via DWA18 Capstone Submission in the [Projects] tab.
-
-??here
+## User Stories:
 
 Project is deployed to a custom Netlify URL
 

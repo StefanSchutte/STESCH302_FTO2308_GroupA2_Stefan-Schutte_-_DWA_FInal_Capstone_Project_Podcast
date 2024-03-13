@@ -143,7 +143,7 @@ const Filters: React.FC = () => {
         // INSERT IN N TABLE
         const { data, error } = await supabase
             .from('favorites')
-            .insert([{  user_id: user.id, episode_id: episode, season_id: seasonId,}]);
+            .insert([{  user_id: user.id, episode_id: episode.id, season_id: seasonId,}]);
         if (error) {
             throw error;
         }

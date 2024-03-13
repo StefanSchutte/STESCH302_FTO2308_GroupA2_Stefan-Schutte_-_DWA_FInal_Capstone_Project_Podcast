@@ -3,6 +3,8 @@ import { useAuth } from "../../auth/AuthContext.tsx";
 import { AiOutlineClose } from 'react-icons/ai';
 import supabase from "../../supabase.ts";
 import PodcastInfo from "../../pages/PodcastInfo.tsx";
+import {json} from "react-router-dom";
+import {formToJSON} from "axios";
 
 interface Podcast {
     id: string;
@@ -158,31 +160,13 @@ console.log(favorites)
                 {/*    ))}*/}
                 {/*</ul>*/}
 
-                {/*<ul>*/}
-                {/*    {favorites.map((episode, index) => (*/}
-                {/*        <li key={index}>*/}
-                {/*        <span*/}
-                {/*            onClick={() => handleEpisodeClick(episode.episode_id)} // Call handleEpisodeClick function when clicked*/}
-                {/*            style={{ cursor: 'pointer' }} // Add cursor pointer style for better UX*/}
-                {/*        >*/}
-                {/*            Episode ID: {episode.episode_id}*/}
-                {/*        </span>*/}
-                {/*            /!* Render other episode details as needed *!/*/}
-                {/*        </li>*/}
-                {/*    ))}*/}
-                {/*</ul>*/}
-                {/*/!* Render the overlay page based on the selectedEpisodeId state *!/*/}
-                {/*{selectedEpisodeId && (*/}
-                {/*    <div className="overlay">*/}
-                {/*        /!* Render the overlay content here *!/*/}
-                {/*        <button onClick={() => setSelectedEpisodeId(null)}>Close Overlay</button>*/}
-                {/*    </div>*/}
-                {/*)}*/}
+
 
                 <ul>
                     {favorites.map((episode, index, seasonId) => (
                         <li key={index} onClick={() => handleEpisodeClick(episode)} style={{ cursor: 'pointer' }}>
-                            {episode.episode_id}{seasonId.title}
+                            {/*{episode.episode_id}{seasonId.title}*/}
+                            {JSON.stringify(episode)}
                         </li>
                     ))}
                 </ul>
