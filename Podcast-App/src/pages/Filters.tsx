@@ -130,10 +130,9 @@ const Filters: React.FC = () => {
 
     const { user } = useAuth();
 
-    const handleSave = async (episode: string, seasonId: string | null) => {
-        // Add your logic to save the podcast here
-        console.log('Filters =  Saving podcast:', episode, seasonId);
+    const handleSave = async (episode: Podcast, seasonId: Podcast) => {
 
+        console.log('Filters =  Saving podcast:', episode, seasonId);
         console.log("data", [user, episode])
 
         if (!user) {
@@ -144,7 +143,7 @@ const Filters: React.FC = () => {
         // INSERT IN N TABLE
         const { data, error } = await supabase
             .from('favorites')
-            .insert([{  user_id: user.id, episode_id: episode['episode'], season_id: seasonId,}]);
+            .insert([{  user_id: user.id, episode_id: episode, season_id: seasonId,}]);
         if (error) {
             throw error;
         }
@@ -153,7 +152,7 @@ const Filters: React.FC = () => {
         const dataAll = supabase.from("favorites").select()
 
         console.log("data", [data,dataAll])
-
+console.log(seasonId)
     };
 
     /**
@@ -199,7 +198,7 @@ const Filters: React.FC = () => {
                                 <div className='text-purple-500 mr-2 pr-4'>Genre:</div>
                                 <div className='flex flex-wrap text-yellow-400'>
                                     {['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].map(genre => (
-                                        <label key={genre} onClick={() => handleGenreClick(genre)} className="cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2">
+                                        <label key={genre} onClick={() => handleGenreClick(genre)} className="cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2" title='Select'>
                                             {genre}
                                         </label>
                                     ))}
@@ -216,7 +215,7 @@ const Filters: React.FC = () => {
                             <li onClick={() => handlePodcastClick(show)} key={show.id}
                                 className="border border-gray-300 rounded-md bg-black my-1 p-4 py-3 text-yellow-400 flex items-center ">
 
-                                <div className="flex flex-col  w-full">
+                                <div className="flex flex-col  w-full" title='Listen'>
                                     <div className="grid grid-cols-3 gap-1">
                                         <div className=" col-span-1 aspect-w-1 aspect-h-1 mb-2">
                                             <img src={show.image} alt={show.title}

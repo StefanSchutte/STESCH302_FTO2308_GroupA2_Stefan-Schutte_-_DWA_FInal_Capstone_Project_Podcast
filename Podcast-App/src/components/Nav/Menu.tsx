@@ -77,38 +77,38 @@ const Menu = ({ closeOverlay }: { closeOverlay: () => void }): JSX.Element => {
                 <div className="fixed top-0 left0 w-full h-full flex flex-col justify-center items-center bg-black bg-opacity-40 z-[100]">
                     <div className="absolute p-4 m-4  rounded-lg max-w-screen h-screen flex-col justify-center " style={{ top: '15%' }}>
                         <h2 className="mb-4 p-4 col-span-2 flex justify-center">
-                            <img src={menuFav} alt="Menu"/>
+                            <img src={menuFav} alt="Menu" title='This is the Menu. Use icons below to nav.'/>
                         </h2>
                         <ul className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
                             <li className='p-4 flex'>
-                                <Link to="/" onClick={handleLinkClick}>
-                                    <img src={homeLogo} alt="account" className='w-16 h-16 ml-2'/>
+                                <Link to="/" onClick={handleLinkClick} >
+                                    <img src={homeLogo} alt="home" className='w-16 h-16 ml-2' title='Home'/>
                                 </Link>
-                            </li>
-                            <li className='p-4'>
-                                <Link to="/filter" onClick={handleLinkClick}>
-                                    <img src={settingLogo} alt="account" className='w-16 h-16 ml-2'/>
+                        </li>
+                        <li className='p-4'>
+                            <Link to="/filter" onClick={handleLinkClick}>
+                            <img src={settingLogo} alt="filter" className='w-16 h-16 ml-2' title='Filter Search'/>
                                 </Link>
                             </li>
                             <li className='p-4'>
                                 {isLoggedIn ? (
                                     <Link to="/account" onClick={handleLinkClick}>
-                                        <img src={accountFav} alt="account" className='w-16 h-16 ml-2'/>
+                                        <img src={accountFav} alt="account" className='w-16 h-16 ml-2' title='Account'/>
                                     </Link>
                                 ) : (
                                     <Link to="/login" onClick={handleLinkClick}>
-                                        <img src={loginFav} alt="account" className='w-16 h-16 ml-2'/>
+                                        <img src={loginFav} alt="login" className='w-16 h-16 ml-2' title='Log In'/>
                                     </Link>
                                 )}
                             </li>
                             <li className='p-4'>
                                 {isLoggedIn ? (
                                     <button onClick={handleLogout}>
-                                        <img src={logoutFav} alt="logout" className='w-16 h-16 ml-2'/>
+                                        <img src={logoutFav} alt="logout" className='w-16 h-16 ml-2' title='Log Out'/>
                                     </button>
                                 ):(
                                     <Link to="/signup" onClick={handleLinkClick}>
-                                    <img src={addUserFav} alt="account" className='w-16 h-16 ml-2'/>
+                                    <img src={addUserFav} alt="signup" className='w-16 h-16 ml-2' title='Sign Up'/>
                                     </Link>
                                 )}
                             </li>
@@ -116,7 +116,7 @@ const Menu = ({ closeOverlay }: { closeOverlay: () => void }): JSX.Element => {
                         <div className="col-span-2 flex justify-center">
                             <div className='p-4'>
                                 <button className="py-2 px-5" onClick={closeOverlay}>
-                                    <img src={closeFav} alt="close" className='w-18 h-18 ml-2'/>
+                                    <img src={closeFav} alt="close" className='w-18 h-18 ml-2' title='Close'/>
                                 </button>
                             </div>
                         </div>
@@ -128,12 +128,3 @@ const Menu = ({ closeOverlay }: { closeOverlay: () => void }): JSX.Element => {
 };
 
 export default Menu;
-
-
-// func () {
-//     value === 3
-//     setValue(5)
-//     value === 3
-//     setValue((oldValue) => 7)
-//     value === 7
-// }

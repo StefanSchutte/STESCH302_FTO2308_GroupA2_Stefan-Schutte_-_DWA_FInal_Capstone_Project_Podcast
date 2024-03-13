@@ -44,7 +44,7 @@ const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
 
                 <button onClick={handleClick}
                         className="absolute bottom-2 py-2 px-5">
-                    <img src={playButtonDub} alt='Play'/>
+                    <img src={playButtonDub} alt='Play' title='Listen'/>
                 </button>
 
             </div>

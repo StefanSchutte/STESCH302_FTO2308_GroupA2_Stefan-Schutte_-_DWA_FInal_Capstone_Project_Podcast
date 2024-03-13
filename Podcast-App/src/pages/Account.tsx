@@ -12,10 +12,11 @@ function Account() {
                     <div className='absolute top-[20%] p-4 md:p-8'>
                         <h1 className='text-5xl md:text font-bold'>My Saved List</h1>
                     </div>
+                    <SavedPodcasts/>
                 </div>
 
             </div>
-            <SavedPodcasts/>
+
         </>
     );
 }

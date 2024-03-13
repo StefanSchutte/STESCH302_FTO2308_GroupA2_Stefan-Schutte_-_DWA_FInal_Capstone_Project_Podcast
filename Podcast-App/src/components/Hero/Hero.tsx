@@ -93,7 +93,7 @@ function Hero(): JSX.Element {
                     <h1 className="text-3xl md:text-5xl font-bold text-yellow-400">{podcast?.title}</h1>
 
                     <div className="my-4">
-                        <button className="py-2 px-5"><img src={playButtonDub} alt='Play' onClick={handlePlayButtonClick}/></button>
+                        <button className="py-2 px-5"><img src={playButtonDub} alt='Play' title='Listen' onClick={handlePlayButtonClick}/></button>
                     </div>
                     <span className="text-gray-300 text-sm"><Genres genres={podcast?.genres || []} /></span>
                     <p className="w-full md:max-w-[60%] lg:max-w-[70%] xl:max-w-[80%] text-yellow-400 mt-4">

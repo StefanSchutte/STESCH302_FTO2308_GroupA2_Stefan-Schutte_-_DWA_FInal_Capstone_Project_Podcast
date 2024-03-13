@@ -4,6 +4,7 @@ import PlayButton from '../components/audio/PlayButton.tsx'
 import Genres from "../helpers/Genres.tsx";
 import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
+import supabase from "../supabase.ts";
 
 /**
  * Props interface for the PodcastInfo component.
@@ -164,9 +165,17 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     const handleSave = () => {
         if (selectedSeason !== null && selectedEpisode !== null && podcastData) {
             const episode = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
+            const seasonId = podcastData.seasons[selectedSeason - 1]
             if (episode) {
                 //onSave(episode.id, String(selectedSeason));
-                onSave(episode)
+                onSave(episode, seasonId)
+
+            // if (episode && seasonId) {
+            //     // Save episode and season information to Supabase
+            //     supabase.from('episodes').upsert([episode]); // Upsert episode data
+            //     supabase.from('seasons').upsert([seasonId]); // Upsert season data
+
+console.log(podcastData.seasons)
             } else {
                 console.error('Selected episode not found.');
             }
@@ -243,7 +252,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                                                     </select>
                                                     {/* See More button */}
                                                     <button className="ml-3 w-12 h-12" onClick={toggleSeasonExpanded}>
-                                                        {seasonExpanded ? <img src={closeFav}/> : <img src={seeMoreFav}/>}
+                                                        {seasonExpanded ? <img src={closeFav} title='Close'/> : <img src={seeMoreFav} title='See More'/> }
                                                     </button>
                                                 </div>
 
@@ -259,7 +268,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                                                                         className="w-16 h-16 mr-4"
                                                                     />
                                                                     <button
-                                                                        onClick={() => handleSeasonSelect(i + 1)}>
+                                                                        onClick={() => handleSeasonSelect(i + 1)} title='Select Season'>
                                                                         Season {i + 1}
                                                                     </button>
                                                                 </div>
@@ -291,7 +300,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                                                         </select>
                                                         {/* See More button */}
                                                         <button className="ml-3 w-12 h-12" onClick={toggleExpanded}>
-                                                            {expanded ? <img src={closeFav}/> : <img src={seeMoreFav}/>}
+                                                            {expanded ? <img src={closeFav} title='Close'/> : <img src={seeMoreFav} title='See More'/>}
                                                         </button>
                                                     </div>
                                                     {/* Episode list */}
@@ -305,7 +314,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                                                                     onMouseLeave={() => handleMouseLeave()}
                                                                 >
                                                                     <button
-                                                                        onClick={() => handleEpisodeSelect(index + 1)}>
+                                                                        onClick={() => handleEpisodeSelect(index + 1)}
+                                                                        title='Select Episode'>
                                                                         {episode.title}
                                                                     </button>
                                                                     {tooltipIndex === index && (
@@ -315,7 +325,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                                                                             {tooltipText}
                                                                         </div>
                                                                     )}
-                                                                    <button onClick={handleSave} className='w-12 h-12'><img src={saveBtnFav} alt='Save'/></button>
+                                                                    <button onClick={handleSave} className='w-12 h-12'><img src={saveBtnFav} alt='Save' title='Select Episode to Save'/></button>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -330,7 +340,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                                     )
                                     )}
                             <button className="absolute top-4 right-4 " onClick={closeOverlay}>
-                                <img src={closeFav} alt="close" className='w-15 h-15 ml-2'/>
+                                <img src={closeFav} alt="close" className='w-15 h-15 ml-2' title='CLose'/>
                                     </button>
                                 </div>
                             </div>

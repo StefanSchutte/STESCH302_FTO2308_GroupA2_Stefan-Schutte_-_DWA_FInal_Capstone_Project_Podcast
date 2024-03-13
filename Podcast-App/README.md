@@ -163,7 +163,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User can listen to any episode in a season of a show
 
-- User can see a view where only episodes for a specifically selected season are shown
+✅ User can see a view where only episodes for a specifically selected season are shown
 
 ✅ User can toggle between different seasons for the same show
 
@@ -221,7 +221,7 @@ Project is deployed to a custom Netlify URL
 
  Audio player is always visible, so the user can listen to episodes while they browse
 
- +User is prompted to confirm they want to close the page when audio is playing
+✅ User is prompted to confirm they want to close the page when audio is playing
 
  App remembers which show and episode the user listened to last when returning to the platform
 

@@ -17,7 +17,7 @@ interface Podcast {
  *
  * @returns JSX.Element
  */
-function SavedPodcasts({ savedEpisode }: { savedEpisode: Podcast[] }): JSX.Element {
+function SavedPodcasts(): JSX.Element {
     const [favorites, setFavorites] = useState<Podcast[]>([]);
     const { user } = useAuth();
 
@@ -46,6 +46,18 @@ function SavedPodcasts({ savedEpisode }: { savedEpisode: Podcast[] }): JSX.Eleme
                 if (error) {
                     throw error;
                 }
+
+                // // Group episodes by season
+                // const groupedFavorites = data.reduce((acc: { [key: string]: Podcast[] }, episode: Podcast) => {
+                //     const seasonId = episode.season_id || 'No Season';
+                //     if (!acc[seasonId]) {
+                //         acc[seasonId] = [];
+                //     }
+                //     acc[seasonId].push(episode);
+                //     return acc;
+                // }, {});
+                // console.log('Grouped Favorites:', groupedFavorites);
+
                 setFavorites(data || []);
             }
         } catch (error) {
@@ -103,9 +115,29 @@ function SavedPodcasts({ savedEpisode }: { savedEpisode: Podcast[] }): JSX.Eleme
             console.error('Error saving episode:', error.message);
         }
     };
+    const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null); // State to track the selected episode ID
+    const [showOverlay, setShowOverlay] = useState(false);
 
+    // Function to handle opening the overlay page with the selected episode details
+    const handleEpisodeClick = (episode: Podcast) => {
+        setSelectedEpisode(episode);
+        setShowOverlay(true);
+    };
+    // /**
+    //  * Handle clicking on an episode ID.
+    //  * Set the selectedEpisodeId state to the clicked episode ID.
+    //  */
+    // const handleEpisodeClick = (episodeId: string) => {
+    //     setSelectedEpisodeId(episodeId);
+    // };
+
+    // Function to close the overlay page
+    const handleCloseOverlay = () => {
+        setShowOverlay(false);
+    };
 
 console.log(favorites)
+
     /**
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.
      * Each podcast item is displayed with its image and title.
@@ -114,46 +146,58 @@ console.log(favorites)
      */
     return (
         <>
-            <div className='flex items-center justify-center'>
+            <div className='flex justify-center text-yellow-400'>
                 <h2 className="text-white font-bold md:text-xl p-4">Saved for Later</h2>
 
-                {favorites.map((favorites) => (
-                    <li key={favorites.id}>
-                        {/* Render details of each favorite episode */}
-                        <div>Title: {favorites.title}</div>
+                {/*<ul>*/}
+                {/*    {favorites.map((episode, index) => (*/}
+                {/*        <li key={index}>*/}
+                {/*            Episode ID: {episode.episode_id}*/}
+                {/*            /!* Render other episode details as needed *!/*/}
+                {/*        </li>*/}
+                {/*    ))}*/}
+                {/*</ul>*/}
 
-                    </li>
-                ))}
-
-
-                {/* Render each saved podcast item */}
-                {/*{favorites.map((podcastItem, index) => (*/}
-                {/*    <div key={index}*/}
-                {/*         className='w-[160px] sm:w-[200px] md:w-[240px] lg:w[240px] inline-block cursor-pointer relative p-2'>*/}
-                {/*        /!* Display podcast item content *!/*/}
-                {/*        <img className='w-full h-auto block' src={podcastItem?.image} alt={podcastItem?.title}/>*/}
-                {/*        <div*/}
-                {/*            className='absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-amber-50'>*/}
-                {/*            <p className='whitespace-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center'>{podcastItem?.title}</p>*/}
-
-
-
-
-
-                {/*            /!* Add a button to delete the podcast item *!/*/}
-                {/*            <p onClick={() => deletePodcast(podcastItem.id)}*/}
-                {/*               className='absolute text-gray-300 top-4 right-4'><AiOutlineClose/></p>*/}
-                {/*            /!* Pass onSave function to the PodcastInfo component *!/*/}
-                {/*            /!*<PodcastInfo*!/*/}
-                {/*            /!*    item={podcastItem}*!/*/}
-                {/*            /!*    showOverlay={true}*!/*/}
-                {/*            /!*    closeOverlay={() => {*!/*/}
-                {/*            /!*    }}*!/*/}
-                {/*            /!*    onSave={savePodcast}*!/*/}
-
-                {/*        </div>*/}
+                {/*<ul>*/}
+                {/*    {favorites.map((episode, index) => (*/}
+                {/*        <li key={index}>*/}
+                {/*        <span*/}
+                {/*            onClick={() => handleEpisodeClick(episode.episode_id)} // Call handleEpisodeClick function when clicked*/}
+                {/*            style={{ cursor: 'pointer' }} // Add cursor pointer style for better UX*/}
+                {/*        >*/}
+                {/*            Episode ID: {episode.episode_id}*/}
+                {/*        </span>*/}
+                {/*            /!* Render other episode details as needed *!/*/}
+                {/*        </li>*/}
+                {/*    ))}*/}
+                {/*</ul>*/}
+                {/*/!* Render the overlay page based on the selectedEpisodeId state *!/*/}
+                {/*{selectedEpisodeId && (*/}
+                {/*    <div className="overlay">*/}
+                {/*        /!* Render the overlay content here *!/*/}
+                {/*        <button onClick={() => setSelectedEpisodeId(null)}>Close Overlay</button>*/}
                 {/*    </div>*/}
-                {/*))}*/}
+                {/*)}*/}
+
+                <ul>
+                    {favorites.map((episode, index, seasonId) => (
+                        <li key={index} onClick={() => handleEpisodeClick(episode)} style={{ cursor: 'pointer' }}>
+                            {episode.episode_id}{seasonId.title}
+                        </li>
+                    ))}
+                </ul>
+                {/* Render the overlay page with the selected episode details */}
+                {selectedEpisode && (
+                    <PodcastInfo
+                        item={selectedEpisode}
+                        showOverlay={showOverlay}
+                        closeOverlay={handleCloseOverlay}
+
+                    />
+                )}
+
+
+
             </div>
         </>
     );
