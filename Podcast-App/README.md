@@ -48,7 +48,8 @@ Row below that.
 - The 'Browse All Shows' row provided the user the possibility to browse through all the podcasts using the right and left arrow slider.
 - Users can also navigate to the PodcastInfo overlay, the same as with the 'Hero' section.
 
-![Screenshot from 2024-03-14 09-33-24.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-33-24.png)
+![Screenshot from 2024-03-14 09-33-24](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/assets/127427422/55da675b-a2ba-4a23-830f-02ba8477ebc7)
+
 
 #### MENU
 - At the top right corner is the 'Menu' button. 
@@ -63,7 +64,8 @@ Row below that.
 - If user is logged in instead of seeing a 'login' and 'sign up' button, a 'account' and 'logout' button will be rendered.
 - The 'close' button is used for closing the menu and returning to previous page.
 
-![Screenshot from 2024-03-14 09-46-12.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-46-12.png)
+![Screenshot from 2024-03-14 09-46-12](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/assets/127427422/b458396c-37d0-4962-b4ea-abc19c770759)
+
 
 #### FILTER
 - The 'filters' page gives the user the opportunity to filter through the podcasts by either:
@@ -74,15 +76,17 @@ Row below that.
 - Each result (Preview) contains a title, image, amount of seasons, date updated and the genres.
 - When clicking on any of these result previews user navigates to the 'Podcast Info' overlay.
 
-![Screenshot from 2024-03-14 09-48-14.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-48-14.png)
+![Screenshot from 2024-03-14 09-48-14](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/assets/127427422/6d694f64-6af3-4f97-8c41-c8e250904a34)
+
 
 #### PODCAST INFO
 
 - In this overlay the Show title and image is rendered as well as a detailed description of the Show is given.
 - The date last updated and amount of seasons are also rendered.
-- 
-![Screenshot from 2024-03-14 10-08-25.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-08-25.png)
-- 
+
+  ![Screenshot from 2024-03-14 10-08-25](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/assets/127427422/d29313ea-b8b6-4683-acf9-744bd63785d7)
+
+  
 - In the 'Select Season' dropdown the user can select a Season, or the user can also use the 'See More' button, next to the dropdown.
 - The 'See More' button expands the Seasons list that includes the Season image.
 - After selecting a season, the user can select an episode.
@@ -90,12 +94,14 @@ Row below that.
 - A description of the Episode is given on hover.
 - After selecting the Episode, user can Play or Save the Episode, using the play button on top right corner, and saving by clicking the save button.
 
-![Screenshot from 2024-03-14 10-11-22.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-11-22.png)
+![Screenshot from 2024-03-14 10-11-22](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/assets/127427422/de8041cc-ad17-42bf-8ece-9d2e312dc256)
+
 
 #### PLAY
 - Pressing the play button opens the Audio Player at the bottom of the page.
 
-![Screenshot from 2024-03-14 10-19-34.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-19-34.png)
+![Screenshot from 2024-03-14 10-19-34](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/assets/127427422/f4de5196-b4e2-4ba8-8d76-e0210aa07fd4)
+
 
 
 ## Deployment:
