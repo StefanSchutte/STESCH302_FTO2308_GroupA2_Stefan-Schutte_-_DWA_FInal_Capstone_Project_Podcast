@@ -35,7 +35,15 @@ export default {
 #### developed by Stefan Schutte.
 STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_18_Final_Capstone
 
-## Intro
+This is Stefan Schutte's Podcast App.
+
+Author: Stefan Schutte
+
+Application: Podcast App
+
+Link: https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/tree/master/Podcast-App
+
+## Description:
 
 A podcast app that allows users to browse various podcasts shows, play episodes and track their favorite episodes.
 
