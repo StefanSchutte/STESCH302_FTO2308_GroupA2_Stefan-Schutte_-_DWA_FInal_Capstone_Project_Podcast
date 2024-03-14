@@ -35,9 +35,22 @@ export default {
 #### developed by Stefan Schutte.
 STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_18_Final_Capstone
 
-## Intro
+This is Stefan Schutte's Podcast App.
+
+Author: Stefan Schutte
+
+Application: Podcast App
+
+Link: https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/tree/master/Podcast-App
+
+
+## Description
 
 A podcast app that allows users to browse various podcasts shows, play episodes and track their favorite episodes.
+
+## Deployment:
+The app is deployed to a custom Netlify URL, ensuring accessibility to users across various devices and platforms.
+LINKHERE
 
 ## How to use PODCASTED App:
 #### HOME
@@ -80,7 +93,7 @@ Row below that.
 
 - In this overlay the Show title and image is rendered as well as a detailed description of the Show is given.
 - The date last updated and amount of seasons are also rendered.
-- 
+
 ![Screenshot from 2024-03-14 10-08-25.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-08-25.png)
 - 
 - In the 'Select Season' dropdown the user can select a Season, or the user can also use the 'See More' button, next to the dropdown.
@@ -97,10 +110,6 @@ Row below that.
 
 ![Screenshot from 2024-03-14 10-19-34.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-19-34.png)
 
-
-## Deployment:
-The app is deployed to a custom Netlify URL, ensuring accessibility to users across various devices and platforms.
-LINKHERE
 
 ## Technologies used:
 - React
@@ -158,11 +167,15 @@ LINKHERE
 - 'Genre' inside 'Show' is an array of strings called title.
 
 ##### Entity Relationship Mapping
-gecopy
-Note that the text between the units indicates what properties map to one another. It is separated using three underscores (___). The value before the underscores is the mapping from the parent object, whereas the values after the underscore are the mapping from the child object.
-PLEASE NOTE: In some cases, there is no way to infer the parent from the child itself; in those cases, just the parent map is noted, with no value after the underscores.
+- The text between the units indicates what properties map to one another. 
+- It is separated using three underscores (___). 
+- The value before the underscores is the mapping from the parent object. 
+- Whereas the values after the underscore are the mapping from the child object.
+- In some cases, there is no way to infer the parent from the child itself; in those cases, just the parent map is noted, with no value after the underscores.
+
 ![img.png](img.png)
 [Mermaid.js Docs](https://mermaid.js.org/syntax/entityRelationshipDiagram.html)
+
 ### Genre Mapping:
 Genre array IDs are assigned titles as follow:
 - 1 -	Personal Growth
@@ -206,6 +219,16 @@ Genre array IDs are assigned titles as follow:
 - The app remembers the user's listening history, including the last show and episode listened to, and the timestamp progress of any episode started.
 - Users can reset their listening progress if desired, effectively clearing their history.
 
+## Installation
+1. Clone the repo or download the zip file.
+- git clone / download zip
+2. Navigate to the project.
+- cd podcast-app
+3. Install the dependencies.
+- npm install
+4. Run the application.
+- npm run dev
+
 ## User Stories:
 
 Project is deployed to a custom Netlify URL
@@ -246,7 +269,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User sees the amount of episodes in a season as a number
 
-? User can go back to a show view from a season-specific view
+✅ User can go back to a show view from a season-specific view
 
  User can mark specific episodes as favourites to find them again
 
