@@ -5,6 +5,7 @@ import { useShows } from "../api/ShowsContext.tsx";
 import Genres from "../helpers/Genres.tsx";
 import supabase, {auth} from "../supabase.ts";
 import {useAuth} from "../auth/AuthContext.tsx";
+import {SupabaseWrapper} from "../api/api.ts";
 //import {savePodcast} from '../components/Saved Shows/SavedPodcasts.tsx'
 
 interface Podcast {
@@ -143,17 +144,36 @@ const Filters: React.FC = () => {
         // INSERT IN N TABLE
         const { data, error } = await supabase
             .from('favorites')
-            .insert([{  user_id: user.id, episode_id: episode.id, season_id: seasonId,}]);
+            .insert([{  user_id: user.id, episode_id: episode.id, season_id: seasonId.season,}]);
         if (error) {
             throw error;
         }
 //save id of episode.//item.id so that i dont have to rename id in rendering of favorites
         // LEES VAN TABLES
         const dataAll = supabase.from("favorites").select()
-
+// fetch season for id
         console.log("data", [data,dataAll])
 console.log(seasonId)
     };
+
+//     const apiService = new SupabaseWrapper(supabase);
+//
+//     try {
+//         // INSERT IN N TABLE
+//         const data = await supabase
+//             .from('favorites')
+//             .insert([{  user_id: user.id, episode_id: episode.id, season_id: seasonId,}]);
+//     } catch (error) {
+//         console.error('Insert failed:', error);
+//         console.log("data", [data, dataAll])
+//     }
+// //save id of episode.//item.id so that i dont have to rename id in rendering of favorites
+//     // LEES VAN TABLES
+//     const dataAll = supabase.from("favorites").select()
+// // fetch season for id
+//
+//     console.log(seasonId)
+// };
 
     /**
      * Renders the search input field, sorting options, genre labels, and the list of filtered shows.

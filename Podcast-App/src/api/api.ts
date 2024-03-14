@@ -29,3 +29,49 @@ const getShowsFromAPI = async (): Promise<any[]> => {
 };
 
 export default getShowsFromAPI;
+
+import { SupabaseClient, PostgrestResponse } from '@supabase/supabase-js';
+
+export class SupabaseWrapper {
+    private supabase: SupabaseClient;
+
+    constructor(supabaseClient: SupabaseClient) {
+        this.supabase = supabaseClient;
+    }
+
+    // Generic function to handle requests
+    async request<T>(action: () => Promise<PostgrestResponse<T>>): Promise<T[] | null> {
+        const { data, error } = await action();
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        return data;
+    }
+
+    async getFavorites(userId: string){
+        return this.request(() =>
+            this.supabase
+                .from('favorites')
+                .select()
+        );
+    }
+
+    async insertFavoriteEpisode(userId: string, episodeId: string) {
+        return this.request(() =>
+            this.supabase
+                .from('favorites')
+                .insert([{ user_id: userId, episode_id: episodeId }])
+        );
+    }
+
+    async insertFavoriteSeason(userId: string, seasonId: string) {
+        return this.request(() =>
+            this.supabase
+                .from('favorites')
+                .insert([{ user_id: userId, season_id: seasonId }])
+        );
+    }
+
+}
