@@ -40,7 +40,63 @@ STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_18_Final_Capstone
 A podcast app that allows users to browse various podcasts shows, play episodes and track their favorite episodes.
 
 ## How to use PODCASTED App:
-On loading into the deployed site you will arrive at the Home page, which has a 'Hero' section and a 
+#### HOME
+- On loading into the deployed site you will arrive at the Home page, which has a 'Hero' section and a 
+Row below that. 
+- The 'Hero' section provides a recommended Podcast, with the name genre and description.
+- User can navigate to the PodcastInfo overlay by clicking the play/listen button. The Hero section is changed every minute.
+- The 'Browse All Shows' row provided the user the possibility to browse through all the podcasts using the right and left arrow slider.
+- Users can also navigate to the PodcastInfo overlay, the same as with the 'Hero' section.
+
+![Screenshot from 2024-03-14 09-33-24.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-33-24.png)
+
+#### MENU
+- At the top right corner is the 'Menu' button. 
+- User should use this to navigate through application.
+- After pressing the 'Menu' button, the 'Menu' overlay is rendered. 
+- The 'Menu' includes: 
+- A 'home' button, that navigates user back to the 'Home' page. 
+- A 'filter' button that navigates the user to the 'Filter' page. 
+- If the user is not signed up or logged in, the user sees the 'login' and 'sign up' buttons.
+- New user can sign up and after confirming via email sent, can log in.
+- Old user will use the 'login' button, that will navigate the user to 'Account' page.
+- If user is logged in instead of seeing a 'login' and 'sign up' button, a 'account' and 'logout' button will be rendered.
+- The 'close' button is used for closing the menu and returning to previous page.
+
+![Screenshot from 2024-03-14 09-46-12.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-46-12.png)
+
+#### FILTER
+- The 'filters' page gives the user the opportunity to filter through the podcasts by either:
+- Using the 'search' input to filter podcasts based on the text users inputs, This functionality uses Fuse.js.
+- From the 'Filter' dropdown user can filter podcasts by date and alphabetically.
+- User can also filter using the genre labels.
+- In the 'Results' section of this page, the results are rendered.
+- Each result (Preview) contains a title, image, amount of seasons, date updated and the genres.
+- When clicking on any of these result previews user navigates to the 'Podcast Info' overlay.
+
+![Screenshot from 2024-03-14 09-48-14.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-48-14.png)
+
+#### PODCAST INFO
+
+- In this overlay the Show title and image is rendered as well as a detailed description of the Show is given.
+- The date last updated and amount of seasons are also rendered.
+- 
+![Screenshot from 2024-03-14 10-08-25.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-08-25.png)
+- 
+- In the 'Select Season' dropdown the user can select a Season, or the user can also use the 'See More' button, next to the dropdown.
+- The 'See More' button expands the Seasons list that includes the Season image.
+- After selecting a season, the user can select an episode.
+- In the 'Select Episode' dropdown the user can select an Episode, or the user can also use the 'See More' button, next to the dropdown.
+- A description of the Episode is given on hover.
+- After selecting the Episode, user can Play or Save the Episode, using the play button on top right corner, and saving by clicking the save button.
+
+![Screenshot from 2024-03-14 10-11-22.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-11-22.png)
+
+#### PLAY
+- Pressing the play button opens the Audio Player at the bottom of the page.
+
+![Screenshot from 2024-03-14 10-19-34.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-19-34.png)
+
 
 ## Deployment:
 The app is deployed to a custom Netlify URL, ensuring accessibility to users across various devices and platforms.
