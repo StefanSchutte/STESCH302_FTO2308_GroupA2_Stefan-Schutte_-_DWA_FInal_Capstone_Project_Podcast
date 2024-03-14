@@ -122,7 +122,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import supabase from '../supabase'; // Ensure this import is correct. It seems you're also importing 'auth' which might not be used.
-
+import {session} from "@supabase/supabase-js";
 interface User {
     id: string;
     email?: string;
@@ -143,17 +143,17 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         // This effect sets the user on mount and listens for auth state changes.
-        const unsubscribe = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
         });
 
         // Check the current auth state and set the user accordingly on initial load.
-        (async () => {
-            const session = supabase.auth.session();
-            setUser(session?.user ?? null);
-        })();
+        // (async () => {
+        //     const session = supabase.auth.session();
+        //     setUser(session?.user ?? null);
+        // })();
 
-        return () => unsubscribe.data?.unsubscribe();
+        return () => subscription.unsubscribe();
     }, []);
 
     const signUp = async (email: string, password: string): Promise<void> => {

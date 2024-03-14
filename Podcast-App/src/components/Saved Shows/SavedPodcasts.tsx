@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from "../../auth/AuthContext.tsx";
-import { AiOutlineClose } from 'react-icons/ai';
 import supabase from "../../supabase.ts";
 import PodcastInfo from "../../pages/PodcastInfo.tsx";
-import {json} from "react-router-dom";
-import {formToJSON} from "axios";
+
 
 interface Podcast {
     id: string;
@@ -22,7 +20,8 @@ interface Podcast {
 function SavedPodcasts(): JSX.Element {
     const [favorites, setFavorites] = useState<Podcast[]>([]);
     const { user } = useAuth();
-
+    const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null); // State to track the selected episode ID
+    const [showOverlay, setShowOverlay] = useState(false);
     /**
      * Fetch the user's favorite podcasts from the database whenever the user object changes.
      * This ensures that the component updates its state when the user logs in or out.
@@ -48,18 +47,6 @@ function SavedPodcasts(): JSX.Element {
                 if (error) {
                     throw error;
                 }
-
-                // // Group episodes by season
-                // const groupedFavorites = data.reduce((acc: { [key: string]: Podcast[] }, episode: Podcast) => {
-                //     const seasonId = episode.season_id || 'No Season';
-                //     if (!acc[seasonId]) {
-                //         acc[seasonId] = [];
-                //     }
-                //     acc[seasonId].push(episode);
-                //     return acc;
-                // }, {});
-                // console.log('Grouped Favorites:', groupedFavorites);
-
                 setFavorites(data || []);
             }
         } catch (error) {
@@ -67,72 +54,42 @@ function SavedPodcasts(): JSX.Element {
         }
     };
 
-    /**
-     * Deletes a podcast from the user's favorites.
-     * Deletes podcast by calling the appropriate Supabase query.
-     * @param id - The ID of the podcast to be deleted.
-     */
-    const deletePodcast = async (id: string) => {
-        try {
-            const { error } = await supabase
-                .from('favorites')
-                .delete()
-                .eq('id', id);
-            if (error) {
-                throw error;
-            }
-            setFavorites(favorites.filter(favorite => favorite.id !== id));
-        } catch (error) {
-            console.error('Error deleting podcast:', error.message);
-        }
-    };
+    // /**
+    //  * Deletes a podcast from the user's favorites.
+    //  * Deletes podcast by calling the appropriate Supabase query.
+    //  * @param id - The ID of the podcast to be deleted.
+    //  */
+    // const deletePodcast = async (id: string) => {
+    //     try {
+    //         const { error } = await supabase
+    //             .from('favorites')
+    //             .delete()
+    //             .eq('id', id);
+    //         if (error) {
+    //             throw error;
+    //         }
+    //         setFavorites(favorites.filter(favorite => favorite.id !== id));
+    //     } catch (error) {
+    //         console.error('Error deleting podcast:', error.message);
+    //     }
+    // };
 
     /**
-     * Saves a podcast episode to the user's favorites.
-     * Save logic here, making an api call or interacting with Supabase.
-     * After successfully saving the podcast, fetch the updated favorites.
-     * @param episodeId - The ID of the podcast episode.
-     * @param seasonId - The ID of the podcast season.
-     * @param podcastData - Data of the podcast episode to be saved.
+     * Handle clicking on an episode ID.
+     * Set the selectedEpisodeId state to the clicked episode ID.
      */
-
-    //here fix
-    const savePodcast = async (episodeId: string, seasonId: string | null, podcastData: Podcast) => {
-        try {
-            // save logic here, such as making an api call or interacting with Supabase
-
-            const { data, error } = await supabase
-                .from('favorites')
-                //.insert(podcastData);
-                .insert([{ user_id: user.id, episode_id: episodeId, season_id: seasonId, ...podcastData }]);
-            if (error) {
-                throw error;
-            }
-            console.log('Podcast saved successfully:', data);
-
-            fetchFavorites();
-            console.log("Saving Episode:", episodeId);
-            console.log("Saving Season:", seasonId);
-        } catch (error) {
-            console.error('Error saving episode:', error.message);
-        }
-    };
-    const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null); // State to track the selected episode ID
-    const [showOverlay, setShowOverlay] = useState(false);
-
-    // Function to handle opening the overlay page with the selected episode details
+    //Function to handle opening the overlay page with the selected episode details
     const handleEpisodeClick = (episode: Podcast) => {
         setSelectedEpisode(episode);
         setShowOverlay(true);
     };
-    // /**
-    //  * Handle clicking on an episode ID.
-    //  * Set the selectedEpisodeId state to the clicked episode ID.
-    //  */
-    // const handleEpisodeClick = (episodeId: string) => {
-    //     setSelectedEpisodeId(episodeId);
-    // };
 
+    // const handleEpisodeClick = (episode: Podcast) => {
+    //         // Construct the route path for the PodcastInfo page with the episode ID as a parameter
+    //         const path = `https://podcast-api.netlify.app/id/${episode.id}`;
+    //         // Navigate to the PodcastInfo page with the constructed path
+    //         window.location.href = path;
+    //     };
     // Function to close the overlay page
     const handleCloseOverlay = () => {
         setShowOverlay(false);
@@ -151,22 +108,13 @@ console.log(favorites)
             <div className='flex justify-center text-yellow-400'>
                 <h2 className="text-white font-bold md:text-xl p-4">Saved for Later</h2>
 
-                {/*<ul>*/}
-                {/*    {favorites.map((episode, index) => (*/}
-                {/*        <li key={index}>*/}
-                {/*            Episode ID: {episode.episode_id}*/}
-                {/*            /!* Render other episode details as needed *!/*/}
-                {/*        </li>*/}
-                {/*    ))}*/}
-                {/*</ul>*/}
-
-
-
-                <ul>
+                <ul className='items-center  z-[100]'>
                     {favorites.map((episode, index, seasonId) => (
                         <li key={index} onClick={() => handleEpisodeClick(episode)} style={{ cursor: 'pointer' }}>
                             {/*{episode.episode_id}{seasonId.title}*/}
                             {JSON.stringify(episode)}
+
+
                         </li>
                     ))}
                 </ul>
@@ -179,9 +127,6 @@ console.log(favorites)
 
                     />
                 )}
-
-
-
             </div>
         </>
     );

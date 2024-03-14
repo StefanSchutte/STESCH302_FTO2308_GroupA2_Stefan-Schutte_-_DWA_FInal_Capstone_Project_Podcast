@@ -5,6 +5,7 @@ import Genres from "../helpers/Genres.tsx";
 import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
 import supabase from "../supabase.ts";
+import {useAuth} from "../auth/AuthContext.tsx";
 
 /**
  * Props interface for the PodcastInfo component.
@@ -53,7 +54,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     const [seasonExpanded, setSeasonExpanded] = useState(false);
     const [tooltipText, setTooltipText] = useState('');
     const [tooltipIndex, setTooltipIndex] = useState(-1);
-
+    const { user } = useAuth();
     /**
      * Fetches podcast data from api and sets it in the state.
      * Manages the body overflow and fetches podcast data based on changes in item and showOverlay.
@@ -83,25 +84,67 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     /**
      * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
      */
-        useEffect(() => {
-            if (showOverlay && item) {
-                const fetchPodcastData = async () => {
-                    setLoading(true);
-                    console.log('item:', item)
-                    try {
-                        const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`);
-                        const data = await response.json();
-                        setPodcastData(data);
-                        //console.log(data)
-                    } catch (error) {
-                        console.error('Error fetching podcast data:', error);
-                    } finally {
-                        setLoading(false);
-                    }
-                };
-                fetchPodcastData();
+    useEffect(() => {
+        if (showOverlay && item) {
+            const fetchPodcastData = async () => {
+                setLoading(true);
+
+                try {
+                    const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`);
+                    const data = await response.json();
+                    setPodcastData(data);
+                } catch (error) {
+                    console.error('Error fetching podcast data:', error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            fetchPodcastData();
+        }
+    }, [item, showOverlay]);
+
+
+    /**
+     * Save data to Supabase
+     *
+     * @param episode
+     * @param seasonId
+     */
+    const handleSave = async (episode, seasonId) => {
+        if (!user) {
+            console.error('User is not authenticated');
+            return;
+        }
+
+        // Ensure selectedSeason and selectedEpisode are not null
+        if (selectedSeason !== null && selectedEpisode !== null && podcastData) {
+            const selectedEpisodeData = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
+            const selectedSeasonData = podcastData;
+            console.log(podcastData)
+console.log(selectedSeasonData)
+            // Insert the favorite episode into the database
+            const { data: insertedData, error } = await supabase
+                .from('favorites')
+                .insert([{ user_id: user.id, episode_id: selectedEpisodeData.id, season_id: selectedSeasonData.id }]);
+
+            if (error) {
+                console.error('Error inserting favorite episode:', error);
+                return;
             }
-        }, [item, showOverlay]);
+
+            console.log('Favorite episode inserted:', insertedData);
+
+            // Fetch all favorite data after insertion
+            const { data: allFavorites, error: fetchError } = await supabase.from('favorites').select();
+
+            if (fetchError) {
+                console.error('Error fetching all favorites:', fetchError);
+                return;
+            }
+
+            console.log('All favorite data:', allFavorites);
+        }
+    };
 
     /**
      * Handles the selection of a season.
@@ -147,42 +190,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     const handleMouseLeave = () => {
         setTooltipIndex(-1);
         setTooltipText('');
-    };
-
-    // /**
-    //  * Handles saving of podcast episodes.
-    //  */
-    // const handleSave = () => {
-    //     if (selectedSeason !== null) {
-    //         const episodeId = selectedEpisode ? podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.id : '';
-    //         const seasonId = selectedSeason ? String(selectedSeason) : null;
-    //         onSave(episodeId, seasonId);
-    //     }
-    // }
-
-    /**
-     * Handles saving of podcast episodes.
-     */
-    const handleSave = () => {
-        if (selectedSeason !== null && selectedEpisode !== null && podcastData) {
-            const episode = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
-            const seasonId = podcastData.seasons[selectedSeason - 1]
-            if (episode) {
-                //onSave(episode.id, String(selectedSeason));
-                onSave(episode, seasonId)
-
-            // if (episode && seasonId) {
-            //     // Save episode and season information to Supabase
-            //     supabase.from('episodes').upsert([episode]); // Upsert episode data
-            //     supabase.from('seasons').upsert([seasonId]); // Upsert season data
-
-console.log(podcastData.seasons)
-            } else {
-                console.error('Selected episode not found.');
-            }
-        } else {
-            console.error('Selected season or episode is null, or podcast data is not available.');
-        }
     };
 
     /**

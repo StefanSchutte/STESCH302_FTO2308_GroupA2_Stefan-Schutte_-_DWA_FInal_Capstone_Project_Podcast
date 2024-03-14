@@ -73,14 +73,6 @@ function Hero(): JSX.Element {
         setShowOverlay(false);
     };
 
-    /**
-     * A function to handle saving the podcast.
-     */
-    const handleSave = (episodeId: string, seasonId: string | null) => {
-        //logic to save the podcast here
-        console.log('Saving podcast:', episodeId, seasonId);
-    }
-
     return (
 
         <div className="flex">
@@ -101,7 +93,7 @@ function Hero(): JSX.Element {
                     </p>
                 </div>
             </div>
-            {showOverlay && <PodcastInfo item={podcast} showOverlay={showOverlay} closeOverlay={closeOverlay} onSave={handleSave}/>}
+            {showOverlay && <PodcastInfo item={podcast} showOverlay={showOverlay} closeOverlay={closeOverlay} />}
         </div>
     );
 }
