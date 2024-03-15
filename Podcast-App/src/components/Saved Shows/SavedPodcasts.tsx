@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from "../../auth/AuthContext.tsx";
 import supabase from "../../supabase.ts";
 import PodcastInfo from "../../pages/PodcastInfo.tsx";
+import SavedPodcastInfo from "./SavedPodcastInfo.tsx";
 
 
 interface Podcast {
@@ -22,6 +23,10 @@ function SavedPodcasts(): JSX.Element {
     const { user } = useAuth();
     const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null); // State to track the selected episode ID
     const [showOverlay, setShowOverlay] = useState(false);
+
+    const [podcastData, setPodcastData] = useState<any>(null); // State to manage podcast data
+    const [loading, setLoading] = useState(false); // State to manage loading st
+
     /**
      * Fetch the user's favorite podcasts from the database whenever the user object changes.
      * This ensures that the component updates its state when the user logs in or out.
@@ -42,7 +47,7 @@ function SavedPodcasts(): JSX.Element {
             if (user) {
                 const { data, error } = await supabase
                     .from('favorites')
-                    .select('*')
+                    .select('season_id')
                     .eq('user_id', user.id);
                 if (error) {
                     throw error;
@@ -51,6 +56,24 @@ function SavedPodcasts(): JSX.Element {
             }
         } catch (error) {
             console.error('Error fetching favorites:', error.message);
+        }
+    };
+
+    /**
+     * Fetch podcast data from the API using the provided season ID.
+     * @param {string} seasonId - The ID of the season to fetch podcast data for.
+     */
+    const fetchPodcastDataFromSupaBase = async (seasonId) => {
+        setLoading(true);
+
+        try {
+            const response = await fetch(`https://podcast-api.netlify.app/id/${seasonId}`);
+            const data = await response.json();
+            setPodcastData(data);
+        } catch (error) {
+            console.error('Error fetching podcast data:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -82,21 +105,23 @@ function SavedPodcasts(): JSX.Element {
     const handleEpisodeClick = (episode: Podcast) => {
         setSelectedEpisode(episode);
         setShowOverlay(true);
+
+            // Check if the episode has a nested object with a 'season_id' property
+            if (episode.season_id) {
+                // Access the 'season_id' property from the nested object
+                fetchPodcastDataFromSupaBase(episode.season_id);
+            } else {
+                console.error('Error: No season_id found in episode:', episode);
+            }
     };
 
-    // const handleEpisodeClick = (episode: Podcast) => {
-    //         // Construct the route path for the PodcastInfo page with the episode ID as a parameter
-    //         const path = `https://podcast-api.netlify.app/id/${episode.id}`;
-    //         // Navigate to the PodcastInfo page with the constructed path
-    //         window.location.href = path;
-    //     };
     // Function to close the overlay page
     const handleCloseOverlay = () => {
         setShowOverlay(false);
     };
 
 console.log(favorites)
-
+    //console.log("showOverlay value:", showOverlay);
     /**
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.
      * Each podcast item is displayed with its image and title.
@@ -105,12 +130,13 @@ console.log(favorites)
      */
     return (
         <>
-            <div className='flex justify-center text-yellow-400'>
-                <h2 className="text-white font-bold md:text-xl p-4">Saved for Later</h2>
-
-                <ul className='items-center  z-[100]'>
+            <div className='flex justify-center items-center text-yellow-400 mt-14'>
+                <h1 className="text-white font-bold md:text-xl text-xl p-4 mt-8">Favorites</h1>
+            </div>
+            <div className='justify-center items-center'>
+                <ul className='items-center z-[100]'>
                     {favorites.map((episode, index, seasonId) => (
-                        <li key={index} onClick={() => handleEpisodeClick(episode)} style={{ cursor: 'pointer' }}>
+                        <li key={index} onClick={() => handleEpisodeClick(episode)} style={{ cursor: 'pointer' }} className='border bg-black rounded m-4'>
                             {/*{episode.episode_id}{seasonId.title}*/}
                             {JSON.stringify(episode)}
 
@@ -119,12 +145,13 @@ console.log(favorites)
                     ))}
                 </ul>
                 {/* Render the overlay page with the selected episode details */}
-                {selectedEpisode && (
-                    <PodcastInfo
+                {showOverlay && (
+                    <SavedPodcastInfo
                         item={selectedEpisode}
                         showOverlay={showOverlay}
                         closeOverlay={handleCloseOverlay}
-
+                        podcastData={podcastData}
+                        loading={loading}
                     />
                 )}
             </div>

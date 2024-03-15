@@ -6,6 +6,7 @@ import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
 import supabase from "../supabase.ts";
 import {useAuth} from "../auth/AuthContext.tsx";
+import fetchPodcastData from "../api/fetchPodcastData.ts";
 
 /**
  * Props interface for the PodcastInfo component.
@@ -84,25 +85,31 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     /**
      * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
      */
+    // useEffect(() => {
+    //     if (showOverlay && item) {
+    //         const fetchPodcastData = async () => {
+    //             setLoading(true);
+    //
+    //             try {
+    //                 const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`);
+    //                 const data = await response.json();
+    //                 setPodcastData(data);
+    //             } catch (error) {
+    //                 console.error('Error fetching podcast data:', error);
+    //             } finally {
+    //                 setLoading(false);
+    //             }
+    //         };
+    //         fetchPodcastData();
+    //     }
+    // }, [item, showOverlay]);
+
     useEffect(() => {
         if (showOverlay && item) {
-            const fetchPodcastData = async () => {
-                setLoading(true);
-
-                try {
-                    const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`);
-                    const data = await response.json();
-                    setPodcastData(data);
-                } catch (error) {
-                    console.error('Error fetching podcast data:', error);
-                } finally {
-                    setLoading(false);
-                }
-            };
-            fetchPodcastData();
+            // Call the fetchPodcastData function from the imported module
+            fetchPodcastData(item.id, setLoading, setPodcastData);
         }
     }, [item, showOverlay]);
-
 
     /**
      * Save data to Supabase
