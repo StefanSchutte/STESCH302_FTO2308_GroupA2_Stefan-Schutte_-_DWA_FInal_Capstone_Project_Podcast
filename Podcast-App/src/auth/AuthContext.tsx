@@ -121,8 +121,8 @@
 // }
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import supabase from '../supabase'; // Ensure this import is correct. It seems you're also importing 'auth' which might not be used.
-import {session} from "@supabase/supabase-js";
+import supabase from '../supabase';
+
 interface User {
     id: string;
     email?: string;
@@ -146,13 +146,6 @@ export const AuthContextProvider: React.FC = ({ children }) => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
         });
-
-        // Check the current auth state and set the user accordingly on initial load.
-        // (async () => {
-        //     const session = supabase.auth.session();
-        //     setUser(session?.user ?? null);
-        // })();
-
         return () => subscription.unsubscribe();
     }, []);
 
@@ -178,6 +171,10 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     );
 };
 
+/**
+ * Custom hook for accessing the authentication auth.
+ * @returns The authentication auth, using the useContext hook.
+ */
 export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (!context) throw new Error("useAuth must be used within an AuthContextProvider");

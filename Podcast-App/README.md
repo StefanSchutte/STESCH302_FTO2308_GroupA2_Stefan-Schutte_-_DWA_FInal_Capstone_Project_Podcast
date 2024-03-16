@@ -120,6 +120,8 @@ LINKHERE
 - Fuse.js
 - ES Lint
 - Webstorm
+- metatags.io
+- Google Fonts
 
 ### Technologies reasoning:
 1. React.
@@ -222,7 +224,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ All favicon information has been created an added correctly via https://realfavicongenerator.net/ (you are welcome to use any free PNG image you find on https://www.flaticon.com/)
 
- All metatag information has been created and added via https://metatags.io/ (You are welcome to use any free image on https://unsplash.com/). Be mindful to manually replace all URL values (especially image URL) to absolute Netlify URL values (you will need to deploy to Netlify first)
+✅ All metatag information has been created and added via https://metatags.io/ (You are welcome to use any free image on https://unsplash.com/). Be mindful to manually replace all URL values (especially image URL) to absolute Netlify URL values (you will need to deploy to Netlify first)
 
 ✅ All show data loaded via a fetch call from the https://podcast-api.netlify.app/shows
 
@@ -254,7 +256,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User sees the amount of episodes in a season as a number
 
-? User can go back to a show view from a season-specific view
+✅ User can go back to a show view from a season-specific view
 
 ✅ User can mark specific episodes as favourites to find them again
 

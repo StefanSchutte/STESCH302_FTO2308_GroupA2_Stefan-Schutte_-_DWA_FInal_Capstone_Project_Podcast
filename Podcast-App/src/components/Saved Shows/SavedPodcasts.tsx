@@ -32,6 +32,7 @@ function SavedPodcasts(): JSX.Element {
 
     // State variable to store the ID of the selected episode for audio playback
     const [selectedEpisodeForAudio, setSelectedEpisodeForAudio] = useState<string | null>(null);
+    const [shareUrl, setShareUrl] = useState<string>('');
 
     /**
      * Fetch the user's favorite podcasts from the database whenever the user object changes.
@@ -122,13 +123,7 @@ console.log(seasonId)
             }
     };
 
-    // Function to close the overlay page
-    const handleCloseOverlay = () => {
-        setShowOverlay(false);
-    };
-
 console.log(favorites)
-    //console.log("showOverlay value:", showOverlay);
 
     //filters
     const sortFavoritesByShowAZ = () => {
@@ -158,6 +153,13 @@ console.log(favorites)
         setSelectedEpisodeForAudio(episodeId);
     };
 
+    const generateShareUrl = () => {
+        // Generate a unique share URL based on the user's ID or session
+        const uniqueIdentifier = user ? user.id : Date.now().toString();
+        const url = `${window.location.origin}/shared-favorites/${uniqueIdentifier}`;
+        setShareUrl(url);
+    };
+
     /**
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.
      * Each podcast item is displayed with its image and title.
@@ -184,11 +186,12 @@ console.log(favorites)
                             onClick={() => handleEpisodeClick(episode)}
                             className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 cursor-pointer'>
                             {/*{JSON.stringify(episode)}*/}
+                            <div className="flex items-center">
                             <div>
-                                <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-3'/>
+                                <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-4'/>
                             </div>
-                            <div className="flex flex-col ml-4">
-                                <div className='font-bold m-3'>{episode.season_title}</div>
+                            <div className="flex flex-col ml-6">
+                                <div className='font-bold m-3 underline'>{episode.season_title}</div>
                                 <div className=' flex items-center m-2'>
                                     <p className='text-gray-500 pr-4'>Episode:</p>
                                     {episode.episode_title}
@@ -202,16 +205,25 @@ console.log(favorites)
                                     {format(new Date(episode.date_saved), 'dd/MM/yyyy HH:mm')}
                                 </div>
                             </div>
-
+                            </div>
                             <div className='m-3'>
                                 <div>
                                     <button onClick={() => openAudioPlayer(episode.id)}>
                                         <img src={playFav} alt='Play' title='Play' className='w-14 h-14 m-2'/>
                                     </button>
                                 </div>
+
                                 <div>
-                                    <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2'/>
+                                    <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2' onClick={generateShareUrl}/>
+                                    {/*share url*/}
+                                    {shareUrl && (
+                                        <div className='bg-blue-500'>
+                                            <input type="text" value={shareUrl} readOnly />
+                                            <button onClick={() => navigator.clipboard.writeText(shareUrl)}>Copy URL</button>
+                                        </div>
+                                    )}
                                 </div>
+
                                 <div onClick={() => deletePodcast(episode.id)}>
                                     <img src={removeFav} alt='Remove' title='Remove' className='w-14 h-14 m-2 mt-3'/>
                                 </div>
