@@ -6,7 +6,7 @@ import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
 import supabase from "../supabase.ts";
 import {useAuth} from "../auth/AuthContext.tsx";
-import fetchPodcastData from "../api/fetchPodcastData.ts";
+import podcastDataAPI from "../api/podcastDataAPI.ts";
 
 /**
  * Props interface for the PodcastInfo component.
@@ -84,16 +84,21 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
 
     /**
      * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
+     * Call the podcastDataAPI function from the imported module
      */
     useEffect(() => {
         if (showOverlay && item) {
-            // Call the fetchPodcastData function from the imported module
-            fetchPodcastData(item.id, setLoading, setPodcastData);
+            podcastDataAPI(item.id, setLoading, setPodcastData);
         }
     }, [item, showOverlay]);
 
     /**
-     * Save data to Supabase
+     * Save data to Supabase.
+     *
+     * Ensure selectedSeason and selectedEpisode are not null.
+     * Get the current date and time.
+     * Insert the favorite episode into the database.
+     * Fetch all favorite data after insertion.
      *
      * @param episode
      * @param seasonId
@@ -104,20 +109,14 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
             return;
         }
 
-        // Ensure selectedSeason and selectedEpisode are not null
         if (selectedSeason !== null && selectedEpisode !== null && podcastData) {
             const selectedEpisodeData = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
             const selectedSeasonData = podcastData;
-            console.log(podcastData)
 
-            console.log(selectedSeasonData.seasons.title)
+console.log(selectedSeasonData)
 
-console.log(selectedEpisodeData)
-
-            // Get the current date and time
             const currentDate = new Date().toISOString();
 
-            // Insert the favorite episode into the database
             const { data: insertedData, error } = await supabase
                 .from('favorites')
                 .insert([{
@@ -130,16 +129,14 @@ console.log(selectedEpisodeData)
                     seasons_titles: selectedSeasonData.seasons,
                     date_saved: currentDate,
                     mp3_file: selectedEpisodeData.file,
+                    //mp3_file: selectedSeasonData.seasons.mp3_file
                 }]);
 
             if (error) {
                 console.error('Error inserting favorite episode:', error);
                 return;
             }
-
             console.log('Favorite episode inserted:', insertedData);
-
-            // Fetch all favorite data after insertion
             const { data: allFavorites, error: fetchError } = await supabase.from('favorites').select();
 
             if (fetchError) {
@@ -200,6 +197,7 @@ console.log(selectedEpisodeData)
     /**
      * Conditional rendering of the overlay based on the visibility flag.(showOverlay)
      * Renders the podcast details, loading indicator, season/episode selectors, and a button to close the overlay.
+     * Render loading spinner if data is loading.
      */
     if (!showOverlay) return null;
 
@@ -240,7 +238,7 @@ console.log(selectedEpisodeData)
                                             </p>{item.seasons}</div>
                                     </div>
 
-                                    {loading ? ( // Render loading spinner if data is loading
+                                    {loading ? (
                                         <div className="flex justify-center items-center">
                                             <div className="text-blue-500 text-5xl">Loading...</div>
                                         </div>

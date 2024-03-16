@@ -1,4 +1,4 @@
-const fetchPodcastData = async (itemId: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>, setPodcastData: React.Dispatch<React.SetStateAction<any>>) => {
+const podcastDataAPI = async (itemId: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>, setPodcastData: React.Dispatch<React.SetStateAction<any>>) => {
     setLoading(true);
 
     try {
@@ -12,4 +12,4 @@ const fetchPodcastData = async (itemId: string, setLoading: React.Dispatch<React
     }
 };
 
-export default fetchPodcastData;
+export default podcastDataAPI;

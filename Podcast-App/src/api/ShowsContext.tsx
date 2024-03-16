@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import getShowsFromAPI from './api';
+import getShowsFromAPI from './previewAPI.ts';
 
 interface Podcast {
     id: string,
