@@ -256,9 +256,9 @@ Project is deployed to a custom Netlify URL
 
 ? User can go back to a show view from a season-specific view
 
- User can mark specific episodes as favourites to find them again
+✅ User can mark specific episodes as favourites to find them again
 
- User can visit a view where they see all their favourites
+✅ User can visit a view where they see all their favourites
 
  User can see the show and season of any episode in their favourites list
 
@@ -280,15 +280,15 @@ Project is deployed to a custom Netlify URL
 
 ✅  Automatically filter shows by genre if the genre label is clicked on
 
- User sees the date and time that an episode was added to their favourites list
+✅ User sees the date and time that an episode was added to their favourites list
 
- User can arrange favourites by show titles from A-Z
+✅ User can arrange favourites by show titles from A-Z
 
- User can arrange favourites by show titles from Z-A
+✅ User can arrange favourites by show titles from Z-A
 
- User can arrange favourites by date updated in ascending order
+✅ User can arrange favourites by date updated in ascending order
 
- User can arrange favourites by date updated in descending order
+✅ User can arrange favourites by date updated in descending order
 
 ✅ Audio player shows current progress and episode length as timestamps
 
@@ -312,7 +312,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User favourites are stored in the https://app.supabase.com database
 
- User favourites are automatically synced when logged in, ensuring that they share favourites between devices
+✅ User favourites are automatically synced when logged in, ensuring that they share favourites between devices
 
  Users can share their favourites as a publicly accessible URL
 

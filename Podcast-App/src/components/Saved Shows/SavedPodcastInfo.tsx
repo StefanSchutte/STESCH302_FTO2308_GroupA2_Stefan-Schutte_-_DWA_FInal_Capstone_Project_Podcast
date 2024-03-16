@@ -87,6 +87,7 @@ const SavedPodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOver
     /**
      * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
      */
+    useEffect(() => {
     const fetchPodcastData = async (seasonId) => {
             // Check if seasonId is undefined
             if (!seasonId) {
@@ -109,9 +110,9 @@ const SavedPodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOver
             }
         };
 
-    useEffect(() => {
-        if (showOverlay && selectedSeason) {
-            fetchPodcastData(selectedSeason);
+
+        if (showOverlay && selectedSeason !== null ) {
+            fetchPodcastData(item.id);
         }
     }, [showOverlay, selectedSeason]);
 

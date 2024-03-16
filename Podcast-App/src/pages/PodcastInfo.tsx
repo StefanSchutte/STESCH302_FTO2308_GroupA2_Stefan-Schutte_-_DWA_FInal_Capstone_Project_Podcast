@@ -111,6 +111,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
         }
     }, [item, showOverlay]);
 
+
+
     /**
      * Save data to Supabase
      *
@@ -128,11 +130,27 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
             const selectedEpisodeData = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
             const selectedSeasonData = podcastData;
             console.log(podcastData)
+
+            console.log(selectedSeasonData.seasons.title)
+
 console.log(selectedSeasonData)
+
+            // Get the current date and time
+            const currentDate = new Date().toISOString();
+
             // Insert the favorite episode into the database
             const { data: insertedData, error } = await supabase
                 .from('favorites')
-                .insert([{ user_id: user.id, episode_id: selectedEpisodeData.id, season_id: selectedSeasonData.id }]);
+                .insert([{
+                    user_id: user.id,
+                    episode_id: selectedEpisodeData.id,
+                    season_id: selectedSeasonData.id,
+                    episode_title: selectedEpisodeData.title,
+                    season_title: selectedSeasonData.title,
+                    season_image: selectedSeasonData.image,
+                    seasons_titles: selectedSeasonData.seasons,
+                    date_saved: currentDate
+                }]);
 
             if (error) {
                 console.error('Error inserting favorite episode:', error);

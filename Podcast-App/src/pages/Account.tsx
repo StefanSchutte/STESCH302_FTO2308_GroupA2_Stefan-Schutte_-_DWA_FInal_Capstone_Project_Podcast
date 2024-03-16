@@ -9,9 +9,7 @@ function Account() {
             <div className='w-full text-green-500'>
                 <img className='absolute w-full h-full object-cover' src={accountImage} alt='/'/>
                 <div className='bg-black/60 fixed top-0 left-0 w-full h-full'>
-                    <div className='absolute top-[20%] p-4 md:p-8'>
-                        {/*<h1 className='text-5xl md:text font-bold'>My Saved List</h1>*/}
-                    </div>
+                    <div className='absolute top-[20%] p-4 md:p-8'></div>
                     <SavedPodcasts/>
                 </div>
 
