@@ -27,17 +27,12 @@ const Filters: React.FC = () => {
     /** State variable to track selected podcast */
     const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null);
 
-
-
     /**
      * Fetch shows from api on component mount.
      * Initialize filteredShows with the fetched podcasts
      */
     useEffect(() => {
         setFilteredShows(podcasts);
-
-
-
     }, [podcasts]);
 
     /**

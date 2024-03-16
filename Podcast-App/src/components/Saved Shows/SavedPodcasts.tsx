@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from "../../auth/AuthContext.tsx";
 import supabase from "../../supabase.ts";
-import PodcastInfo from "../../pages/PodcastInfo.tsx";
-import SavedPodcastInfo from "./SavedPodcastInfo.tsx";
 import removeFav from '/remove.png'
+import shareFav from '/share.png'
+import playFav from "/play-button.png";
 import { format } from 'date-fns'
+
+import AudioPlayer from "../audio/AudioPlayer.tsx";
 
 interface Podcast {
     id: string;
@@ -28,6 +30,9 @@ function SavedPodcasts(): JSX.Element {
     const [podcastData, setPodcastData] = useState<any>(null); // State to manage podcast data
     const [loading, setLoading] = useState(false); // State to manage loading st
 
+    // State variable to store the ID of the selected episode for audio playback
+    const [selectedEpisodeForAudio, setSelectedEpisodeForAudio] = useState<string | null>(null);
+
     /**
      * Fetch the user's favorite podcasts from the database whenever the user object changes.
      * This ensures that the component updates its state when the user logs in or out.
@@ -48,7 +53,7 @@ function SavedPodcasts(): JSX.Element {
             if (user) {
                 const { data, error } = await supabase
                     .from('favorites')
-                    .select('season_id, episode_title, season_title, season_image, date_saved')
+                    .select('season_id, episode_title, season_title, season_image, date_saved, mp3_file')
                     .eq('user_id', user.id);
                 if (error) {
                     throw error;
@@ -145,6 +150,15 @@ console.log(favorites)
     };
 
     /**
+     * Function to handle opening the audio player for the selected episode.
+     * @param {string} episodeId - The ID of the episode to be played.
+     */
+    const openAudioPlayer = (episodeId: string) => {
+        // Set the selected episode ID for audio playback
+        setSelectedEpisodeForAudio(episodeId);
+    };
+
+    /**
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.
      * Each podcast item is displayed with its image and title.
      * It provides a delete button for each podcast item, allowing users to remove it from their favorites.
@@ -157,10 +171,10 @@ console.log(favorites)
             </div>
 
             <div className="flex justify-center mt-2">
-            <button onClick={sortFavoritesByShowAZ} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Sort A-Z</button>
-            <button onClick={sortFavoritesByShowZA} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Sort Z-A</button>
-            <button onClick={sortFavoritesByDateAscending} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Ascending Date</button>
-            <button onClick={sortFavoritesByDateDescending} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Descending Date</button>
+                <button onClick={sortFavoritesByShowAZ} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Sort A-Z</button>
+                <button onClick={sortFavoritesByShowZA} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Sort Z-A</button>
+                <button onClick={sortFavoritesByDateAscending} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Ascending Date</button>
+                <button onClick={sortFavoritesByDateDescending} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Descending Date</button>
             </div>
 
             <div className='justify-center items-center text-gray-500 overflow-y-auto max-h-screen'>
@@ -169,48 +183,50 @@ console.log(favorites)
                         <li key={index}
                             onClick={() => handleEpisodeClick(episode)}
                             className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 cursor-pointer'>
-                            {/*{episode.episode_id}{seasonId.title}*/}
                             {/*{JSON.stringify(episode)}*/}
-
                             <div>
-                                {/* Render episode image */}
-                                <img src={episode.season_image} alt={episode.title} className='w-32 h-32 ml-3'/>
+                                <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-3'/>
                             </div>
                             <div className="flex flex-col ml-4">
-
                                 <div className='font-bold m-3'>{episode.season_title}</div>
-
                                 <div className=' flex items-center m-2'>
-                                    <p className='text-gray-500 pr-4'>Episode: </p> {episode.episode_title}
+                                    <p className='text-gray-500 pr-4'>Episode:</p>
+                                    {episode.episode_title}
                                 </div>
                                 <div className=' flex items-center m-2'>
-                                    <p className='text-gray-500 pr-6'>Season:</p> {episode.season_title}
+                                    <p className='text-gray-500 pr-6'>Season:</p>
+                                    {episode.season_title}
                                 </div>
                                 <div className=' flex items-center m-2 mb-3'>
-                                    <p className='text-gray-500 pr-2'>Date
-                                        Saved:</p> {format(new Date(episode.date_saved), 'dd/MM/yyyy HH:mm')}
+                                    <p className='text-gray-500 pr-2'>Date Saved:</p>
+                                    {format(new Date(episode.date_saved), 'dd/MM/yyyy HH:mm')}
                                 </div>
                             </div>
-                            <div onClick={() => deletePodcast(episode.id)}>
-                                <img src={removeFav} alt='Remove' title='Remove'/>
+
+                            <div className='m-3'>
+                                <div>
+                                    <button onClick={() => openAudioPlayer(episode.id)}>
+                                        <img src={playFav} alt='Play' title='Play' className='w-14 h-14 m-2'/>
+                                    </button>
+                                </div>
+                                <div>
+                                    <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2'/>
+                                </div>
+                                <div onClick={() => deletePodcast(episode.id)}>
+                                    <img src={removeFav} alt='Remove' title='Remove' className='w-14 h-14 m-2 mt-3'/>
+                                </div>
                             </div>
                         </li>
                     ))}
                 </ul>
-                {/* Render the overlay page with the selected episode details */}
-                {/*{showOverlay && (*/}
-                {/*    <SavedPodcastInfo*/}
-                {/*        item={selectedEpisode}*/}
-                {/*        showOverlay={showOverlay}*/}
-                {/*        closeOverlay={handleCloseOverlay}*/}
-                {/*        podcastData={podcastData}*/}
-                {/*        loading={loading}*/}
-
-                {/*    />*/}
-                {/*)}*/}
             </div>
 
-
+            {selectedEpisodeForAudio && (
+                <AudioPlayer
+                    audioUrl={favorites.find(episode => episode.id === selectedEpisodeForAudio)?.mp3_file || ''}
+                    onClose={() => setSelectedEpisodeForAudio(null)}
+                />
+            )}
         </>
     );
 }

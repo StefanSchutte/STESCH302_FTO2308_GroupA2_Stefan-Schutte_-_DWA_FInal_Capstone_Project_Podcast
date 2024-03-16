@@ -85,33 +85,12 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     /**
      * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
      */
-    // useEffect(() => {
-    //     if (showOverlay && item) {
-    //         const fetchPodcastData = async () => {
-    //             setLoading(true);
-    //
-    //             try {
-    //                 const response = await fetch(`https://podcast-api.netlify.app/id/${item.id}`);
-    //                 const data = await response.json();
-    //                 setPodcastData(data);
-    //             } catch (error) {
-    //                 console.error('Error fetching podcast data:', error);
-    //             } finally {
-    //                 setLoading(false);
-    //             }
-    //         };
-    //         fetchPodcastData();
-    //     }
-    // }, [item, showOverlay]);
-
     useEffect(() => {
         if (showOverlay && item) {
             // Call the fetchPodcastData function from the imported module
             fetchPodcastData(item.id, setLoading, setPodcastData);
         }
     }, [item, showOverlay]);
-
-
 
     /**
      * Save data to Supabase
@@ -133,7 +112,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
 
             console.log(selectedSeasonData.seasons.title)
 
-console.log(selectedSeasonData)
+console.log(selectedEpisodeData)
 
             // Get the current date and time
             const currentDate = new Date().toISOString();
@@ -149,7 +128,8 @@ console.log(selectedSeasonData)
                     season_title: selectedSeasonData.title,
                     season_image: selectedSeasonData.image,
                     seasons_titles: selectedSeasonData.seasons,
-                    date_saved: currentDate
+                    date_saved: currentDate,
+                    mp3_file: selectedEpisodeData.file,
                 }]);
 
             if (error) {
