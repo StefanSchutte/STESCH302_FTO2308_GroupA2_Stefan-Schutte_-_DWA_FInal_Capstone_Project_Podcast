@@ -54,7 +54,7 @@ function SavedPodcasts(): JSX.Element {
             if (user) {
                 const { data, error } = await supabase
                     .from('favorites')
-                    .select('season_id, episode_title, season_title, season_image, date_saved, mp3_file')
+                    .select('season_id, episode_title, season_title, season_image, date_saved, mp3_file, seasons_titles')
                     .eq('user_id', user.id);
                 if (error) {
                     throw error;
@@ -146,13 +146,23 @@ console.log(favorites)
 
     /**
      * Function to handle opening the audio player for the selected episode.
+     * Set the selected episode ID for audio playback.
+     * Find the episode with the given ID.
      * @param {string} episodeId - The ID of the episode to be played.
      */
     const openAudioPlayer = (episodeId: string) => {
-        // Set the selected episode ID for audio playback
-        setSelectedEpisodeForAudio(episodeId);
+        const selectedEpisode = favorites.find(episode => episode.id === episodeId);
+        if (selectedEpisode) {
+            setSelectedEpisodeForAudio(selectedEpisode.mp3_file);
+        } else {
+            console.error('Error: Episode not found with ID:', episodeId);
+        }
     };
 
+
+    /**
+     * share
+     */
     const generateShareUrl = () => {
         // Generate a unique share URL based on the user's ID or session
         const uniqueIdentifier = user ? user.id : Date.now().toString();
@@ -198,7 +208,8 @@ console.log(favorites)
                                 </div>
                                 <div className=' flex items-center m-2'>
                                     <p className='text-gray-500 pr-6'>Season:</p>
-                                    {episode.season_title}
+                                    {/*{episode.seasons_titles[index]?.title}*/}
+                                    {episode.seasons_titles && episode.seasons_titles[index]?.title ? episode.seasons_titles[index]?.title : episode.season_title}
                                 </div>
                                 <div className=' flex items-center m-2 mb-3'>
                                     <p className='text-gray-500 pr-2'>Date Saved:</p>
@@ -235,7 +246,7 @@ console.log(favorites)
 
             {selectedEpisodeForAudio && (
                 <AudioPlayer
-                    audioUrl={favorites.find(episode => episode.id === selectedEpisodeForAudio)?.mp3_file || ''}
+                    audioUrl={selectedEpisode.mp3_file}
                     onClose={() => setSelectedEpisodeForAudio(null)}
                 />
             )}

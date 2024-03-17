@@ -129,7 +129,6 @@ console.log(selectedSeasonData)
                     seasons_titles: selectedSeasonData.seasons,
                     date_saved: currentDate,
                     mp3_file: selectedEpisodeData.file,
-                    //mp3_file: selectedSeasonData.seasons.mp3_file
                 }]);
 
             if (error) {
@@ -279,13 +278,17 @@ console.log(selectedSeasonData)
                                                                         className="w-16 h-16 mr-4"
                                                                     />
                                                                     <button
-                                                                        onClick={() => handleSeasonSelect(i + 1)} title='Select Season'>
-                                                                        Season {i + 1}
+                                                                        onClick={() => handleSeasonSelect(i + 1)}
+                                                                        title='Select Season'>
+                                                                        <div className='flex items-center'>
+                                                                        <p className='text-gray-300 pr-3'> Season {i + 1}:</p> {podcastData.seasons[i]?.title || 'Untitled'}
+                                                                        </div>
                                                                     </button>
                                                                 </div>
-                                                                {/*<button className='w-12 h-12' onClick={() => onSave(episode.id, selectedSeason ? String(selectedSeason) : null)}>*/}
-                                                                {/*<img src={saveBtnFav} alt='Save'/>*/}
-                                                                {/*</button>*/}
+                                                                <div className='flex items-center'>
+                                                                    <p className='text-gray-300 pr-2'>Episodes: </p>
+                                                                    {String(podcastData.seasons[i]?.episodes.length || 0).padStart(2, '0')}
+                                                                </div>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -333,7 +336,8 @@ console.log(selectedSeasonData)
                                                                         <div
                                                                             className="absolute left-0 mt-8 ml-2 bg-black text-amber-50 p-2 rounded z-20"
                                                                             style={{top: '50%', left: '0'}}>
-                                                                            {tooltipText}
+                                                                            {/*{tooltipText}*/}
+                                                                            {episode.description ? episode.description : "No description available."}
                                                                         </div>
                                                                     )}
                                                                     <button onClick={handleSave} className='w-12 h-12'><img src={saveBtnFav} alt='Save' title='Select Episode to Save'/></button>

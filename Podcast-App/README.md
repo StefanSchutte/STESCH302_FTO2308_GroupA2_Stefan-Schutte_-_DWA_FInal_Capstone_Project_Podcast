@@ -224,7 +224,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ All favicon information has been created an added correctly via https://realfavicongenerator.net/ (you are welcome to use any free PNG image you find on https://www.flaticon.com/)
 
-✅ All metatag information has been created and added via https://metatags.io/ (You are welcome to use any free image on https://unsplash.com/). Be mindful to manually replace all URL values (especially image URL) to absolute Netlify URL values (you will need to deploy to Netlify first)
+? All metatag information has been created and added via https://metatags.io/ (You are welcome to use any free image on https://unsplash.com/). Be mindful to manually replace all URL values (especially image URL) to absolute Netlify URL values (you will need to deploy to Netlify first)
 
 ✅ All show data loaded via a fetch call from the https://podcast-api.netlify.app/shows
 
@@ -262,7 +262,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User can visit a view where they see all their favourites
 
- User can see the show and season of any episode in their favourites list
+✅ User can see the show and season of any episode in their favourites list
 
  Episodes related by season/show are grouped in favourites
 
