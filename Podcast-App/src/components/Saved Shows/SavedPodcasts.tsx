@@ -77,7 +77,6 @@ console.log(seasonId)
             const response = await fetch(`https://podcast-api.netlify.app/id/${seasonId}`);
             const data = await response.json();
             setPodcastData(data);
-            console.log(response)
         } catch (error) {
             console.error('Error fetching podcast data:', error);
         } finally {
@@ -90,20 +89,24 @@ console.log(seasonId)
      * Deletes podcast by calling the appropriate Supabase query.
      * @param id - The ID of the podcast to be deleted.
      */
-    const deletePodcast = async (id: string) => {
+    const deletePodcast = async (season_id: string) => {
         try {
             const { error } = await supabase
                 .from('favorites')
                 .delete()
-                .eq('id', id);
+                .eq('season_id', season_id);
             if (error) {
                 throw error;
             }
-            setFavorites(favorites.filter(favorite => favorite.id !== id));
+            setFavorites(favorites.filter(favorite => favorite.season_id !== season_id));
         } catch (error) {
             console.error('Error deleting podcast:', error.message);
         }
     };
+
+    const handleDeleteClick = (season_id: string) => {
+        deletePodcast(season_id);
+    }
 
     /**
      * Handle clicking on an episode ID.
@@ -235,9 +238,9 @@ console.log(favorites)
                                     )}
                                 </div>
 
-                                <div onClick={() => deletePodcast(episode.id)}>
+                                <button onClick={() => handleDeleteClick(episode.season_id)}>
                                     <img src={removeFav} alt='Remove' title='Remove' className='w-14 h-14 m-2 mt-3'/>
-                                </div>
+                                </button>
                             </div>
                         </li>
                     ))}

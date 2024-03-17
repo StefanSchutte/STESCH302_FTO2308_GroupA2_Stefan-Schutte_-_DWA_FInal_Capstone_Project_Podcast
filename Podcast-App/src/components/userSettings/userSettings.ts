@@ -3,29 +3,58 @@
 // Function to update the last listened show and episode
 import supabase from "../../supabase.ts";
 
-const updateLastListened = async (userId: string, showId: string, episodeId: string) => {
-    const { data, error } = await supabase
-        .from('user_history')
-        .upsert([{ user_id: userId, last_listened_show_id: showId, last_listened_episode_id: episodeId }], { onConflict: ['user_id'] });
-    if (error) {
-        console.error('Error updating last listened:', error.message);
-        return null;
+export const saveLastListened = async (userId: string, showId: string, episodeId: string, podcastData, selectedEpisode, selectedSeason) => {
+
+    // Check if user is authenticated
+    if (!userId) {
+        console.error('User is not authenticated');
+        return;
     }
-    return data;
+
+    // Check if podcast data and selected season/episode are available
+    if (podcastData && selectedSeason !== null && selectedEpisode !== null) {
+        // Extract selected episode data
+        const selectedEpisodeData = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
+
+
+        // Construct the upsert object
+        const upsertData = {
+            user_id: userId,
+            last_listened_show_id: selectedEpisodeData.id,
+            last_listened_episode_id: selectedEpisodeData.title,
+            episode_title: selectedEpisodeData.title,
+        };
+
+        // Perform the upsert operation
+        const { data, error } = await supabase
+            .from('user_history')
+            .upsert([upsertData], { onConflict: ['user_id'] });
+
+        if (error) {
+            console.error('Error updating last listened:', error.message);
+            return null;
+        }
+
+        return data;
+    }
 };
 
 // Function to retrieve the last listened show and episode
-const getLastListened = async (userId: string) => {
-    const { data, error } = await supabase
-        .from('user_history')
-        .select('last_listened_show_id, last_listened_episode_id')
-        .eq('user_id', userId)
-        .single();
-    if (error) {
-        console.error('Error fetching last listened:', error.message);
-        return null;
-    }
-    return data;
+export const getLastListened = async (userId: string) => {
+    // const { data, error } = await supabase
+    //     .from('user_history')
+    //     .select('last_listened_show_id, last_listened_episode_id')
+    //     .eq('user_id', userId)
+    //     .single();
+    // if (error) {
+    //     console.error('Error fetching last listened:', error.message);
+    //     return null;
+    // }
+    // if (!data) {
+    //     console.error('No data found for the user');
+    //     return null;
+    // }
+    // return data;
 };
 
 // Remembering which shows and episodes the user listened to all the way through: table named 'completed_episodes' in your Supabase database with columns 'user_id' and 'episode_id'

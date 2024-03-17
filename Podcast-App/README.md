@@ -266,7 +266,7 @@ Project is deployed to a custom Netlify URL
 
  Episodes related by season/show are grouped in favourites
 
- User is able to remove episodes from their favourites
+✅ User is able to remove episodes from their favourites
 
 ✅ User can arrange the list of shows by title from A-Z
 

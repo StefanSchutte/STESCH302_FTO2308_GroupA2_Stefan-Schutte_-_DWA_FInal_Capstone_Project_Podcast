@@ -7,6 +7,7 @@ import saveBtnFav from "/save.png";
 import supabase from "../supabase.ts";
 import {useAuth} from "../auth/AuthContext.tsx";
 import podcastDataAPI from "../api/podcastDataAPI.ts";
+import { saveLastListened, getLastListened } from "../components/userSettings/userSettings.ts";
 
 /**
  * Props interface for the PodcastInfo component.
@@ -112,9 +113,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
         if (selectedSeason !== null && selectedEpisode !== null && podcastData) {
             const selectedEpisodeData = podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1];
             const selectedSeasonData = podcastData;
-
-console.log(selectedSeasonData)
-
             const currentDate = new Date().toISOString();
 
             const { data: insertedData, error } = await supabase
@@ -147,6 +145,29 @@ console.log(selectedSeasonData)
         }
     };
 
+    // Function to handle saving last listened show and episode
+    const handleSaveLastListened = async () => {
+        if (user && selectedSeason !== null && selectedEpisode !== null) {
+            await saveLastListened(user.id, item.id, selectedEpisode.toString());
+        }
+    };
+
+    useEffect(() => {
+        // Fetch last listened show and episode when component mounts
+        const fetchLastListenedData = async () => {
+            if (user) {
+                const data = await getLastListened(user.id);
+                if (data) {
+                    // Update state with last listened show and episode
+                    setSelectedSeason(parseInt(data.last_listened_show_id));
+                    setSelectedEpisode(parseInt(data.last_listened_episode_id));
+                }
+            }
+        };
+
+        fetchLastListenedData();
+    }, [user]);
+
     /**
      * Handles the selection of a season.
      * @param seasonNumber - The selected season number.
@@ -161,6 +182,7 @@ console.log(selectedSeasonData)
      */
     const handleEpisodeSelect = (episodeNumber: number) => {
         setSelectedEpisode(episodeNumber);
+        handleSaveLastListened();
     };
 
     const toggleExpanded = () => {
