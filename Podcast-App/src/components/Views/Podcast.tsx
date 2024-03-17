@@ -9,7 +9,7 @@ interface PodcastProps {
         image: string;
         title: string;
     };
-    openOverlay: (podcast: any) => void;
+    openOverlay: (podcast) => void;
 }
 
 /**

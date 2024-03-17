@@ -5,14 +5,21 @@ import removeFav from '/remove.png'
 import shareFav from '/share.png'
 import playFav from "/play-button.png";
 import { format } from 'date-fns'
-
 import AudioPlayer from "../audio/AudioPlayer.tsx";
 
 interface Podcast {
     id: string;
     image: string;
     title: string;
+    season_id: string;
+    season_image: string;
+    season_title: string;
+    episode_title: string;
+    date_saved: string;
+    mp3_file: string;
+    seasons_titles: string;
 }
+
 
 /**
  * Functional component representing the saved podcasts section.
@@ -24,13 +31,9 @@ interface Podcast {
 function SavedPodcasts(): JSX.Element {
     const [favorites, setFavorites] = useState<Podcast[]>([]);
     const { user } = useAuth();
-    const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null); // State to track the selected episode ID
-    const [showOverlay, setShowOverlay] = useState(false);
-
-    const [podcastData, setPodcastData] = useState<any>(null); // State to manage podcast data
-    const [loading, setLoading] = useState(false); // State to manage loading st
-
-    // State variable to store the ID of the selected episode for audio playback
+    const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null);
+    const [podcastData, setPodcastData] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
     const [selectedEpisodeForAudio, setSelectedEpisodeForAudio] = useState<string | null>(null);
     const [shareUrl, setShareUrl] = useState<string>('');
 
@@ -43,7 +46,6 @@ function SavedPodcasts(): JSX.Element {
             fetchFavorites();
         }
     }, [user]);
-
 
     /**
      * Fetches the user's favorite podcasts from the database.
@@ -72,7 +74,7 @@ function SavedPodcasts(): JSX.Element {
      */
     const fetchPodcastDataFromSupaBase = async (seasonId) => {
         setLoading(true);
-console.log(seasonId)
+
         try {
             const response = await fetch(`https://podcast-api.netlify.app/id/${seasonId}`);
             const data = await response.json();
@@ -111,37 +113,48 @@ console.log(seasonId)
     /**
      * Handle clicking on an episode ID.
      * Set the selectedEpisodeId state to the clicked episode ID.
+     * Function to handle opening the overlay page with the selected episode details.
+     * Check if the episode has a nested object with a 'season_id' property.
+     * Access the 'season_id' property from the nested object.
      */
-    //Function to handle opening the overlay page with the selected episode details
     const handleEpisodeClick = (episode: Podcast) => {
         setSelectedEpisode(episode);
-        setShowOverlay(true);
 
-            // Check if the episode has a nested object with a 'season_id' property
             if (episode.season_id) {
-                // Access the 'season_id' property from the nested object
                 fetchPodcastDataFromSupaBase(episode.season_id);
             } else {
                 console.error('Error: No season_id found in episode:', episode);
             }
     };
 
-console.log(favorites)
+//console.log(favorites)
 
-    //filters
+    /**
+     * Sorts the podcasts alphabetically by season title in ascending order (A-Z).
+     */
     const sortFavoritesByShowAZ = () => {
         const sortedFavorites = [...favorites].filter(podcast => podcast.season_title).sort((a, b) => a.season_title.localeCompare(b.season_title));
         setFavorites(sortedFavorites);
     };
 
+    /**
+     * Sorts the podcasts alphabetically by season title in descending order (Z-A).
+     */
     const sortFavoritesByShowZA = () => {
         const sortedFavorites = [...favorites].filter(podcast => podcast.season_title).sort((a, b) => b.season_title.localeCompare(a.season_title));
         setFavorites(sortedFavorites);
     };
+    /**
+     * Sorts the podcasts by the date they were saved in ascending order (oldest to newest).
+     */
     const sortFavoritesByDateAscending = () => {
         const sortedFavorites = [...favorites].sort((a, b) => new Date(a.date_saved) - new Date(b.date_saved));
         setFavorites(sortedFavorites);
     };
+
+    /**
+     * Sorts the podcasts by the date they were saved in descending order (newest to oldest).
+     */
     const sortFavoritesByDateDescending = () => {
         const sortedFavorites = [...favorites].sort((a, b) => new Date(b.date_saved) - new Date(a.date_saved));
         setFavorites(sortedFavorites);
@@ -161,7 +174,6 @@ console.log(favorites)
             console.error('Error: Episode not found with ID:', episodeId);
         }
     };
-
 
     /**
      * share
@@ -194,7 +206,7 @@ console.log(favorites)
 
             <div className='justify-center items-center text-gray-500 overflow-y-auto max-h-screen'>
                 <ul className='items-center z-[100]'>
-                    {favorites.map((episode, index, seasonId) => (
+                    {favorites.map((episode, index) => (
                         <li key={index}
                             onClick={() => handleEpisodeClick(episode)}
                             className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 cursor-pointer'>
@@ -226,7 +238,6 @@ console.log(favorites)
                                         <img src={playFav} alt='Play' title='Play' className='w-14 h-14 m-2'/>
                                     </button>
                                 </div>
-
                                 <div>
                                     <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2' onClick={generateShareUrl}/>
                                     {/*share url*/}
@@ -237,7 +248,6 @@ console.log(favorites)
                                         </div>
                                     )}
                                 </div>
-
                                 <button onClick={() => handleDeleteClick(episode.season_id)}>
                                     <img src={removeFav} alt='Remove' title='Remove' className='w-14 h-14 m-2 mt-3'/>
                                 </button>
@@ -246,7 +256,6 @@ console.log(favorites)
                     ))}
                 </ul>
             </div>
-
             {selectedEpisodeForAudio && (
                 <AudioPlayer
                     audioUrl={selectedEpisode.mp3_file}

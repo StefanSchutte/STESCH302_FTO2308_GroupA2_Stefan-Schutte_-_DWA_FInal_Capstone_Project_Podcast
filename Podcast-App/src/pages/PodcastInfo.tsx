@@ -51,7 +51,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
     const [selectedEpisode, setSelectedEpisode] = useState<number | null>(null);
     const formattedUpdated = item && item.updated ? new Date(item.updated).toISOString().split('T')[0].replace(/-/g, '/') : '';
-    const [loading, setLoading] = useState(false); // Initialize loading state
+    const [loading, setLoading] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [seasonExpanded, setSeasonExpanded] = useState(false);
     const [tooltipText, setTooltipText] = useState('');
@@ -133,15 +133,12 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                 console.error('Error inserting favorite episode:', error);
                 return;
             }
-            console.log('Favorite episode inserted:', insertedData);
             const { data: allFavorites, error: fetchError } = await supabase.from('favorites').select();
 
             if (fetchError) {
                 console.error('Error fetching all favorites:', fetchError);
                 return;
             }
-
-            console.log('All favorite data:', allFavorites);
         }
     };
 
@@ -164,7 +161,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                 }
             }
         };
-
         fetchLastListenedData();
     }, [user]);
 

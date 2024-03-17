@@ -20,7 +20,7 @@ interface RowProps {
  * @param {RowProps} props - Props for the Row component.
  * @returns {JSX.Element} Row component.
  */
-const Row: React.FC<RowProps> = ({ title, fetchURL, rowId, openOverlay }) => {
+const Row: React.FC<RowProps> = ({ title, rowId, openOverlay }) => {
 
     const { podcasts } = useShows();
 
