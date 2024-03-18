@@ -145,10 +145,12 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
 
     //---------------------------------------------------------
     // Function to handle saving last listened show and episode
-    const handleSaveLastListened = async () => {
+    const handleSaveLastListened = async (episodeNumber) => {
+
+        console.log('save fired');
 
         if (user && selectedSeason !== null && selectedEpisode !== null) {
-            await saveLastListened(user.id, item.id, podcastData, selectedSeasonData);
+            await saveLastListened(user.id, item.id, podcastData);
             await updateEpisodeProgress(user.id, podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1].id, Date.now());
         }
     };
@@ -187,7 +189,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
      */
     const handleEpisodeSelect = (episodeNumber: number) => {
         setSelectedEpisode(episodeNumber);
-        handleSaveLastListened();
+        handleSaveLastListened(episodeNumber);
     };
 
     const toggleExpanded = () => {

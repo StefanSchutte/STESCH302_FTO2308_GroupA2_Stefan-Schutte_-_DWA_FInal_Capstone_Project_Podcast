@@ -212,7 +212,10 @@ const Filters: React.FC = () => {
                     </ul>
                 </div>
                 {selectedPodcast && (
-                <PodcastInfo item={selectedPodcast} showOverlay={true} closeOverlay={closeOverlay} />
+                <PodcastInfo
+                    item={selectedPodcast}
+                    showOverlay={true}
+                    closeOverlay={closeOverlay} />
                 )}
             </div>
         </div>
