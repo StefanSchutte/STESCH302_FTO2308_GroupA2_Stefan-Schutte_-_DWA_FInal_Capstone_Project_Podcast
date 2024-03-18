@@ -8,6 +8,8 @@ import Account from "./pages/Account.tsx";
 import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 import Filters from "./pages/Filters.tsx";
 import PodcastInfo from "./pages/PodcastInfo.tsx";
+import AudioPlayer from "./components/audio/AudioPlayer.tsx";
+import {useState} from "react";
 
 
 
@@ -17,7 +19,6 @@ import PodcastInfo from "./pages/PodcastInfo.tsx";
  */
 function App(): JSX.Element {
 
-    const { user } = useAuth(); // Access authenticated user using useAuth hook
 
     /**
      * Function to handle saving podcast information.
@@ -26,10 +27,7 @@ function App(): JSX.Element {
      * @param {string | null} seasonId - ID of the season (nullable)
      * @returns {void}
      */
-    const onSave = (episodeId: string, seasonId: string | null) => {
-        // Implement the onSave logic here
-        console.log('Save logic executed:', episodeId, seasonId);
-    };
+
 
   return (
       <>
@@ -42,7 +40,7 @@ function App(): JSX.Element {
               <Route path='/login' element={<Login />}/>
               <Route path='/signup' element={<Signup />}/>
 
-              <Route path='/overlay' element={<PodcastInfo onSave={onSave} />}/>
+              <Route path='/overlay' element={<PodcastInfo />}/>
 
               <Route path='/account' element={<Account />}/>
 

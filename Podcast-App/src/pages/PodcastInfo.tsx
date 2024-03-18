@@ -8,6 +8,7 @@ import supabase from "../supabase.ts";
 import {useAuth} from "../auth/AuthContext.tsx";
 import podcastDataAPI from "../api/podcastDataAPI.ts";
 import { saveLastListened, getLastListened } from "../components/userSettings/userSettings.ts";
+import { updateEpisodeProgress, getEpisodeProgress} from "../components/userSettings/userSettings.ts";
 
 /**
  * Props interface for the PodcastInfo component.
@@ -142,10 +143,13 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
         }
     };
 
+    //---------------------------------------------------------
     // Function to handle saving last listened show and episode
     const handleSaveLastListened = async () => {
+
         if (user && selectedSeason !== null && selectedEpisode !== null) {
-            await saveLastListened(user.id, item.id, selectedEpisode.toString());
+            await saveLastListened(user.id, item.id, podcastData, selectedSeasonData);
+            await updateEpisodeProgress(user.id, podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1].id, Date.now());
         }
     };
 
@@ -158,6 +162,11 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                     // Update state with last listened show and episode
                     setSelectedSeason(parseInt(data.last_listened_show_id));
                     setSelectedEpisode(parseInt(data.last_listened_episode_id));
+                    const episodeProgress = await getEpisodeProgress(user.id, data.last_listened_episode_id);
+                    if (episodeProgress) {
+                        // Update the audio player with the episode progress
+                        // Example: setAudioPlayerProgress(episodeProgress);
+                    }
                 }
             }
         };
