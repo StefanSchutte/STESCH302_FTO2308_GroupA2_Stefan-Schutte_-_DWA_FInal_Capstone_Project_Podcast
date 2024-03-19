@@ -36,7 +36,7 @@ interface OverlayProps {
  * @param closeOverlay - Function to close the overlay.
  * @param onSave
  */
-const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, onSave}) => {
+const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay}) => {
 
     /**
      * State Initialization.

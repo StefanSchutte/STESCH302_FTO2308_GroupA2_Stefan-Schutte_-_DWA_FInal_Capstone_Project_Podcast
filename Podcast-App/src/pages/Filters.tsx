@@ -80,7 +80,7 @@ const Filters: React.FC = () => {
      */
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         const value = e.target.value;
-        let sortedShows = [...filteredShows];
+        const sortedShows = [...filteredShows];
         if (value === 'az') {
             sortedShows.sort((a, b) => a.title.localeCompare(b.title));
         } else if (value === 'za') {
@@ -95,17 +95,18 @@ const Filters: React.FC = () => {
 
     /**
      * Function to handle genre click.
+     * Check if the genre is valid.
+     * If 'All' is selected, show all podcasts.
+     * Filter by the selected genre
      * @param {string} genre - Selected genre
      */
     const handleGenreClick = (genre: string): void => {
         const genreIndex = ['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].indexOf(genre);
-        if (genreIndex !== -1) { // Check if the genre is valid
+        if (genreIndex !== -1) {
             let filteredByGenre: Podcast[] = [];
             if (genreIndex === 0) {
-                // If 'All' is selected, show all podcasts
                 filteredByGenre = podcasts;
             } else {
-                // Filter by the selected genre
                 filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex));
             }
             setFilteredShows(filteredByGenre);

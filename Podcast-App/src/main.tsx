@@ -8,9 +8,9 @@ import {AuthContextProvider} from "./auth/AuthContext.tsx";
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
       <AuthContextProvider>
-      <ShowsProvider>
-    <App />
-      </ShowsProvider>
+        <ShowsProvider>
+            <App />
+        </ShowsProvider>
       </AuthContextProvider>
   </BrowserRouter>,
 )

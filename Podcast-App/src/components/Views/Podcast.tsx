@@ -9,7 +9,7 @@ interface PodcastProps {
         image: string;
         title: string;
     };
-    openOverlay: (podcast) => void;
+    openOverlay: any;
 }
 
 /**
@@ -19,7 +19,7 @@ interface PodcastProps {
  * @param {Function} openOverlay - Function to open the overlay with podcast data.
  * @returns {JSX.Element} The rendered podcast card.
  */
-const Podcast: React.FC<PodcastProps> = ({item, openOverlay}) => {
+const Podcast: React.FC<PodcastProps> = function ({item, openOverlay}) {
 
     /**
      * Handles the click event on the podcast card.

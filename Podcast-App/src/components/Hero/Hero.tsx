@@ -21,7 +21,7 @@ interface Podcast {
  */
 function Hero(): JSX.Element {
 
-    const [podcast, setPodcast] = useState<Podcast | undefined>();
+    const [podcast, setPodcast] = useState<Podcast | undefined>(undefined);
     const { podcasts } = useShows(); // Use the useShows hook to access the fetched data
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
 

@@ -6,7 +6,7 @@ import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Account from "./pages/Account.tsx";
 import Filters from "./pages/Filters.tsx";
-import PodcastInfo from "./pages/PodcastInfo.tsx";
+import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 
 /**
  * Main application component.
@@ -18,18 +18,12 @@ function App(): JSX.Element {
       <>
           <AuthContextProvider>
           <Navbar />
-
           < Routes>
               <Route path='/' element={<Home  />} />
               <Route path='/filter' element={<Filters />}/>
               <Route path='/login' element={<Login />}/>
               <Route path='/signup' element={<Signup />}/>
-
-              <Route path='/overlay' element={<PodcastInfo />}/>
-
-              <Route path='/account' element={<Account />}/>
-
-              {/*<Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>}/>*/}
+              <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>}/>
           </Routes>
           </AuthContextProvider>
       </>
