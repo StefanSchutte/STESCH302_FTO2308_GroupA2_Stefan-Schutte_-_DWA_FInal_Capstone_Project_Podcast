@@ -1,3 +1,9 @@
+/**
+ * Function to fetch podcast data from API.
+ * @param itemId
+ * @param setLoading
+ * @param setPodcastData
+ */
 const podcastDataAPI = async (itemId: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>, setPodcastData: React.Dispatch<React.SetStateAction<any>>) => {
     setLoading(true);
 

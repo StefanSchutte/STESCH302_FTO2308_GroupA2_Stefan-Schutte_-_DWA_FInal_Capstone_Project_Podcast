@@ -22,7 +22,7 @@ interface AudioPlayerProps {
  * @param {AudioPlayerProps} props - Props for the AudioPlayer component.
  * @returns JSX.Element
  */
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, userId, episodeId, episodeProgress }) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, userId, episodeProgress }) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [progress, setProgress] = useState(0);
 

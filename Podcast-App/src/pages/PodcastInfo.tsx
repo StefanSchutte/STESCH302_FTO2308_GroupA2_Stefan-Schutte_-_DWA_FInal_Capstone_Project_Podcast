@@ -147,7 +147,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
     // Function to handle saving last listened show and episode
     const handleSaveLastListened = async (episodeNumber) => {
 
-        console.log('save fired');
+        console.log(item.id);
 
         if (user && selectedSeason !== null && selectedEpisode !== null) {
             await saveLastListened(user.id, item.id, podcastData);
@@ -167,7 +167,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay, 
                     const episodeProgress = await getEpisodeProgress(user.id, data.last_listened_episode_id);
                     if (episodeProgress) {
                         // Update the audio player with the episode progress
-                        // Example: setAudioPlayerProgress(episodeProgress);
                     }
                 }
             }

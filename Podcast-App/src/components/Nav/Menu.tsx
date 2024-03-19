@@ -22,7 +22,6 @@ import {useAuth} from "../../auth/AuthContext.tsx";
  */
 const Menu = ({ closeOverlay }: { closeOverlay: () => void }): JSX.Element => {
 
-    const filterLogo = 'https://images.unsplash.com/photo-1565656898731-61d5df85f9a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     const { user, logOut } = useAuth();
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -71,9 +70,6 @@ const Menu = ({ closeOverlay }: { closeOverlay: () => void }): JSX.Element => {
     return (
         <>
             <div className="fixed top-0 left-0 w-full h-full  bg-gray-600 z-[90] ">
-                {/*<img className='absolute w-full h-full object-cover ' src={filterLogo}*/}
-                {/*alt='filterlogo'/>*/}
-
                 <div className="fixed top-0 left0 w-full h-full flex flex-col justify-center items-center bg-black bg-opacity-40 z-[100]">
                     <div className="absolute p-4 m-4  rounded-lg max-w-screen h-screen flex-col justify-center " style={{ top: '15%' }}>
                         <h2 className="mb-4 p-4 col-span-2 flex justify-center">

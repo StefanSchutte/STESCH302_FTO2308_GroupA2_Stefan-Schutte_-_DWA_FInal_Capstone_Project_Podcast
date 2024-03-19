@@ -7,12 +7,8 @@ export const saveLastListened = async (userId: string, showId: string, episodeId
     console.log(showId);
     console.log('userId:', userId);
     console.log('podcastData:', podcastData);
-    // Check if user is authenticated
-    if (!userId) {
-        console.error('User is not authenticated');
-        return;
-    }
-    console.log(podcastData)
+
+    console.log(showId)
 // Check if podcast data and selected season/episode are available
     if (podcastData !== null) {
         const { data, error } = await supabase
@@ -21,7 +17,7 @@ export const saveLastListened = async (userId: string, showId: string, episodeId
                 user_id: userId,
                 last_listened_episode_id: episodeId,
                 last_listened_show_id: showId,
-                episode_title: episodeTitle,
+                // episode_title: episodeTitle,
             });
 
         if (error) {
@@ -34,22 +30,22 @@ export const saveLastListened = async (userId: string, showId: string, episodeId
 
 
 
-// Function to retrieve the last listened show and episode
+// Function to retrieve the last listened show and episode need episode id
 export const getLastListened = async (userId: string, showId: string, episodeId: string, podcastData) => {
-    const { data, error } = await supabase
-        .from('user_history')
-        .select('last_listened_show_id, last_listened_episode_id')
-        .eq('user_id', userId)
-        .single();
-    if (error) {
-        console.error('Error fetching last listened:', error.message);
-        return null;
-    }
-    if (!data) {
-        console.error('No data found for the user');
-        return null;
-    }
-    return data;
+    // const { data, error } = await supabase
+    //     .from('user_history')
+    //     .select('last_listened_show_id, last_listened_episode_id')
+    //     .eq('user_id', userId)
+    //     .single();
+    // if (error) {
+    //     console.error('Error fetching last listened:', error.message);
+    //     return null;
+    // }
+    // if (!data) {
+    //     console.error('No data found for the user');
+    //     return null;
+    // }
+    // return data;
 };
 
 

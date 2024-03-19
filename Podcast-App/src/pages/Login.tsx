@@ -49,7 +49,7 @@ function Login(): JSX.Element {
 
         try {
             await logIn(email, password);
-            navigate('/account');
+            navigate('/');
             console.log(user)
         } catch (error: any) {
             console.log(error);
