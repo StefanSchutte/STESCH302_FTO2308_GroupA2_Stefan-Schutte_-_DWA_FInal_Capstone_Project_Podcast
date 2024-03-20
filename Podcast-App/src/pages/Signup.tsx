@@ -33,7 +33,7 @@ function Signup(): JSX.Element {
      */
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-
+console.log('submit')
         try {
             await signUp(email, password);
             navigate('/');

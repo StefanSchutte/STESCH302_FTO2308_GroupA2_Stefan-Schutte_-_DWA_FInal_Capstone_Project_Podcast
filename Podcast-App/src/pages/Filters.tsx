@@ -3,15 +3,7 @@ import Fuse from 'fuse.js';
 import PodcastInfo from './PodcastInfo.tsx'
 import { useShows } from "../api/ShowsContext.tsx";
 import Genres from "../helpers/Genres.tsx";
-
-interface Podcast {
-    id: string;
-    title: string;
-    image: string;
-    seasons: number;
-    updated: string;
-    genres: string[];
-}
+import {Podcast} from "../types.ts";
 
 /**
  * Filters component to manage searching, filtering, and sorting of podcasts.

@@ -17,18 +17,11 @@ import PodcastInfo from "./pages/PodcastInfo.tsx";
  * @returns {JSX.Element}
  */
 function App(): JSX.Element {
-    const [showAudioPlayer, setShowAudioPlayer] = useState(false);
-    const [audioUrl, setAudioUrl] = useState('')
 
-    const toggleAudioPlayer = () => {
-        setShowAudioPlayer(prevState => !prevState);
-    };
   return (
       <>
           <AuthContextProvider>
               <AudioPlayerProvider>
-                  <PodcastInfo setAudioUrl={setAudioUrl} toggleAudioPlayer={toggleAudioPlayer} />
-                  {showAudioPlayer && <AudioPlayer audioUrl={audioUrl} />}
 
 
           <Navbar />

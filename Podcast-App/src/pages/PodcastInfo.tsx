@@ -6,29 +6,12 @@ import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
 import supabase from "../supabase.ts";
 import {useAuth} from "../auth/AuthContext.tsx";
-import podcastDataAPI from "../api/podcastDataAPI.ts";
+import {getShowDetailFromApi} from "../api/API.ts";
 import { saveLastListened, getLastListened } from "../components/userSettings/userSettings.ts";
 import { updateEpisodeProgress, getEpisodeProgress} from "../components/userSettings/userSettings.ts";
 import { useAudioPlayer } from "../components/audio/AudioPlayerContext.tsx";
+import {OverlayProps} from "../types.ts";
 import AudioPlayer from "../components/audio/AudioPlayer.tsx";
-
-/**
- * Props interface for the PodcastInfo component.
- */
-interface OverlayProps {
-    item: {
-        id: string,
-        image: string;
-        title: string;
-        updated: string;
-        description: string;
-        genres: string;
-        seasons: number;
-    };
-    showOverlay: boolean;
-    closeOverlay: () => void;
-    onSave: (episodeId: string, seasonId: string | null) => void;
-}
 
 /**
  * PodcastInfo component to display detailed information about a podcast.
@@ -60,7 +43,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
     const [tooltipText, setTooltipText] = useState('');
     const [tooltipIndex, setTooltipIndex] = useState(-1);
     const { user } = useAuth();
-    const { showAudioPlayer, toggleAudioPlayer, setShowAudioPlayer } = useAudioPlayer();
+    const { showAudioPlayer, setShowAudioPlayer, setAudioUrl } = useAudioPlayer();
 
     /**
      * Fetches podcast data from api and sets it in the state.
@@ -90,11 +73,20 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
 
     /**
      * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
-     * Call the podcastDataAPI function from the imported module
+     * Call the getShowDetailFromApi function from the imported module
      */
     useEffect(() => {
         if (showOverlay && item) {
-            podcastDataAPI(item.id, setLoading, setPodcastData);
+            setLoading(true);
+            getShowDetailFromApi(item.id)
+                .then(data => {
+                    setPodcastData(data);
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error fetching podcast data:', error);
+                    setLoading(false);
+                });
         }
     }, [item, showOverlay]);
 
@@ -193,6 +185,12 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
     const handleEpisodeSelect = (episodeNumber: number) => {
         setSelectedEpisode(episodeNumber);
         handleSaveLastListened(episodeNumber);
+
+        if (podcastData && selectedSeason !== null) {
+            const selectedEpisodeFile = podcastData.seasons[selectedSeason - 1].episodes[episodeNumber - 1].file;
+            setAudioUrl(selectedEpisodeFile);
+            setShowAudioPlayer(true);
+        }
     };
 
     const toggleExpanded = () => {
@@ -224,10 +222,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
         setTooltipIndex(-1);
         setTooltipText('');
     };
-
-    useEffect(() => {
-        setShowAudioPlayer(false); // Close audio player when PodcastInfo component mounts
-    }, [setShowAudioPlayer]);
 
 
     /**
@@ -388,14 +382,22 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            {showOverlay &&
                                             <PlayButton
                                             audioUrl={
                                                 selectedSeason && selectedEpisode && podcastData &&
                                                 podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.file}
                                             showId={item.id}
                                             />
-
+                                            }
+                                            {showAudioPlayer && (
+                                                <AudioPlayer
+                                                    audioUrl={audioUrl}
+                                                    onClose={() => setShowAudioPlayer(false)}
+                                                    userId={user?.id || ''} // Assuming user is defined and has an id property
+                                                    episodeId={selectedEpisode ? podcastData.seasons[selectedSeason - 1].episodes[selectedEpisode - 1].id : ''}
+                                                />
+                                            )}
                                         </div>
                                     )
                                     )}

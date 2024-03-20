@@ -29,21 +29,21 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) 
      * Called when the play button is clicked.
      * It updates the showAudioPlayer state to true and stores the last listened show and episode in the local storage.
      */
-    // const handlePlayButtonClick = () => {
-    //
-    //     setShowAudioPlayer(true);
-    // };
+    const handlePlayButtonClick = () => {
+
+        setShowAudioPlayer(true);
+    };
 
     /**
      * Called when the audio player is closed. It updates the showAudioPlayer state to false.
      */
-    // const handleClosePlayer = () => {
-    //     setShowAudioPlayer(false);
-    // };
-
-    const handlePlayButtonClick = () => {
-        toggleAudioPlayer();
+    const handleClosePlayer = () => {
+        setShowAudioPlayer(false);
     };
+
+    // const handlePlayButtonClick = () => {
+    //     toggleAudioPlayer();
+    // };
 
     return (
         <>
@@ -55,12 +55,10 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) 
                 <img src={playFav} alt='Play'/>
             </button>
             {showAudioPlayer && (
-                <AudioPlayer audioUrl={audioUrl}  />
+                <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />
             )}
         </>
     );
 };
 
 export default PlayButton;
-
-// <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />

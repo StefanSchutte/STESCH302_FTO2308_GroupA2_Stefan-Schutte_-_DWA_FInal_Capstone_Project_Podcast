@@ -4,16 +4,8 @@ import Row from '../components/Views/Row';
 import PodcastInfo from './PodcastInfo.tsx';
 import { useShows } from "../api/ShowsContext.tsx";
 import supabase from "../supabase.ts";
+import {Podcast} from "../types.ts";
 
-interface Podcast {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    genres: number[];
-    updated: string;
-    seasons: number;
-}
 
 /**
  * Home component representing the main page of the application.

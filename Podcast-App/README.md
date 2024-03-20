@@ -71,8 +71,16 @@ Row below that.
 
 #### PLAY
 - Pressing the play button opens the Audio Player at the bottom of the page.
+- User can navigate through episode on timestamp bar.
+- User can close audio player by clicking close.
 
-
+#### Favorites
+- Users favorites are saved under the Favorites page.
+- Similar to Filters page, user sees a list of the saved Episodes.
+- User can sort and group favorites by clicking the labels for desired requirement.
+- User can click play button to listen to the episode.
+- User can delete episode by clicking the delete button.
+- User can also share the Episode.
 
 
 ## Deployment:
@@ -115,19 +123,19 @@ LINKHERE
 - Tooling support like autocompletion, type inference, refactoring tools.
 
 
-### API
+### ShowsContext
 
-#### API Endpoints:
+#### ShowsContext Endpoints:
 - Preview objects - https://podcast-api.netlify.app/shows
 - Show object with seasons and episodes - https://podcast-api.netlify.app/id/<ID>
 
-#### API DATA
+#### ShowsContext DATA
 - Episode - Corresponds to a specific MP3 file. 
 - Season - A collection of Episodes, released across a specific timespan.
 - Show - A podcast that contains seasons.
 - Preview - A summarised version of a show, that do not contain the season or episode data.
 
-#### API Relationships
+#### ShowsContext Relationships
 
 - 'Episodes' make up a 'Season'.
 - 'Seasons' make up a 'Show'.

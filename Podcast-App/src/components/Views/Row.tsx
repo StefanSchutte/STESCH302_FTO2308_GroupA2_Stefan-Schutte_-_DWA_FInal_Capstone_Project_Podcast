@@ -28,7 +28,7 @@ const Row: React.FC<RowProps> = ({ title, rowId, openOverlay }) => {
      * Handles sliding the row to the left.
      */
     const slideLeft = () => {
-        let slider = document.getElementById('slider' + rowId);
+        const slider = document.getElementById('slider' + rowId);
         if (slider) slider.scrollLeft = slider.scrollLeft - 500;
     };
 
@@ -36,7 +36,7 @@ const Row: React.FC<RowProps> = ({ title, rowId, openOverlay }) => {
      * Handles sliding the row to the right.
      */
     const slideRight = () => {
-        let slider = document.getElementById('slider' + rowId);
+        const slider = document.getElementById('slider' + rowId);
         if (slider) slider.scrollLeft = slider.scrollLeft + 500;
     };
 

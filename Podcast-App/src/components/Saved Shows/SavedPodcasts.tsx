@@ -6,19 +6,7 @@ import shareFav from '/share.png'
 import playFav from "/play-button.png";
 import { format } from 'date-fns'
 import AudioPlayer from "../audio/AudioPlayer.tsx";
-
-interface Podcast {
-    id: string;
-    image: string;
-    title: string;
-    season_id: string;
-    season_image: string;
-    season_title: string;
-    episode_title: string;
-    date_saved: string;
-    mp3_file: string;
-    seasons_titles: string;
-}
+import {Podcast} from "../../types.ts";
 
 
 /**

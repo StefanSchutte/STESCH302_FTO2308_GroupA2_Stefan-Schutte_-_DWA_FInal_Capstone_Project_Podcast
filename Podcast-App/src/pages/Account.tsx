@@ -1,4 +1,3 @@
-import React from 'react';
 import SavedPodcasts from '../components/Saved Shows/SavedPodcasts';
 
 function Account() {

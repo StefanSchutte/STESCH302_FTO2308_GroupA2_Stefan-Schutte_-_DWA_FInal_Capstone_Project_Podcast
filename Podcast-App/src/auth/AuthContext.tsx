@@ -122,18 +122,9 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import supabase from '../supabase';
+import {AuthContextType, User} from "../types.ts";
 
-interface User {
-    id: string;
-    email?: string;
-}
 
-interface AuthContextType {
-    signUp: (email: string, password: string) => Promise<void>;
-    logIn: (email: string, password: string) => Promise<void>;
-    logOut: () => Promise<void>;
-    user: User | null;
-}
 
 // Create a context with an initial undefined value. This will be overridden with an actual value in the provider.
 const AuthContext = createContext<AuthContextType | null>(null);
