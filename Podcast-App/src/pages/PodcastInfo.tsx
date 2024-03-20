@@ -9,6 +9,8 @@ import {useAuth} from "../auth/AuthContext.tsx";
 import podcastDataAPI from "../api/podcastDataAPI.ts";
 import { saveLastListened, getLastListened } from "../components/userSettings/userSettings.ts";
 import { updateEpisodeProgress, getEpisodeProgress} from "../components/userSettings/userSettings.ts";
+import { useAudioPlayer } from "../components/audio/AudioPlayerContext.tsx";
+import AudioPlayer from "../components/audio/AudioPlayer.tsx";
 
 /**
  * Props interface for the PodcastInfo component.
@@ -58,6 +60,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
     const [tooltipText, setTooltipText] = useState('');
     const [tooltipIndex, setTooltipIndex] = useState(-1);
     const { user } = useAuth();
+    const { showAudioPlayer, toggleAudioPlayer, setShowAudioPlayer } = useAudioPlayer();
+
     /**
      * Fetches podcast data from api and sets it in the state.
      * Manages the body overflow and fetches podcast data based on changes in item and showOverlay.
@@ -221,6 +225,11 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
         setTooltipText('');
     };
 
+    useEffect(() => {
+        setShowAudioPlayer(false); // Close audio player when PodcastInfo component mounts
+    }, [setShowAudioPlayer]);
+
+
     /**
      * Conditional rendering of the overlay based on the visibility flag.(showOverlay)
      * Renders the podcast details, loading indicator, season/episode selectors, and a button to close the overlay.
@@ -271,7 +280,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                         </div>
                                     ) : (
                                     podcastData && (
-                                        <div >
+                                        <div>
                                             <div className='grid-cols-2'>
                                                 <div className='flex items-center'>
                                                     {/* Choose Season dropdown */}
@@ -290,7 +299,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                     </select>
                                                     {/* See More button */}
                                                     <button className="ml-3 w-12 h-12" onClick={toggleSeasonExpanded}>
-                                                        {seasonExpanded ? <img src={closeFav} title='Close'/> : <img src={seeMoreFav} title='See More'/> }
+                                                        {seasonExpanded ? <img src={closeFav} title='Close'/> :
+                                                            <img src={seeMoreFav} title='See More'/>}
                                                     </button>
                                                 </div>
 
@@ -309,7 +319,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                                         onClick={() => handleSeasonSelect(i + 1)}
                                                                         title='Select Season'>
                                                                         <div className='flex items-center'>
-                                                                        <p className='text-gray-300 pr-3'> Season {i + 1}:</p> {podcastData.seasons[i]?.title || 'Untitled'}
+                                                                            <p className='text-gray-300 pr-3'> Season {i + 1}:</p> {podcastData.seasons[i]?.title || 'Untitled'}
                                                                         </div>
                                                                     </button>
                                                                 </div>
@@ -342,7 +352,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                         </select>
                                                         {/* See More button */}
                                                         <button className="ml-3 w-12 h-12" onClick={toggleExpanded}>
-                                                            {expanded ? <img src={closeFav} title='Close'/> : <img src={seeMoreFav} title='See More'/>}
+                                                            {expanded ? <img src={closeFav} title='Close'/> :
+                                                                <img src={seeMoreFav} title='See More'/>}
                                                         </button>
                                                     </div>
                                                     {/* Episode list */}
@@ -368,17 +379,23 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                                             {episode.description ? episode.description : "No description available."}
                                                                         </div>
                                                                     )}
-                                                                    <button onClick={handleSave} className='w-12 h-12'><img src={saveBtnFav} alt='Save' title='Select Episode to Save'/></button>
+                                                                    <button onClick={handleSave} className='w-12 h-12'>
+                                                                        <img src={saveBtnFav} alt='Save'
+                                                                             title='Select Episode to Save'/></button>
                                                                 </li>
                                                             ))}
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <PlayButton
-                                        audioUrl={selectedSeason && selectedEpisode && podcastData && podcastData.seasons[selectedSeason - 1].episodes[selectedEpisode - 1].file}
-                                        showId={item.id}
-                                        />
+
+                                            <PlayButton
+                                            audioUrl={
+                                                selectedSeason && selectedEpisode && podcastData &&
+                                                podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.file}
+                                            showId={item.id}
+                                            />
+
                                         </div>
                                     )
                                     )}

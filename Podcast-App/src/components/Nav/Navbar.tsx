@@ -35,7 +35,7 @@ function Navbar(): JSX.Element {
                     PODCASTED
                 </h1>
             </Link>
-            <button onClick={handleMenuClick} className="cursor-pointer flex items-center border rounded-2xl ">
+            <button onClick={handleMenuClick} className="cursor-pointer flex items-center">
                 <img src={menuFav} alt="Menu" title='Menu'/>
             </button>
             {showOverlay && <Menu closeOverlay={closeOverlay}/>}

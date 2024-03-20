@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import closeBtnFav from '/close.png';
 import { markEpisodeCompleted } from "../userSettings/userSettings.ts";
+import { useAudioPlayer } from "./AudioPlayerContext.tsx";
 
 /**
  * Props interface for the AudioPlayer component.

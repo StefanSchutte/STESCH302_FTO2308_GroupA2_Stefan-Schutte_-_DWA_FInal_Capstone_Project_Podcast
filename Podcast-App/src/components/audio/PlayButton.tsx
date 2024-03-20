@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import AudioPlayer from "./AudioPlayer.tsx";
 import playFav from '/play-button.png'
+import { useAudioPlayer } from "./AudioPlayerContext.tsx";
 
 interface PlayButtonProps {
     audioUrl: string;
     showId: string;
     episodeId: string;
+
 }
 
 /**.
@@ -19,25 +21,28 @@ interface PlayButtonProps {
  * @constructor
  */
 const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) => {
-    const [showAudioPlayer, setShowAudioPlayer] = useState<boolean>(false);
+    //const [showAudioPlayer, setShowAudioPlayer] = useState<boolean>(false);
+
+    const { showAudioPlayer, setShowAudioPlayer, toggleAudioPlayer } = useAudioPlayer()
 
     /**
      * Called when the play button is clicked.
      * It updates the showAudioPlayer state to true and stores the last listened show and episode in the local storage.
      */
-    const handlePlayButtonClick = () => {
-
-        // Store the last listened show and episode in local storage
-        localStorage.setItem('lastListenedShow', showId);
-        localStorage.setItem('lastListenedEpisode', episodeId);
-        setShowAudioPlayer(true);
-    };
+    // const handlePlayButtonClick = () => {
+    //
+    //     setShowAudioPlayer(true);
+    // };
 
     /**
      * Called when the audio player is closed. It updates the showAudioPlayer state to false.
      */
-    const handleClosePlayer = () => {
-        setShowAudioPlayer(false);
+    // const handleClosePlayer = () => {
+    //     setShowAudioPlayer(false);
+    // };
+
+    const handlePlayButtonClick = () => {
+        toggleAudioPlayer();
     };
 
     return (
@@ -50,10 +55,12 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) 
                 <img src={playFav} alt='Play'/>
             </button>
             {showAudioPlayer && (
-                <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />
+                <AudioPlayer audioUrl={audioUrl}  />
             )}
         </>
     );
 };
 
 export default PlayButton;
+
+// <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />
