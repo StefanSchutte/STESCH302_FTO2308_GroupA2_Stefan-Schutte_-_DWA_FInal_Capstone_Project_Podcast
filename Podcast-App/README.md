@@ -1,34 +1,3 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-
 # Podcast-App
 ### ( PODCASTED )
 
@@ -41,7 +10,7 @@ Author: Stefan Schutte
 
 Application: Podcast App
 
-Link: https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/tree/master/Podcast-App
+Github Link: https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/tree/master/Podcast-App
 
 ## Description:
 
@@ -56,7 +25,7 @@ Row below that.
 - The 'Browse All Shows' row provided the user the possibility to browse through all the podcasts using the right and left arrow slider.
 - Users can also navigate to the PodcastInfo overlay, the same as with the 'Hero' section.
 
-![Screenshot from 2024-03-14 09-33-24.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-33-24.png)
+
 
 #### MENU
 - At the top right corner is the 'Menu' button. 
@@ -71,7 +40,7 @@ Row below that.
 - If user is logged in instead of seeing a 'login' and 'sign up' button, a 'account' and 'logout' button will be rendered.
 - The 'close' button is used for closing the menu and returning to previous page.
 
-![Screenshot from 2024-03-14 09-46-12.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-46-12.png)
+
 
 #### FILTER
 - The 'filters' page gives the user the opportunity to filter through the podcasts by either:
@@ -82,15 +51,15 @@ Row below that.
 - Each result (Preview) contains a title, image, amount of seasons, date updated and the genres.
 - When clicking on any of these result previews user navigates to the 'Podcast Info' overlay.
 
-![Screenshot from 2024-03-14 09-48-14.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2009-48-14.png)
+
 
 #### PODCAST INFO
 
 - In this overlay the Show title and image is rendered as well as a detailed description of the Show is given.
 - The date last updated and amount of seasons are also rendered.
-- 
-![Screenshot from 2024-03-14 10-08-25.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-08-25.png)
-- 
+
+
+
 - In the 'Select Season' dropdown the user can select a Season, or the user can also use the 'See More' button, next to the dropdown.
 - The 'See More' button expands the Seasons list that includes the Season image.
 - After selecting a season, the user can select an episode.
@@ -98,12 +67,12 @@ Row below that.
 - A description of the Episode is given on hover.
 - After selecting the Episode, user can Play or Save the Episode, using the play button on top right corner, and saving by clicking the save button.
 
-![Screenshot from 2024-03-14 10-11-22.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-11-22.png)
+
 
 #### PLAY
 - Pressing the play button opens the Audio Player at the bottom of the page.
 
-![Screenshot from 2024-03-14 10-19-34.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202024-03-14%2010-19-34.png)
+
 
 
 ## Deployment:
@@ -264,7 +233,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User can see the show and season of any episode in their favourites list
 
- Episodes related by season/show are grouped in favourites// reduce
+✅ Episodes related by season/show are grouped in favourites
 
 ✅ User is able to remove episodes from their favourites
 
@@ -310,7 +279,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User is presented with a sliding carousel of possible shows they might be interested in on the landing page
 
-✅  User can log in via https://app.supabase.com authentication
+?  User can log in via https://app.supabase.com authentication
 
 ✅ User favourites are stored in the https://app.supabase.com database
 
@@ -351,4 +320,34 @@ episode_id uuid references episodes(id) not null,
 season_id uuid references seasons(id),
 -- Add other attributes as needed
 );
- 
+
+# React + TypeScript + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
+```
+
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

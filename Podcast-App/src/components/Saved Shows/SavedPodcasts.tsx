@@ -160,6 +160,28 @@ function SavedPodcasts(): JSX.Element {
         setFavorites(sortedFavorites);
     };
 
+    const filterAndGroupBySeason = () => {
+        const groupedBySeason: { [key: string]: { [key: string]: Podcast[] } } = {};
+
+        favorites.map((episode, index) => {
+            const seasonKey = episode.season_title;
+            const subSeasonKey = episode.seasons_titles && episode.seasons_titles[index]?.title;
+
+            if (!groupedBySeason[seasonKey]) {
+                groupedBySeason[seasonKey] = {};
+            }
+
+            if (!groupedBySeason[seasonKey][subSeasonKey]) {
+                groupedBySeason[seasonKey][subSeasonKey] = [];
+            }
+
+            groupedBySeason[seasonKey][subSeasonKey].push(episode);
+        });
+
+        setFavorites(Object.values(groupedBySeason).flatMap(Object.values).flat());
+    };
+
+
     /**
      * Function to handle opening the audio player for the selected episode.
      * Set the selected episode ID for audio playback.
@@ -194,24 +216,40 @@ function SavedPodcasts(): JSX.Element {
     return (
         <>
             <div className='flex justify-center items-center text-yellow-400 mt-14'>
-                <h1 className="text-white font-bold text-4xl p-4 mt-8">Favorites</h1>
+                <h1 className="text-white font-bold text-4xl p-4 mt-1">Favorites</h1>
             </div>
 
-            <div className="flex justify-center mt-2">
-                <button onClick={sortFavoritesByShowAZ} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Sort A-Z</button>
-                <button onClick={sortFavoritesByShowZA} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Sort Z-A</button>
-                <button onClick={sortFavoritesByDateAscending} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Ascending Date</button>
-                <button onClick={sortFavoritesByDateDescending} className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400' title='Select'>Descending Date</button>
+            <div className="flex flex-col sm:flex-row items-center justify-center mt-2">
+                <button onClick={sortFavoritesByShowAZ}
+                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
+                        title='Select'>Sort A-Z
+                </button>
+                <button onClick={sortFavoritesByShowZA}
+                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
+                        title='Select'>Sort Z-A
+                </button>
+                <button onClick={sortFavoritesByDateAscending}
+                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
+                        title='Select'>Ascending Date
+                </button>
+                <button onClick={sortFavoritesByDateDescending}
+                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
+                        title='Select'>Descending Date
+                </button>
+                <button onClick={filterAndGroupBySeason}
+                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
+                        title='Select'>Group by Season
+                </button>
             </div>
 
             <div className='justify-center items-center text-gray-500 overflow-y-auto max-h-screen'>
                 <ul className='items-center z-[100]'>
-                    {favorites.map((episode, index) => (
+                {favorites.map((episode, index) => (
                         <li key={index}
                             onClick={() => handleEpisodeClick(episode)}
                             className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 cursor-pointer'>
                             {/*{JSON.stringify(episode)}*/}
-                            <div className="flex items-center">
+                            <div className="flex flex-col sm:flex-row items-center">
                             <div>
                                 <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-4'/>
                             </div>
@@ -232,7 +270,7 @@ function SavedPodcasts(): JSX.Element {
                                 </div>
                             </div>
                             </div>
-                            <div className='m-3'>
+                            <div className=' m-3'>
                                 <div>
                                     <button onClick={() => openAudioPlayer(episode.id)}>
                                         <img src={playFav} alt='Play' title='Play' className='w-14 h-14 m-2'/>
