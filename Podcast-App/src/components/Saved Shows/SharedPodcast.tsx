@@ -1,11 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import supabase from '../../supabase';
 
+interface Episode {
+    season_id: string;
+    episode_title: string;
+    season_title: string;
+    season_image: string;
+    date_saved: string;
+    mp3_file: string;
+    seasons_titles?: { title: string }[];
+
+}
+
 function SharedPodcast() {
-    const { userId, episodeId } = useParams();
-    const [episodes, setEpisodes] = useState([]);
+    const { userId } = useParams();
+    const [episodes, setEpisodes] = useState<Episode[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -13,21 +24,29 @@ function SharedPodcast() {
             const { data, error } = await supabase
                 .from('favorites')
                 .select('season_id, episode_title, season_title, season_image, date_saved, mp3_file, seasons_titles')
-                .eq('user_id', userId); // Use userId from useParams
+                .eq('user_id', userId);
             if (error) {
                 throw error;
             }
             if (data) {
-                setEpisodes(data); // Set episodes data to state
-                setLoading(false); // Set loading to false after data is fetched
+                const episodesData: Episode[] = data.map((episode: any) => ({
+                    season_id: episode.season_id,
+                    episode_title: episode.episode_title,
+                    season_title: episode.season_title,
+                    season_image: episode.season_image,
+                    date_saved: episode.date_saved,
+                    mp3_file: episode.mp3_file,
+                    seasons_titles: episode.seasons_titles,
+                }));
+                setEpisodes(episodesData);
+                setLoading(false);
             }
         };
-
-        fetchFavorites(); // Call fetchFavorites function
-    }, [userId]); // Add userId to dependency array
+        fetchFavorites();
+    }, [userId]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className='flex items-center justify-center h-screen text-blue-500 text-5xl'>Loading...</div>;
     }
 
     if (episodes.length === 0) {
@@ -43,8 +62,8 @@ function SharedPodcast() {
 
         <div className='justify-center items-center text-gray-500 overflow-y-auto '>
             <ul className='items-center z-[100]'>
-                {episodes.map((episode, index) => ( // Map over episodes array
-                    <li key={index} className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 cursor-pointer'>
+                {episodes.map((episode, index) => (
+                    <li key={index} className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 '>
                         <div className="flex flex-col sm:flex-row items-center">
                             <div>
                                 <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-4'/>
