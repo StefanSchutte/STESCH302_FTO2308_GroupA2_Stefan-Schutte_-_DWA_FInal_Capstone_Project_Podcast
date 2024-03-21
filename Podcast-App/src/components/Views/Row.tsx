@@ -11,14 +11,12 @@ interface RowProps {
     /** The unique identifier for the row. */
     rowId: string;
     /** Function to open an overlay for a podcast. */
-    openOverlay: () => void;
+    openOverlay: (podcast: typeof Podcast) => void;
 }
 
 /**
  * Row component to display a horizontal row of podcasts.
  * useShows hook is used to access the podcasts data.
- * @param {RowProps} props - Props for the Row component.
- * @returns {JSX.Element} Row component.
  */
 const Row: React.FC<RowProps> = ({ title, rowId, openOverlay }) => {
 

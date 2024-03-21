@@ -1,4 +1,4 @@
-import {useState, FormEvent, useEffect} from 'react';
+import {useState, FormEvent} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext.tsx';
 import signupFav from '/add-user.png';

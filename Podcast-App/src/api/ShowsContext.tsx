@@ -12,6 +12,10 @@ interface ShowsContextType {
     selectSeason: (seasonNumber: number) => void;
 }
 
+interface ShowsProviderProps {
+    children: React.ReactNode;
+}
+
 /**
  * Context for managing podcasts data.
  * creates a auth named ShowsContext using createContext.
@@ -33,7 +37,7 @@ export const useShows = () => useContext(ShowsContext);
  * and selectedSeason to track the currently selected season.
  * @param children - The child components to be wrapped by the provider.
  */
-export const ShowsProvider: React.FC = ({ children }) => {
+export const ShowsProvider: React.FC<ShowsProviderProps> = ({ children }) => {
     const [podcasts, setPodcasts] = useState<Podcast[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
@@ -48,9 +52,9 @@ export const ShowsProvider: React.FC = ({ children }) => {
                 const data = await getShowsFromAPI();
 
                 setPodcasts(data);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
-            }  finally {
                 setLoading(false);
             }
         };

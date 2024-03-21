@@ -6,7 +6,7 @@ import shareFav from '/share.png'
 import playFav from "/play-button.png";
 import { format } from 'date-fns'
 import AudioPlayer from "../audio/AudioPlayer.tsx";
-import { PodcastFavorite } from "../../types.ts";
+import {PodcastFavorite} from "../../types.ts";
 
 /**
  * Functional component representing the saved podcasts section.
@@ -48,18 +48,34 @@ function SavedPodcasts(): JSX.Element {
                 if (error) {
                     throw error;
                 }
-                setFavorites(data || []);
+                if (data) {
+                //setFavorites(data || []);
+                const transformedData = data.map((item: any) => ({
+                    id: item.season_id,
+                    episode_title: item.episode_title,
+                    season_title: item.season_title,
+                    season_image: item.season_image,
+                    date_saved: item.date_saved,
+                    mp3_file: item.mp3_file,
+                    seasons_titles: item.seasons_titles,
+                    image: '',
+                    title: '',
+                    season_id: item.season_id,
+                }));
+                setFavorites(transformedData);
+            } else {
+                setFavorites([]);
+            }
             }
         } catch (error) {
-            console.error('Error fetching favorites:', error.message);
+            console.error('Error fetching favorites:', (error as Error).message);
         }
     };
 
     /**
      * Fetch podcast data from the API using the provided season ID.
-     * @param {string} seasonId - The ID of the season to fetch podcast data for.
      */
-    const fetchPodcastDataFromSupaBase = async (seasonId) => {
+    const fetchPodcastDataFromSupaBase = async (seasonId: string) => {
         setLoading(true);
 
         try {
@@ -76,7 +92,6 @@ function SavedPodcasts(): JSX.Element {
     /**
      * Deletes a podcast from the user's favorites.
      * Deletes podcast by calling the appropriate Supabase query.
-     * @param id - The ID of the podcast to be deleted.
      */
     const deletePodcast = async (season_id: string) => {
         try {
@@ -89,7 +104,7 @@ function SavedPodcasts(): JSX.Element {
             }
             setFavorites(favorites.filter(favorite => favorite.season_id !== season_id));
         } catch (error) {
-            console.error('Error deleting podcast:', error.message);
+            console.error('Error deleting podcast:', (error as Error).message);
         }
     };
 
@@ -104,7 +119,7 @@ function SavedPodcasts(): JSX.Element {
      * Check if the episode has a nested object with a 'season_id' property.
      * Access the 'season_id' property from the nested object.
      */
-    const handleEpisodeClick = (episode: Podcast) => {
+    const handleEpisodeClick = (episode) => {
         setSelectedEpisode(episode);
 
             if (episode.season_id) {
@@ -135,7 +150,7 @@ function SavedPodcasts(): JSX.Element {
      * Sorts the podcasts by the date they were saved in ascending order (oldest to newest).
      */
     const sortFavoritesByDateAscending = () => {
-        const sortedFavorites = [...favorites].sort((a, b) => new Date(a.date_saved) - new Date(b.date_saved));
+        const sortedFavorites = [...favorites].sort((a, b) => new Date(a.date_saved).getTime() - new Date(b.date_saved).getTime());
         setFavorites(sortedFavorites);
     };
 
@@ -143,7 +158,7 @@ function SavedPodcasts(): JSX.Element {
      * Sorts the podcasts by the date they were saved in descending order (newest to oldest).
      */
     const sortFavoritesByDateDescending = () => {
-        const sortedFavorites = [...favorites].sort((a, b) => new Date(b.date_saved) - new Date(a.date_saved));
+        const sortedFavorites = [...favorites].sort((a, b) => new Date(b.date_saved).getTime() - new Date(a.date_saved).getTime());
         setFavorites(sortedFavorites);
     };
 
@@ -281,7 +296,7 @@ function SavedPodcasts(): JSX.Element {
                     ))}
                 </ul>
             </div>
-            {selectedEpisodeForAudio && (
+            {selectedEpisodeForAudio && selectedEpisode && (
                 <AudioPlayer
                     audioUrl={selectedEpisode.mp3_file}
                     onClose={() => setSelectedEpisodeForAudio(null)}

@@ -3,9 +3,7 @@ import Hero from '../components/Hero/Hero';
 import Row from '../components/Views/Row';
 import PodcastInfo from '../components/Views/PodcastInfo.tsx';
 import { useShows } from "../api/ShowsContext.tsx";
-import supabase from "../supabase.ts";
 import {Podcast} from "../types.ts";
-
 
 /**
  * Home component representing the main page of the application.
@@ -54,8 +52,19 @@ function Home(): JSX.Element {
     return (
         <div>
             <Hero />
-            <Row  rowId="all-shows" title="Browse All Shows" podcasts={podcasts} openOverlay={openOverlay} />
-            {showOverlay && selectedPodcast && <PodcastInfo item={selectedPodcast} showOverlay={showOverlay} closeOverlay={closeOverlay} onSave={handleSave} />}
+            <Row
+                rowId="all-shows"
+                title="Browse All Shows"
+                podcasts={podcasts}
+                openOverlay={openOverlay}
+            />
+            {showOverlay && selectedPodcast &&
+                <PodcastInfo
+                    item={selectedPodcast}
+                    showOverlay={showOverlay}
+                    closeOverlay={closeOverlay}
+                    onSave={handleSave}
+                />}
         </div>
     );
 }

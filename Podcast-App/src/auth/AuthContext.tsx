@@ -5,7 +5,11 @@ import {AuthContextType, User} from "../types.ts";
 // Create a context with an initial undefined value. This will be overridden with an actual value in the provider.
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthContextProvider: React.FC = ({ children }) => {
+type AuthContextProviderProps = {
+    children: React.ReactNode;
+};
+
+export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
 
@@ -17,7 +21,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
         return () => subscription.unsubscribe();
     }, []);
 
-    const signUp = async (email, password,): Promise<void> => {
+    const signUp = async (email: string, password: string): Promise<void> => {
         const { data, error } = await supabase.auth.signUp({ email, password });
         if (error) console.error("Error signing up:", error.message);
 

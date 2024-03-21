@@ -37,7 +37,7 @@ export interface PodcastFavorite {
     episode_title: string;
     date_saved: string;
     mp3_file: string;
-    seasons_titles: { title: string }[];
+    seasons_titles: string[];
 }
 
 export interface OverlayProps {
@@ -52,5 +52,5 @@ export interface OverlayProps {
     };
     showOverlay: boolean;
     closeOverlay: () => void;
-    onSave: (episodeId: string, seasonId: string | null) => void;
+    onSave?: (episodeId: string, seasonId: string | null) => void;
 }

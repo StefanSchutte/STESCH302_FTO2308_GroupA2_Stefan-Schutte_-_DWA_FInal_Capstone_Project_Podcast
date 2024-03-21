@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import PodcastInfo from '../components/Views/PodcastInfo.tsx'
 import { useShows } from "../api/ShowsContext.tsx";
@@ -95,11 +95,11 @@ const Filters: React.FC = () => {
     const handleGenreClick = (genre: string): void => {
         const genreIndex = ['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].indexOf(genre);
         if (genreIndex !== -1) {
-            let filteredByGenre: Podcast[] = [];
+            let filteredByGenre: Podcast[];
             if (genreIndex === 0) {
                 filteredByGenre = podcasts;
             } else {
-                filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex));
+                filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex.toString()));
             }
             setFilteredShows(filteredByGenre);
         } else {
