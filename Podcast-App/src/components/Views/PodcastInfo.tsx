@@ -96,11 +96,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
      * Get the current date and time.
      * Insert the favorite episode into the database.
      * Fetch all favorite data after insertion.
-     *
-     * @param episode
-     * @param seasonId
      */
-    const handleSave = async (episode, seasonId) => {
+    const handleSave = async () => {
         if (!user) {
             console.error('User is not authenticated');
             return;
@@ -111,7 +108,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
             const selectedSeasonData = podcastData;
             const currentDate = new Date().toISOString();
 
-            const { data: insertedData, error } = await supabase
+            const { error } = await supabase
                 .from('favorites')
                 .insert([{
                     user_id: user.id,
@@ -129,7 +126,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                 console.error('Error inserting favorite episode:', error);
                 return;
             }
-            const { data: allFavorites, error: fetchError } = await supabase.from('favorites').select();
+            const { error: fetchError } = await supabase.from('favorites').select();
 
             if (fetchError) {
                 console.error('Error fetching all favorites:', fetchError);
@@ -242,7 +239,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
 
                                         <div className="flex items-center flex-col mb-4 sm:flex-row sm:items-center sm:justify-start">
                                             <div className="mr-4">
-                                                <img src={item.image} className='max-w-40 h-40 object-cover '/>
+                                                <img src={item.image} alt='img' className='max-w-40 h-40 object-cover '/>
                                             </div>
                                             <div className='font-bold text-yellow-400 flex items-center'>
                                                 <h2 className='text-4xl underline mt-3'>
@@ -253,7 +250,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
 
                                     <div className='mb-4 '>
                                         <div className='flex items-center mb-4 mt-8'>
-                                            <Genres genres={item.genres} />
+                                            <Genres genres={Array.isArray(item.genres) ? item.genres : [item.genres]} />
                                         </div>
                                         <div className='text-gray-500 flex items-center mb-4'>
                                             {formattedUpdated}
@@ -292,8 +289,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                     </select>
                                                     {/* See More button */}
                                                     <button className="ml-3 w-12 h-12" onClick={toggleSeasonExpanded}>
-                                                        {seasonExpanded ? <img src={closeFav} title='Close'/> :
-                                                            <img src={seeMoreFav} title='See More'/>}
+                                                        {seasonExpanded ? <img src={closeFav} alt='close' title='Close'/> :
+                                                            <img src={seeMoreFav} alt='See More' title='See More'/>}
                                                     </button>
                                                 </div>
 
@@ -352,7 +349,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                     {/* Episode list */}
                                                     <div className={`w-full ${expanded ? 'block' : 'hidden'}`}>
                                                         <ul className="p-3 my-2 bg-gray-600 rounded">
-                                                            {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode, index) => (
+                                                            {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode: any, index: number) => (
                                                                 <li
                                                                     key={index + 1}
                                                                     className="py-2 px-4 border-b border-gray-700 flex justify-between items-center relative"
