@@ -1,7 +1,9 @@
-import {ReactNode} from 'react';
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import { useAuth } from "../../auth/AuthContext.tsx";
 
+interface ProtectedRouteProps {
+    children: () => JSX.Element | null;
+}
 /**
  * Functional component representing a protected route that redirects to the home page if the user is not authenticated.
  * Destructures the children prop, which represents the child components to be rendered within the protected route.
@@ -10,14 +12,14 @@ import { useAuth } from "../../auth/AuthContext.tsx";
  * @param children - The child components to be rendered if the user is authenticated.
  * @returns JSX.Element | Navigate
  */
-const ProtectedRoute = ({children}: { children: ReactNode }): JSX.Element | Navigate => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
 
     const {user} = useAuth()
 
     if (!user){
         return <Navigate to='/' />
     } else {
-        return children
+        return children() || null;
     }
 }
 

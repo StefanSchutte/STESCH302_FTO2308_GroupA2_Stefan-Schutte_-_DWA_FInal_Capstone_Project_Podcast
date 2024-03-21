@@ -54,8 +54,15 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) 
             >
                 <img src={playFav} alt='Play'/>
             </button>
+            {/*{showAudioPlayer && (*/}
+            {/*    <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />*/}
+            {/*)}*/}
             {showAudioPlayer && (
-                <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />
+                <AudioPlayer
+                    audioUrl={audioUrl}
+                    onClose={() => setShowAudioPlayer(false)}
+
+                />
             )}
         </>
     );

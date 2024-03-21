@@ -6,8 +6,7 @@ import shareFav from '/share.png'
 import playFav from "/play-button.png";
 import { format } from 'date-fns'
 import AudioPlayer from "../audio/AudioPlayer.tsx";
-import {Podcast} from "../../types.ts";
-
+import { PodcastFavorite } from "../../types.ts";
 
 /**
  * Functional component representing the saved podcasts section.
@@ -17,7 +16,7 @@ import {Podcast} from "../../types.ts";
  * @returns JSX.Element
  */
 function SavedPodcasts(): JSX.Element {
-    const [favorites, setFavorites] = useState<Podcast[]>([]);
+    const [favorites, setFavorites] = useState<PodcastFavorite[]>([]);
     const { user } = useAuth();
     const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null);
     const [podcastData, setPodcastData] = useState<any>(null);
@@ -149,7 +148,7 @@ function SavedPodcasts(): JSX.Element {
     };
 
     const filterAndGroupBySeason = () => {
-        const groupedBySeason: { [key: string]: { [key: string]: Podcast[] } } = {};
+        const groupedBySeason: { [key: string]: { [key: string]: PodcastFavorite[] } } = {};
 
         favorites.map((episode, index) => {
             const seasonKey = episode.season_title;

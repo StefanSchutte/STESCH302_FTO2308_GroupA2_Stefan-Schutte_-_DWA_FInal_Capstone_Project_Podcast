@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import playButtonDub from '/play-button.png';
 import { useShows } from '../../api/ShowsContext.tsx';
-import PodcastInfo from "../../pages/PodcastInfo.tsx";
+import PodcastInfo from "../Views/PodcastInfo.tsx";
 import Genres from "../../helpers/Genres.tsx";
 import {Podcast} from "../../types.ts";
-
 
 /**
  * Functional component representing the hero section of the application.

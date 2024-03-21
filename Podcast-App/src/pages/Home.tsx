@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Hero from '../components/Hero/Hero';
 import Row from '../components/Views/Row';
-import PodcastInfo from './PodcastInfo.tsx';
+import PodcastInfo from '../components/Views/PodcastInfo.tsx';
 import { useShows } from "../api/ShowsContext.tsx";
 import supabase from "../supabase.ts";
 import {Podcast} from "../types.ts";

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
-import PodcastInfo from './PodcastInfo.tsx'
+import PodcastInfo from '../components/Views/PodcastInfo.tsx'
 import { useShows } from "../api/ShowsContext.tsx";
 import Genres from "../helpers/Genres.tsx";
 import {Podcast} from "../types.ts";

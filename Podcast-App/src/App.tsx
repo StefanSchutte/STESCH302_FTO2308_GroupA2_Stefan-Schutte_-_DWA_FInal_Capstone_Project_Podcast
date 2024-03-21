@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 import AudioPlayer from "./components/audio/AudioPlayer.tsx";
 import {AudioPlayerProvider} from "./components/audio/AudioPlayerContext.tsx";
 import {useState} from "react";
-import PodcastInfo from "./pages/PodcastInfo.tsx";
+import PodcastInfo from "./components/Views/PodcastInfo.tsx";
 
 /**
  * Main application component.
@@ -30,7 +30,7 @@ function App(): JSX.Element {
               <Route path='/filter' element={<Filters />}/>
               <Route path='/login' element={<Login />}/>
               <Route path='/signup' element={<Signup />}/>
-              <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>}/>
+              <Route path='/account' element={<ProtectedRoute>{() =><Account />}</ProtectedRoute>}/>
           </Routes>
               </AudioPlayerProvider>
           </AuthContextProvider>

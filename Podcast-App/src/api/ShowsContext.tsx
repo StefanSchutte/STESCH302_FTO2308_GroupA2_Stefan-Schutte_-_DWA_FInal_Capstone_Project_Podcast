@@ -1,15 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import {getShowsFromAPI} from './API.ts';
-
-interface Podcast {
-    id: string,
-    image: string;
-    title: string;
-    updated: string;
-    description: string;
-    genres: string;
-    seasons: number;
-}
+import {Podcast} from "../types.ts";
 
 /**
  * Interface representing the auth value for the ShowsContext.

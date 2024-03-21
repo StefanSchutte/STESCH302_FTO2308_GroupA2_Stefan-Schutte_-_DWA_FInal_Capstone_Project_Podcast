@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import {useState, FormEvent, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext.tsx';
 import signupFav from '/add-user.png';
@@ -21,7 +21,7 @@ function Signup(): JSX.Element {
      * Used to navigate to different routes within the application.
      */
     const navigate = useNavigate();
-
+    
     /**
      * Handles form submission.
      * prevents the default form submission behavior.
@@ -36,6 +36,7 @@ function Signup(): JSX.Element {
 console.log('submit')
         try {
             await signUp(email, password);
+
             navigate('/');
         } catch (error) {
             console.log(error);

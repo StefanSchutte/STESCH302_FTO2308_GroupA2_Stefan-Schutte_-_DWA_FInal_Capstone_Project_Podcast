@@ -27,7 +27,7 @@ export interface ShowsContextType {
     selectSeason: (seasonNumber: number) => void;
 }
 
-export interface PodcastFavourite {
+export interface PodcastFavorite {
     id: string;
     image: string;
     title: string;

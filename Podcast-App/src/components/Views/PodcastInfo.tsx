@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import closeFav from "/close.png";
-import PlayButton from '../components/audio/PlayButton.tsx'
-import Genres from "../helpers/Genres.tsx";
+import PlayButton from '../audio/PlayButton.tsx'
+import Genres from "../../helpers/Genres.tsx";
 import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
-import supabase from "../supabase.ts";
-import {useAuth} from "../auth/AuthContext.tsx";
-import {getShowDetailFromApi} from "../api/API.ts";
-import { saveLastListened, getLastListened } from "../components/userSettings/userSettings.ts";
-import { updateEpisodeProgress, getEpisodeProgress} from "../components/userSettings/userSettings.ts";
-import { useAudioPlayer } from "../components/audio/AudioPlayerContext.tsx";
-import {OverlayProps} from "../types.ts";
-import AudioPlayer from "../components/audio/AudioPlayer.tsx";
+import supabase from "../../supabase.ts";
+import {useAuth} from "../../auth/AuthContext.tsx";
+import {getShowDetailFromApi} from "../../api/API.ts";
+import { saveLastListened, getLastListened } from "../userSettings/userSettings.ts";
+import { updateEpisodeProgress, getEpisodeProgress} from "../userSettings/userSettings.ts";
+import { useAudioPlayer } from "../audio/AudioPlayerContext.tsx";
+import {OverlayProps} from "../../types.ts";
 
 /**
  * PodcastInfo component to display detailed information about a podcast.
@@ -151,24 +150,24 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
         }
     };
 
-    useEffect(() => {
-        // Fetch last listened show and episode when component mounts
-        const fetchLastListenedData = async () => {
-            if (user) {
-                const data = await getLastListened(user.id);
-                if (data) {
-                    // Update state with last listened show and episode
-                    setSelectedSeason(parseInt(data.last_listened_show_id));
-                    setSelectedEpisode(parseInt(data.last_listened_episode_id));
-                    const episodeProgress = await getEpisodeProgress(user.id, data.last_listened_episode_id);
-                    if (episodeProgress) {
-                        // Update the audio player with the episode progress
-                    }
-                }
-            }
-        };
-        fetchLastListenedData();
-    }, [user]);
+    // useEffect(() => {
+    //     // Fetch last listened show and episode when component mounts
+    //     const fetchLastListenedData = async () => {
+    //         if (user) {
+    //             const data = await getLastListened(user.id);
+    //             if (data) {
+    //                 // Update state with last listened show and episode
+    //                 setSelectedSeason(parseInt(data.last_listened_show_id));
+    //                 setSelectedEpisode(parseInt(data.last_listened_episode_id));
+    //                 const episodeProgress = await getEpisodeProgress(user.id, data.last_listened_episode_id);
+    //                 if (episodeProgress) {
+    //                     // Update the audio player with the episode progress
+    //                 }
+    //             }
+    //         }
+    //     };
+    //     fetchLastListenedData();
+    // }, [user]);
 
     /**
      * Handles the selection of a season.
@@ -390,14 +389,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                             showId={item.id}
                                             />
                                             }
-                                            {showAudioPlayer && (
-                                                <AudioPlayer
-                                                    audioUrl={audioUrl}
-                                                    onClose={() => setShowAudioPlayer(false)}
-                                                    userId={user?.id || ''} // Assuming user is defined and has an id property
-                                                    episodeId={selectedEpisode ? podcastData.seasons[selectedSeason - 1].episodes[selectedEpisode - 1].id : ''}
-                                                />
-                                            )}
+
                                         </div>
                                     )
                                     )}
