@@ -293,7 +293,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ User favourites are automatically synced when logged in, ensuring that they share favourites between devices
 
- Users can share their favourites as a publicly accessible URL
+✅ Users can share their favourites as a publicly accessible URL
 
 //supabase tables
 

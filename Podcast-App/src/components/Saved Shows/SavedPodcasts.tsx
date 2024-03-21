@@ -202,10 +202,10 @@ function SavedPodcasts(): JSX.Element {
     /**
      * share
      */
-    const generateShareUrl = () => {
-        // Generate a unique share URL based on the user's ID or session
+    const generateShareUrl = (episode) => {
+        // Generate a unique share URL based on the user's ID or session and the podcast ID
         const uniqueIdentifier = user ? user.id : Date.now().toString();
-        const url = `${window.location.origin}/shared-favorites/${uniqueIdentifier}`;
+        const url = `${window.location.origin}/shared-favorites/${uniqueIdentifier}/${episode.id}`;
         setShareUrl(url);
     };
 
@@ -278,16 +278,18 @@ function SavedPodcasts(): JSX.Element {
                                         <img src={playFav} alt='Play' title='Play' className='w-14 h-14 m-2'/>
                                     </button>
                                 </div>
+
                                 <div>
-                                    <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2' onClick={generateShareUrl}/>
-                                    {/*share url*/}
-                                    {shareUrl && (
+                                    <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2' onClick={() => generateShareUrl(episode)}/>
+
+                                    {episode.id === selectedEpisode?.id && shareUrl && (
                                         <div className='bg-blue-500'>
                                             <input type="text" value={shareUrl} readOnly />
                                             <button onClick={() => navigator.clipboard.writeText(shareUrl)}>Copy URL</button>
                                         </div>
                                     )}
                                 </div>
+
                                 <button onClick={() => handleDeleteClick(episode.season_id)}>
                                     <img src={removeFav} alt='Remove' title='Remove' className='w-14 h-14 m-2 mt-3'/>
                                 </button>

@@ -8,6 +8,7 @@ import Account from "./pages/Account.tsx";
 import Filters from "./pages/Filters.tsx";
 import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 import {AudioPlayerProvider} from "./components/audio/AudioPlayerContext.tsx";
+import SharedPodcast from "./components/Saved Shows/SharedPodcast.tsx";
 
 /**
  * Main application component.
@@ -26,6 +27,7 @@ function App(): JSX.Element {
                       <Route path='/login' element={<Login />}/>
                       <Route path='/signup' element={<Signup />}/>
                       <Route path='/account' element={<ProtectedRoute>{() =><Account />}</ProtectedRoute>}/>
+                      <Route path="/shared-favorites/:userId/:episodeId" element={<SharedPodcast />} />
                   </Routes>
               </AudioPlayerProvider>
           </AuthContextProvider>
