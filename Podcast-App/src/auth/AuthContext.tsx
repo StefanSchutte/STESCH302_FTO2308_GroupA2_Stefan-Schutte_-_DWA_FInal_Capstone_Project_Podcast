@@ -22,13 +22,13 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     }, []);
 
     const signUp = async (email: string, password: string): Promise<void> => {
-        const { data, error } = await supabase.auth.signUp({ email, password });
+        const { error } = await supabase.auth.signUp({ email, password });
         if (error) console.error("Error signing up:", error.message);
 
     };
 
     const logIn = async (email: string, password: string): Promise<void> => {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) console.error("Error signing in:", error.message);
     };
 

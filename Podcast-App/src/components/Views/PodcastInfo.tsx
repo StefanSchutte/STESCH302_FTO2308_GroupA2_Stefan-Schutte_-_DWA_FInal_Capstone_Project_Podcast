@@ -384,6 +384,9 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                 selectedSeason && selectedEpisode && podcastData &&
                                                 podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.file}
                                             showId={item.id}
+                                            episodeId={selectedEpisode && selectedSeason
+                                                ? podcastData?.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.id ?? ''
+                                                : ''}
                                             />
                                             }
 
