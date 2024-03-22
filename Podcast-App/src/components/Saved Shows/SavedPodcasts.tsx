@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from "../../auth/AuthContext.tsx";
+import { useAuth } from "../../services/AuthContext.tsx";
 import supabase from "../../supabase.ts";
 import removeFav from '/remove.png'
 import shareFav from '/share.png'

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import playButtonDub from '/play-button.png';
-import { useShows } from '../../api/ShowsContext.tsx';
+import { useShows } from '../../services/ShowsContext.tsx';
 import PodcastInfo from "../Views/PodcastInfo.tsx";
 import Genres from "../../helpers/Genres.tsx";
 import {Podcast} from "../../types.ts";

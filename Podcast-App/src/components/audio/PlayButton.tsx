@@ -6,7 +6,8 @@ import { useAudioPlayer } from "./AudioPlayerContext.tsx";
 interface PlayButtonProps {
     audioUrl: string;
     showId: string;
-    episodeId: string;
+    episodeId: number;
+    seasonId: any;
 
 }
 
@@ -26,7 +27,8 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId, se
      * It updates the showAudioPlayer state to true and stores the last listened show and episode in the local storage.
      */
     const handlePlayButtonClick = () => {
-
+        //die is waty  ek print om te sien watse data on nou in hierdietempalte ding het
+        console.log(episodeId, showId, seasonId)
         setShowAudioPlayer(true);
         setAudioUrl(audioUrl);
     };
@@ -55,6 +57,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId, se
             {/*    <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />*/}
             {/*)}*/}
             {showAudioPlayer && (
+                // hier pass ons nou data wat on indie template ontvang het, af na AudioPlayer
                 <AudioPlayer
                     audioUrl={audioUrl}
                     onClose={() => setShowAudioPlayer(false)}

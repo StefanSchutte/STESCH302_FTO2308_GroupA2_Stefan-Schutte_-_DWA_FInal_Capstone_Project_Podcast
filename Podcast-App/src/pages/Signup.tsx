@@ -1,6 +1,6 @@
 import {useState, FormEvent} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext.tsx';
+import { useAuth } from '../services/AuthContext.tsx';
 import signupFav from '/add-user.png';
 
 /**

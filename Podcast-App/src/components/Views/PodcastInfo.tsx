@@ -5,7 +5,7 @@ import Genres from "../../helpers/Genres.tsx";
 import seeMoreFav from '/seeMore.png';
 import saveBtnFav from "/save.png";
 import supabase from "../../supabase.ts";
-import {useAuth} from "../../auth/AuthContext.tsx";
+import {useAuth} from "../../services/AuthContext.tsx";
 import {getShowDetailFromApi} from "../../api/API.ts";
 import { useAudioPlayer } from "../audio/AudioPlayerContext.tsx";
 import {OverlayProps} from "../../types.ts";
@@ -242,6 +242,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                         <div>
                                             <div className='grid-cols-2'>
                                                 <div className='flex items-center'>
+
+
                                                     {/* Choose Season dropdown */}
                                                     <div className='pr-6 text-purple-500'>Select Season:</div>
                                                     <select
@@ -256,6 +258,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                             </option>
                                                         ))}
                                                     </select>
+
+
                                                     {/* See More button */}
                                                     <button className="ml-3 w-12 h-12" onClick={toggleSeasonExpanded}>
                                                         {seasonExpanded ? <img src={closeFav} alt='close' title='Close'/> :
@@ -296,6 +300,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                         <div className='pr-4 text-purple-500'>
                                                             Select Episode:
                                                         </div>
+
+
                                                         {/* Choose Episode dropdown */}
                                                         <select
                                                             value={selectedEpisode || ''}
@@ -347,16 +353,14 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                     </div>
                                                 </div>
                                             </div>
-                                            {showOverlay &&
-                                            <PlayButton
-                                            audioUrl={
-                                                selectedSeason && selectedEpisode && podcastData &&
-                                                podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.file}
-                                            showId={item.id}
-                                            episodeId={selectedEpisode && selectedSeason
-                                                ? podcastData?.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.id ?? ''
-                                                : ''}
-                                            />
+                                            {showOverlay &&  selectedSeason && selectedEpisode &&
+
+                                                <PlayButton
+                                                    audioUrl={podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.file}
+                                                    showId={item.id}
+                                                    episodeId={selectedEpisode}
+                                                    seasonId={{selectedSeason}}
+                                                    />
                                             }
 
                                         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Podcast from './Podcast';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import {useShows} from "../../api/ShowsContext.tsx";
+import {useShows} from "../../services/ShowsContext.tsx";
 
 interface RowProps {
     /** The title of the row. */

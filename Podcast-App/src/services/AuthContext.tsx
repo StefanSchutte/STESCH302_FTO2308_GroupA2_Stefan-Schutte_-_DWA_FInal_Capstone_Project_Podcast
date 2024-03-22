@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import supabase from '../supabase';
+import supabase from '../supabase.ts';
 import {AuthContextType, User} from "../types.ts";
 
 // Create a context with an initial undefined value. This will be overridden with an actual value in the provider.

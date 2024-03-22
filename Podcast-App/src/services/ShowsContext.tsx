@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import {getShowsFromAPI} from './API.ts';
+import {getShowsFromAPI} from '../api/API.ts';
 import {Podcast} from "../types.ts";
 
 /**

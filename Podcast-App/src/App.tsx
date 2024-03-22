@@ -1,7 +1,7 @@
 import Navbar from './components/Nav/Navbar.tsx'
 import Home from './pages/Home.tsx'
 import {Route, Routes} from "react-router-dom";
-import {AuthContextProvider} from "./auth/AuthContext.tsx";
+import {AuthContextProvider} from "./services/AuthContext.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Account from "./pages/Account.tsx";

@@ -1,16 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
 import closeBtnFav from '/close.png';
 
-/**
- * Props interface for the AudioPlayer component.
- * The URL of the audio file to be played.
- * Callback function invoked when the audio player is closed.
- */
+//ons pass nou van PlayButton data na hierdie AudioPlayer
 interface AudioPlayerProps {
     audioUrl: string;
     onClose: () => void;
     userId: string;
-    episodeId: string;
+    episodeId: number;
+    showId: number;
+    seasonId: any;
     episodeProgress: number | null;
 }
 
