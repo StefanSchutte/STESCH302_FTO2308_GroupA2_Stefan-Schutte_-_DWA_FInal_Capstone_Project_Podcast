@@ -287,75 +287,10 @@ Project is deployed to a custom Netlify URL
 
 ✅ User is presented with a sliding carousel of possible shows they might be interested in on the landing page
 
-?  User can log in via https://app.supabase.com authentication
+✅ User can log in via https://app.supabase.com authentication
 
 ✅ User favourites are stored in the https://app.supabase.com database
 
 ✅ User favourites are automatically synced when logged in, ensuring that they share favourites between devices
 
 ✅ Users can share their favourites as a publicly accessible URL
-
-//supabase tables
-
--- Users table to store user information
-create table users (
-id uuid primary key default uuid_generate_v4(),
-email text not null unique,
--- Add other user attributes as needed
-);
-
--- Episodes table to store episode information
-create table episodes (
-id uuid primary key default uuid_generate_v4(),
-title text not null,
-description text,
--- Add other episode attributes as needed
-);
-
--- Seasons table to store season information
-create table seasons (
-id uuid primary key default uuid_generate_v4(),
-number integer not null,
-description text,
--- Add other season attributes as needed
-);
-
--- Favorites table to store user's favorite episodes
-create table favorites (
-id uuid primary key default uuid_generate_v4(),
-user_id uuid references users(id) not null,
-episode_id uuid references episodes(id) not null,
-season_id uuid references seasons(id),
--- Add other attributes as needed
-);
-
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

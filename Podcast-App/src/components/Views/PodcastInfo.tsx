@@ -7,8 +7,6 @@ import saveBtnFav from "/save.png";
 import supabase from "../../supabase.ts";
 import {useAuth} from "../../auth/AuthContext.tsx";
 import {getShowDetailFromApi} from "../../api/API.ts";
-import { saveLastListened, getLastListened } from "../userSettings/userSettings.ts";
-import { updateEpisodeProgress, getEpisodeProgress} from "../userSettings/userSettings.ts";
 import { useAudioPlayer } from "../audio/AudioPlayerContext.tsx";
 import {OverlayProps} from "../../types.ts";
 
@@ -64,11 +62,13 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
             window.addEventListener('resize', handleBodyOverflow);
 
             return () => {
-                document.body.classList.remove('overflow-hidden');
+                if (showOverlay) {
+                    document.body.classList.remove('overflow-hidden');
+                }
                 window.removeEventListener('resize', handleBodyOverflow);
             }
 
-        }, [item, showOverlay]);
+        }, [showOverlay]);
 
     /**
      * Fetches podcast data when the overlay is shown, based on changes in item and showOverlay.
@@ -88,7 +88,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                 });
         }
     }, [item, showOverlay]);
-
+// console.log(podcastData)
     /**
      * Save data to Supabase.
      *
@@ -135,36 +135,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
         }
     };
 
-    //---------------------------------------------------------
-    // Function to handle saving last listened show and episode
-    const handleSaveLastListened = async (episodeNumber) => {
-
-        console.log(item.id);
-
-        if (user && selectedSeason !== null && selectedEpisode !== null) {
-            await saveLastListened(user.id, item.id, podcastData);
-            await updateEpisodeProgress(user.id, podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1].id, Date.now());
-        }
-    };
-
-    // useEffect(() => {
-    //     // Fetch last listened show and episode when component mounts
-    //     const fetchLastListenedData = async () => {
-    //         if (user) {
-    //             const data = await getLastListened(user.id);
-    //             if (data) {
-    //                 // Update state with last listened show and episode
-    //                 setSelectedSeason(parseInt(data.last_listened_show_id));
-    //                 setSelectedEpisode(parseInt(data.last_listened_episode_id));
-    //                 const episodeProgress = await getEpisodeProgress(user.id, data.last_listened_episode_id);
-    //                 if (episodeProgress) {
-    //                     // Update the audio player with the episode progress
-    //                 }
-    //             }
-    //         }
-    //     };
-    //     fetchLastListenedData();
-    // }, [user]);
 
     /**
      * Handles the selection of a season.
@@ -180,12 +150,11 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
      */
     const handleEpisodeSelect = (episodeNumber: number) => {
         setSelectedEpisode(episodeNumber);
-        handleSaveLastListened(episodeNumber);
+
 
         if (podcastData && selectedSeason !== null) {
             const selectedEpisodeFile = podcastData.seasons[selectedSeason - 1].episodes[episodeNumber - 1].file;
             setAudioUrl(selectedEpisodeFile);
-            setShowAudioPlayer(true);
         }
     };
 

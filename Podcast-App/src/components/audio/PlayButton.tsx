@@ -15,15 +15,11 @@ interface PlayButtonProps {
  * This state tracks whether the audio player should be shown or not.
  * The component renders a button with an image of a play button (playFav). When clicked, it triggers the handlePlayButtonClick function.
  * If showAudioPlayer is true, it renders the AudioPlayer component passing the audioUrl prop and a function to close the player (onClose).
- * @param audioUrl
- * @param showId
- * @param episodeId
- * @constructor
  */
-const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) => {
+const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId, seasonId, userId, episodeProgress, selectedSeason, selectedEpisode, podcastData }) => {
     //const [showAudioPlayer, setShowAudioPlayer] = useState<boolean>(false);
 
-    const { showAudioPlayer, setShowAudioPlayer, toggleAudioPlayer } = useAudioPlayer()
+    const { showAudioPlayer, setShowAudioPlayer, setAudioUrl } = useAudioPlayer()
 
     /**
      * Called when the play button is clicked.
@@ -32,6 +28,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) 
     const handlePlayButtonClick = () => {
 
         setShowAudioPlayer(true);
+        setAudioUrl(audioUrl);
     };
 
     /**
@@ -61,7 +58,11 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId }) 
                 <AudioPlayer
                     audioUrl={audioUrl}
                     onClose={() => setShowAudioPlayer(false)}
-
+                    userId={userId}
+                    episodeProgress={episodeProgress}
+                    episodeId={episodeId}
+                    showId={showId}
+                    seasonId={seasonId.selectedSeason}
                 />
             )}
         </>
