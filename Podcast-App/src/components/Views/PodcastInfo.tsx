@@ -226,6 +226,11 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
      */
     if (!showOverlay) return null;
 
+    const handleCloseOverlay = () => {
+        closeOverlay(); // Close the overlay
+        setShowAudioPlayer(true); // Keep the audio player visible
+    };
+
     return (
                 <>
                     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[90] overflow-hidden">
@@ -392,7 +397,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                         </div>
                                     )
                                     )}
-                                    <button className="absolute top-4 right-4 " onClick={closeOverlay}>
+                                    <button className="absolute top-4 right-4 " onClick={handleCloseOverlay}>
                                         <img src={closeFav} alt="close" className='w-15 h-15 ml-2' title='CLose'/>
                                     </button>
                                 </div>
@@ -404,3 +409,4 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
 };
 
 export default PodcastInfo;
+// onClick={closeOverlay}
