@@ -1,5 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import closeBtnFav from '/close.png';
+import completedFav from'/checklist.png'
+import incompletedFav from '/incomplete.png'
+import removeFav from "/remove.png";
 
 //ons pass nou van PlayButton data na hierdie AudioPlayer
 interface AudioPlayerProps {
@@ -24,18 +27,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodePro
     const [progress, setProgress] = useState(0);
     const [isEpisodeCompleted, setIsEpisodeCompleted] = useState(false);
 
-// console.log(podcastData)
-    // const seasons = podcastData.seasons;
-    //
-    //
-    // seasons.forEach(season => {
-    //     const episodes = season.episodes;
-    //
-    //     episodes.forEach(episode => {
-    //         console.log(episode.season);
-    //     });
-    // });
-
     useEffect(() => {
         if (audioRef.current && typeof episodeProgress === 'number' && isFinite(episodeProgress)) {
             // Set the current playback position of the audio element to the episode progress
@@ -44,12 +35,22 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodePro
     }, [episodeProgress]);
 
     useEffect(() => {
+
+        const storedProgress = localStorage.getItem(`${userId}-${showId}_season_${seasonId}_episode_${episodeId}_progress`);
+        if (storedProgress) {
+            const parsedProgress = parseFloat(storedProgress);
+            setProgress(parsedProgress);
+            if (audioRef.current) {
+                audioRef.current.currentTime = parsedProgress;
+            }
+        }
+
         //Todo EpisodeId is null hier
         const storedCompletionStatus = localStorage.getItem(`${userId}-${showId}_season_${seasonId}_episode_${episodeId}_completed`);
         if (storedCompletionStatus === 'true') {
             setIsEpisodeCompleted(true);
         }
-    }, [episodeId]);
+    }, [episodeId, seasonId, showId, userId]);
 
     const markEpisodeCompleted = () => {
         setIsEpisodeCompleted(true);
@@ -89,6 +90,20 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodePro
             setIsEpisodeCompleted(true);
         }
     }, []); // This effect runs only once when the component mounts
+
+    const handleClearLocalStorage = () => {
+        localStorage.clear();
+        window.location.reload();
+    };
+
+    const handleProgressUpdate = () => {
+        if (audioRef.current) {
+            const currentTime = audioRef.current.currentTime;
+            setProgress(currentTime);
+            localStorage.setItem(`${userId}-${showId}_season_${seasonId}_episode_${episodeId}_progress`, currentTime.toString());
+        }
+    };
+
     /**
      * <audio> element with controls, using the provided audioUrl.
      * Close button represented by an <img> element, which triggers the handleClose function when clicked.
@@ -103,14 +118,22 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodePro
                     ref={audioRef}
                     controls
                     onEnded={handleAudioEnded}
-                    onTimeUpdate={() => setProgress(audioRef.current ? audioRef.current.currentTime : 0)}>
+                    // onTimeUpdate={() => setProgress(audioRef.current ? audioRef.current.currentTime : 0)}
+                    onTimeUpdate={handleProgressUpdate}
+                >
                     <source src={audioUrl} type="audio/mpeg"/>
                 </audio>
+                <button onClick={handleClearLocalStorage}>
+                    <img src={removeFav} alt='Clear Local Storage' title='Clear Local Storage' className='w-10 h-10 m-3'/>
+                </button>
                 <div>
-                    {isEpisodeCompleted ? <p>Completed</p> : <p>Not Completed</p> }
+                    {isEpisodeCompleted ?
+                        <p><img src={completedFav} alt='Completed' title='Completed' className='w-10 h-10 m-3'/></p>
+                        : <p><img src={incompletedFav} alt='Not Completed' title='Not Completed'
+                                  className='w-10 h-10 m-3'/></p>}
                 </div>
                 <button onClick={handleClose}>
-                    <img src={closeBtnFav} alt='X' className='w-12 h-12 ml-1 cursor-pointer'/>
+                    <img src={closeBtnFav} alt='Close' title='Close' className='w-12 h-12 m-3 cursor-pointer'/>
                 </button>
             </div>
 

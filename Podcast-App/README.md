@@ -277,13 +277,13 @@ Project is deployed to a custom Netlify URL
 
  App remembers which show and episode the user listened to last when returning to the platform
 
- App remembers which shows and episodes the user listened to all the way through
+✅ App remembers which shows and episodes the user listened to all the way through
 
- App remembers the timestamp where the user stopped listening within a 10-second accuracy period of closing
+✅ App remembers the timestamp where the user stopped listening within a 10-second accuracy period of closing
 
- App remembers and shows the timestamp progress of any episode the user has started listening to
+✅ App remembers and shows the timestamp progress of any episode the user has started listening to
 
- User can "reset" all their progress, effectively removing their listening history
+✅ User can "reset" all their progress, effectively removing their listening history
 
 ✅ User is presented with a sliding carousel of possible shows they might be interested in on the landing page
 
