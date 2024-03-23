@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import closeFav from "/close.png";
 import PlayButton from '../audio/PlayButton.tsx'
 import Genres from "../../helpers/Genres.tsx";
-import seeMoreFav from '/seeMore.png';
-import saveBtnFav from "/save.png";
 import supabase from "../../supabase.ts";
 import {useAuth} from "../../services/AuthContext.tsx";
 import {getShowDetailFromApi} from "../../api/API.ts";
 import { useAudioPlayer } from "../audio/AudioPlayerContext.tsx";
 import {OverlayProps} from "../../types.ts";
+import {Podcast} from '../../types.ts'
+import seeMoreFav from '/seeMore.png';
+import saveBtnFav from "/save.png";
+import closeFav from "/close.png";
 
 /**
  * PodcastInfo component to display detailed information about a podcast.
@@ -88,10 +89,9 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                 });
         }
     }, [item, showOverlay]);
-// console.log(podcastData)
+
     /**
      * Save data to Supabase.
-     *
      * Ensure selectedSeason and selectedEpisode are not null.
      * Get the current date and time.
      * Insert the favorite episode into the database.
@@ -135,7 +135,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
         }
     };
 
-
     /**
      * Handles the selection of a season.
      * @param seasonNumber - The selected season number.
@@ -169,9 +168,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
     /**
      * Function to handle mouse enter.
      * Set index of hovered episode.
-     * Set description to display
-     * @param index
-     * @param description
+     * Set description to display.
      */
     const handleMouseEnter = (index: number, description: string) => {
         setTooltipIndex(index);
@@ -187,6 +184,39 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
         setTooltipIndex(-1);
         setTooltipText('');
     };
+
+
+    // // Function to check if all episodes in a season are completed
+    // const isSeasonCompleted = (season: any) => {
+    //     if (!season || !season.episodes) return false;
+    //     return season.episodes.every((episode: any) => {
+    //         const episodeId = episode.id;
+    //         const storedCompletionStatus = localStorage.getItem(`${user?.id}-${item.id}_season_${season.id}_episode_${episodeId}_completed`);
+    //         return storedCompletionStatus === 'true';
+    //     });
+    // };
+    //
+    // // Function to determine the completion status of each season
+    // const getSeasonCompletionStatus = () => {
+    //     if (!podcastData) return [];
+    //     return podcastData.seasons.map((season: any) => ({
+    //         seasonId: season.id,
+    //         completed: isSeasonCompleted(season),
+    //     }));
+    // };
+    //
+    // const renderSeasonCompletion = () => {
+    //     const seasonCompletionStatus = getSeasonCompletionStatus();
+    //     return (
+    //         <div className="flex items-center mt-4">
+    //             {seasonCompletionStatus.map((seasonStatus: any) => (
+    //                 <div key={seasonStatus.seasonId} className="mr-4">
+    //                     <p>Season {seasonStatus.seasonId}: {seasonStatus.completed ? 'Completed' : 'Not Completed'}</p>
+    //                 </div>
+    //             ))}
+    //         </div>
+    //     );
+    // };
 
 
     /**
@@ -300,8 +330,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                         <div className='pr-4 text-purple-500'>
                                                             Select Episode:
                                                         </div>
-
-
                                                         {/* Choose Episode dropdown */}
                                                         <select
                                                             value={selectedEpisode || ''}
@@ -309,7 +337,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                             className='p-3 my-2 bg-gray-600 rounded w-2/3'
                                                         >
                                                             <option value="">Choose Episode</option>
-                                                            {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode: any, index: number) => (
+                                                            {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode: Podcast, index: number) => (
                                                                 <option key={index + 1} value={index + 1}>
                                                                     {episode.title}
                                                                 </option>
@@ -324,7 +352,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                     {/* Episode list */}
                                                     <div className={`w-full ${expanded ? 'block' : 'hidden'}`}>
                                                         <ul className="p-3 my-2 bg-gray-600 rounded">
-                                                            {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode: any, index: number) => (
+                                                            {selectedSeason && podcastData.seasons[selectedSeason - 1]?.episodes.map((episode: Podcast, index: number) => (
                                                                 <li
                                                                     key={index + 1}
                                                                     className="py-2 px-4 border-b border-gray-700 flex justify-between items-center relative"
@@ -354,7 +382,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                 </div>
                                             </div>
                                             {showOverlay &&  selectedSeason && selectedEpisode &&
-
                                                 <PlayButton
                                                     audioUrl={podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.file}
                                                     showId={item.id}
@@ -362,12 +389,11 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                     seasonId={{selectedSeason}}
                                                     />
                                             }
-
                                         </div>
                                     )
                                     )}
-                            <button className="absolute top-4 right-4 " onClick={closeOverlay}>
-                                <img src={closeFav} alt="close" className='w-15 h-15 ml-2' title='CLose'/>
+                                    <button className="absolute top-4 right-4 " onClick={closeOverlay}>
+                                        <img src={closeFav} alt="close" className='w-15 h-15 ml-2' title='CLose'/>
                                     </button>
                                 </div>
                             </div>

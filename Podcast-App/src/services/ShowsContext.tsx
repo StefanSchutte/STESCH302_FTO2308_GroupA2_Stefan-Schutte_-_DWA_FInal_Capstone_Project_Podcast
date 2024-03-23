@@ -76,7 +76,7 @@ export const ShowsProvider: React.FC<ShowsProviderProps> = ({ children }) => {
                     <div className="text-blue-500 text-5xl">Loading...</div>
                 </div>
             ) : (
-                children // Render children when data fetching is complete
+                children
             )}
         </ShowsContext.Provider>
     );

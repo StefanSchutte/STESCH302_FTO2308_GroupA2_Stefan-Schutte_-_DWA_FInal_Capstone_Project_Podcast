@@ -11,7 +11,7 @@ interface AudioPlayerProps {
     userId: string;
     episodeId: number;
     showId: number;
-    seasonId: any;
+    seasonId: number;
     episodeProgress: number | null;
 }
 
@@ -19,8 +19,6 @@ interface AudioPlayerProps {
  * Functional component representing an audio player.
  * AudioPlayer is a functional component declared using the React.FC type,
  * which is a generic type that allows specifying the type of props the component will receive.
- * @param {AudioPlayerProps} props - Props for the AudioPlayer component.
- * @returns JSX.Element
  */
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodeProgress, episodeId, seasonId, showId, userId}) => {
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -103,6 +101,24 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodePro
             localStorage.setItem(`${userId}-${showId}_season_${seasonId}_episode_${episodeId}_progress`, currentTime.toString());
         }
     };
+
+
+    // Function to store the last listened show and episode in localStorage
+    const storeLastListenedEpisode = (showId, episodeId) => {
+        localStorage.setItem('last_listened_show', showId.toString());
+        localStorage.setItem('last_listened_episode', episodeId.toString());
+    };
+
+// Function to retrieve the last listened show and episode from localStorage
+    const getLastListenedEpisode = () => {
+        const lastListenedShowId = localStorage.getItem('last_listened_show');
+        const lastListenedEpisodeId = localStorage.getItem('last_listened_episode');
+        return {
+            showId: lastListenedShowId ? parseInt(lastListenedShowId) : null,
+            episodeId: lastListenedEpisodeId ? parseInt(lastListenedEpisodeId) : null
+        };
+    };
+
 
     /**
      * <audio> element with controls, using the provided audioUrl.

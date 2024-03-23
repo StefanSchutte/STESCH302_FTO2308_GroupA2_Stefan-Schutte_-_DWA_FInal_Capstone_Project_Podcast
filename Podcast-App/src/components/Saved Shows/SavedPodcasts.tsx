@@ -6,20 +6,18 @@ import shareFav from '/share.png'
 import playFav from "/play-button.png";
 import { format } from 'date-fns'
 import AudioPlayer from "../audio/AudioPlayer.tsx";
-import {PodcastFavorite} from "../../types.ts";
+import {Podcast, PodcastFavorite} from "../../types.ts";
 
 /**
  * Functional component representing the saved podcasts section.
  * Sets up a state variable favorites using the useState hook to manage the list of saved podcasts.
  * Retrieves the user object from the useAuth hook, which provides information about the authenticated user.
- *
- * @returns JSX.Element
  */
 function SavedPodcasts(): JSX.Element {
     const [favorites, setFavorites] = useState<PodcastFavorite[]>([]);
     const { user } = useAuth();
     const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null);
-    const [podcastData, setPodcastData] = useState<any>(null);
+    const [podcastData, setPodcastData] = useState<Podcast | null>(null);
     const [loading, setLoading] = useState(false);
     const [selectedEpisodeForAudio, setSelectedEpisodeForAudio] = useState<string | null>(null);
     const [shareUrl, setShareUrl] = useState<string>('');
@@ -49,7 +47,6 @@ function SavedPodcasts(): JSX.Element {
                     throw error;
                 }
                 if (data) {
-                //setFavorites(data || []);
                 const transformedData = data.map((item: any) => ({
                     id: item.season_id,
                     episode_title: item.episode_title,
@@ -119,9 +116,9 @@ function SavedPodcasts(): JSX.Element {
      * Check if the episode has a nested object with a 'season_id' property.
      * Access the 'season_id' property from the nested object.
      */
-    const handleEpisodeClick = (episode) => {
+    const handleEpisodeClick = (episode: PodcastFavorite ) => {
         setSelectedEpisode(episode);
-
+console.log(episode)
             if (episode.season_id) {
                 fetchPodcastDataFromSupaBase(episode.season_id);
             } else {
@@ -194,6 +191,7 @@ function SavedPodcasts(): JSX.Element {
         const selectedEpisode = favorites.find(episode => episode.id === episodeId);
         if (selectedEpisode) {
             setSelectedEpisodeForAudio(selectedEpisode.mp3_file);
+
         } else {
             console.error('Error: Episode not found with ID:', episodeId);
         }
@@ -208,6 +206,8 @@ function SavedPodcasts(): JSX.Element {
         const url = `${window.location.origin}/shared-favorites/${uniqueIdentifier}/${episode.id}`;
         setShareUrl(url);
     };
+
+
 
     /**
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.
@@ -280,12 +280,14 @@ function SavedPodcasts(): JSX.Element {
                                 </div>
 
                                 <div>
-                                    <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2' onClick={() => generateShareUrl(episode)}/>
+                                    <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2'
+                                         onClick={() => generateShareUrl(episode)}/>
 
                                     {episode.id === selectedEpisode?.id && shareUrl && (
                                         <div className='bg-blue-500'>
-                                            <input type="text" value={shareUrl} readOnly />
-                                            <button onClick={() => navigator.clipboard.writeText(shareUrl)}>Copy URL</button>
+                                            <input type="text" value={shareUrl} readOnly/>
+                                            <button onClick={() => navigator.clipboard.writeText(shareUrl)}>Copy URL
+                                            </button>
                                         </div>
                                     )}
                                 </div>
@@ -293,15 +295,17 @@ function SavedPodcasts(): JSX.Element {
                                 <button onClick={() => handleDeleteClick(episode.season_id)}>
                                     <img src={removeFav} alt='Remove' title='Remove' className='w-14 h-14 m-2 mt-3'/>
                                 </button>
+
                             </div>
                         </li>
-                    ))}
+                ))}
                 </ul>
             </div>
             {selectedEpisodeForAudio && selectedEpisode && (
                 <AudioPlayer
                     audioUrl={selectedEpisode.mp3_file}
                     onClose={() => setSelectedEpisodeForAudio(null)}
+
                 />
             )}
         </>

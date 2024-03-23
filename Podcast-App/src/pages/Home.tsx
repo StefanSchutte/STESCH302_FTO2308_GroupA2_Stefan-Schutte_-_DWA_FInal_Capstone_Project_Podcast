@@ -39,16 +39,6 @@ function Home(): JSX.Element {
         setShowOverlay(false);
     };
 
-    /**
-     * Function to handle saving the podcast.
-     * @param {string} episodeId - The ID of the episode being saved.
-     * @param {string | null} seasonId - The ID of the season being saved.
-     */
-    const handleSave = (episodeId: string, seasonId: string | null) => {
-        // Add your logic to save the podcast here
-        console.log('Saving podcast:', episodeId, seasonId);
-    }
-
     return (
         <div>
             <Hero />
@@ -63,7 +53,6 @@ function Home(): JSX.Element {
                     item={selectedPodcast}
                     showOverlay={showOverlay}
                     closeOverlay={closeOverlay}
-                    onSave={handleSave}
                 />}
         </div>
     );

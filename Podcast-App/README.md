@@ -74,13 +74,13 @@ Row below that.
 - User can navigate through episode on timestamp bar.
 - User can close audio player by clicking close.
 
-#### Favorites
+#### FAVORITES
 - Users favorites are saved under the Favorites page.
 - Similar to Filters page, user sees a list of the saved Episodes.
 - User can sort and group favorites by clicking the labels for desired requirement.
 - User can click play button to listen to the episode.
 - User can delete episode by clicking the delete button.
-- User can also share the Episode.
+- User can also share their favorite Episodes.
 
 
 ## Deployment:

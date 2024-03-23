@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AudioPlayer from "./AudioPlayer.tsx";
 import playFav from '/play-button.png'
 import { useAudioPlayer } from "./AudioPlayerContext.tsx";
@@ -8,7 +8,6 @@ interface PlayButtonProps {
     showId: string;
     episodeId: number;
     seasonId: any;
-
 }
 
 /**.
@@ -18,7 +17,6 @@ interface PlayButtonProps {
  * If showAudioPlayer is true, it renders the AudioPlayer component passing the audioUrl prop and a function to close the player (onClose).
  */
 const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId, seasonId, userId, episodeProgress, selectedSeason, selectedEpisode, podcastData }) => {
-    //const [showAudioPlayer, setShowAudioPlayer] = useState<boolean>(false);
 
     const { showAudioPlayer, setShowAudioPlayer, setAudioUrl } = useAudioPlayer()
 
@@ -33,17 +31,6 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId, se
         setAudioUrl(audioUrl);
     };
 
-    /**
-     * Called when the audio player is closed. It updates the showAudioPlayer state to false.
-     */
-    const handleClosePlayer = () => {
-        setShowAudioPlayer(false);
-    };
-
-    // const handlePlayButtonClick = () => {
-    //     toggleAudioPlayer();
-    // };
-
     return (
         <>
             <button
@@ -53,9 +40,6 @@ const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId, se
             >
                 <img src={playFav} alt='Play'/>
             </button>
-            {/*{showAudioPlayer && (*/}
-            {/*    <AudioPlayer audioUrl={audioUrl} onClose={handleClosePlayer} />*/}
-            {/*)}*/}
             {showAudioPlayer && (
                 // hier pass ons nou data wat on indie template ontvang het, af na AudioPlayer
                 <AudioPlayer

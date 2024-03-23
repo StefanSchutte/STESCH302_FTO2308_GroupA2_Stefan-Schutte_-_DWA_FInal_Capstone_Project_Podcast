@@ -11,14 +11,29 @@ interface Episode {
     date_saved: string;
     mp3_file: string;
     seasons_titles?: { title: string }[];
-
 }
 
+/**
+ * Functional component representing a page for displaying shared podcast episodes.
+ * Fetches episodes from the database based on the user ID provided in the route parameters.
+ * Renders a list of episodes with their details.
+ */
 function SharedPodcast() {
+    /**
+     * State Initialization:
+     * Uses useParams to retrieve the userId from the route parameters.
+     * 'episodes' store fetched episodes.
+     * 'loading' track the loading status.
+     */
     const { userId } = useParams();
     const [episodes, setEpisodes] = useState<Episode[]>([]);
     const [loading, setLoading] = useState(true);
 
+    /**
+     * Fetch episodes from the database when the component mounts or the user ID changes.
+     * Asynchronous function to fetch episodes from the database using Supabase.
+     * Handles the fetched data by transforming it into 'Episode' objects and updating the 'episodes' state variable.
+     */
     useEffect(() => {
         const fetchFavorites = async () => {
             const { data, error } = await supabase
@@ -29,7 +44,10 @@ function SharedPodcast() {
                 throw error;
             }
             if (data) {
-                const episodesData: Episode[] = data.map((episode: any) => ({
+                /**
+                 * Transform data into Episode objects.
+                 */
+                const episodesData: Episode[] = data.map((episode: Episode) => ({
                     season_id: episode.season_id,
                     episode_title: episode.episode_title,
                     season_title: episode.season_title,
@@ -38,21 +56,37 @@ function SharedPodcast() {
                     mp3_file: episode.mp3_file,
                     seasons_titles: episode.seasons_titles,
                 }));
+                /**
+                 * Update state with fetched episodes.
+                 * Set loading state to false when data is fetched.
+                 */
                 setEpisodes(episodesData);
                 setLoading(false);
             }
         };
         fetchFavorites();
+        /**
+         * Dependency array: re-run effect when userId changes.
+         */
     }, [userId]);
 
+    /**
+     * Render loading indicator while fetching data.
+     */
     if (loading) {
         return <div className='flex items-center justify-center h-screen text-blue-500 text-5xl'>Loading...</div>;
     }
 
+    /**
+     * Render error message if no episodes are found.
+     */
     if (episodes.length === 0) {
         return <div>Error: Episodes not found</div>;
     }
 
+    /**
+     * Render the list of episodes.
+     */
     return (
         <div>
 
@@ -66,7 +100,7 @@ function SharedPodcast() {
                     <li key={index} className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 '>
                         <div className="flex flex-col sm:flex-row items-center">
                             <div>
-                                <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-4'/>
+                                <img src={episode.season_image} alt={episode.season_title} className='w-52 h-full ml-4'/>
                             </div>
                             <div className="flex flex-col ml-6">
                                 <div className='font-bold m-3 underline'>{episode.season_title}</div>

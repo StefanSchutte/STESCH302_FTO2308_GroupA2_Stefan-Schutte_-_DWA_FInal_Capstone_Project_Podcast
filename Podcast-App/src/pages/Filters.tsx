@@ -99,7 +99,7 @@ const Filters: React.FC = () => {
             if (genreIndex === 0) {
                 filteredByGenre = podcasts;
             } else {
-                filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex.toString()));
+                filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex));
             }
             setFilteredShows(filteredByGenre);
         } else {
