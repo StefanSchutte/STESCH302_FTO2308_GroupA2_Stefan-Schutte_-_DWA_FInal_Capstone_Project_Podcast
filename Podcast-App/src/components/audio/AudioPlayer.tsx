@@ -3,6 +3,7 @@ import closeBtnFav from '/close.png';
 import completedFav from'/checklist.png'
 import incompletedFav from '/incomplete.png'
 import removeFav from "/remove.png";
+import {useAudioPlayer} from "./AudioPlayerContext.tsx";
 
 //ons pass nou van PlayButton data na hierdie AudioPlayer
 interface AudioPlayerProps {
@@ -20,10 +21,19 @@ interface AudioPlayerProps {
  * AudioPlayer is a functional component declared using the React.FC type,
  * which is a generic type that allows specifying the type of props the component will receive.
  */
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodeProgress, episodeId, seasonId, showId, userId}) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({
+         audioUrl,
+         onClose,
+         episodeProgress,
+         episodeId,
+         seasonId,
+         showId,
+         userId
+    }) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [progress, setProgress] = useState(0);
     const [isEpisodeCompleted, setIsEpisodeCompleted] = useState(false);
+    const { setShowAudioPlayer } = useAudioPlayer();
 
     useEffect(() => {
         if (audioRef.current && typeof episodeProgress === 'number' && isFinite(episodeProgress)) {
@@ -63,6 +73,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodePro
         const confirmPrompt = window.confirm('Are you sure you want to close the Audio Player?');
         if (confirmPrompt) {
             onClose();
+            setShowAudioPlayer(false)
         }
     };
 
@@ -103,21 +114,21 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onClose, episodePro
     };
 
 
-    // Function to store the last listened show and episode in localStorage
-    const storeLastListenedEpisode = (showId, episodeId) => {
-        localStorage.setItem('last_listened_show', showId.toString());
-        localStorage.setItem('last_listened_episode', episodeId.toString());
-    };
-
-// Function to retrieve the last listened show and episode from localStorage
-    const getLastListenedEpisode = () => {
-        const lastListenedShowId = localStorage.getItem('last_listened_show');
-        const lastListenedEpisodeId = localStorage.getItem('last_listened_episode');
-        return {
-            showId: lastListenedShowId ? parseInt(lastListenedShowId) : null,
-            episodeId: lastListenedEpisodeId ? parseInt(lastListenedEpisodeId) : null
-        };
-    };
+//     // Function to store the last listened show and episode in localStorage
+//     const storeLastListenedEpisode = (showId, episodeId) => {
+//         localStorage.setItem('last_listened_show', showId.toString());
+//         localStorage.setItem('last_listened_episode', episodeId.toString());
+//     };
+//
+// // Function to retrieve the last listened show and episode from localStorage
+//     const getLastListenedEpisode = () => {
+//         const lastListenedShowId = localStorage.getItem('last_listened_show');
+//         const lastListenedEpisodeId = localStorage.getItem('last_listened_episode');
+//         return {
+//             showId: lastListenedShowId ? parseInt(lastListenedShowId) : null,
+//             episodeId: lastListenedEpisodeId ? parseInt(lastListenedEpisodeId) : null
+//         };
+//     };
 
 
     /**

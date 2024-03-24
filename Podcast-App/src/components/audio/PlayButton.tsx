@@ -16,7 +16,17 @@ interface PlayButtonProps {
  * The component renders a button with an image of a play button (playFav). When clicked, it triggers the handlePlayButtonClick function.
  * If showAudioPlayer is true, it renders the AudioPlayer component passing the audioUrl prop and a function to close the player (onClose).
  */
-const PlayButton: React.FC<PlayButtonProps> = ({ audioUrl, showId, episodeId, seasonId, userId, episodeProgress, selectedSeason, selectedEpisode, podcastData }) => {
+const PlayButton: React.FC<PlayButtonProps> = ({
+               audioUrl,
+               showId,
+               episodeId,
+               seasonId,
+               userId,
+               episodeProgress,
+               selectedSeason,
+               selectedEpisode,
+               podcastData
+    }) => {
 
     const { showAudioPlayer, setShowAudioPlayer, setAudioUrl } = useAudioPlayer()
 

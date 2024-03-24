@@ -9,6 +9,7 @@ import Filters from "./pages/Filters.tsx";
 import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 import {AudioPlayerProvider} from "./components/audio/AudioPlayerContext.tsx";
 import SharedPodcast from "./components/Saved Shows/SharedPodcast.tsx";
+import {useState} from "react";
 
 /**
  * Main application component.
@@ -16,10 +17,17 @@ import SharedPodcast from "./components/Saved Shows/SharedPodcast.tsx";
  */
 function App(): JSX.Element {
 
+    const [showAudioPlayer, setShowAudioPlayer] = useState(false);
+    const [audioUrl, setAudioUrl] = useState('');
+
   return (
       <>
           <AuthContextProvider>
-              <AudioPlayerProvider>
+              <AudioPlayerProvider
+                  showAudioPlayer={showAudioPlayer}
+                  setShowAudioPlayer={setShowAudioPlayer}
+                  audioUrl={audioUrl}
+                  setAudioUrl={setAudioUrl}>
                   <Navbar />
                   < Routes>
                       <Route path='/' element={<Home  />} />

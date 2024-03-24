@@ -228,7 +228,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
 
     const handleCloseOverlay = () => {
         closeOverlay(); // Close the overlay
-        setShowAudioPlayer(true); // Keep the audio player visible
+        //setShowAudioPlayer(true); // Keep the audio player visible
     };
 
     return (
