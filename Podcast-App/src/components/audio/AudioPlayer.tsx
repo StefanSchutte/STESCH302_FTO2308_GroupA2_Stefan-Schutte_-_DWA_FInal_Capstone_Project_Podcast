@@ -53,6 +53,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
             }
         }
 
+        storeLastListenedEpisode();
+
         //Todo EpisodeId is null hier
         const storedCompletionStatus = localStorage.getItem(`${userId}-${showId}_season_${seasonId}_episode_${episodeId}_completed`);
         if (storedCompletionStatus === 'true') {
@@ -114,21 +116,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     };
 
 
-//     // Function to store the last listened show and episode in localStorage
-//     const storeLastListenedEpisode = (showId, episodeId) => {
-//         localStorage.setItem('last_listened_show', showId.toString());
-//         localStorage.setItem('last_listened_episode', episodeId.toString());
-//     };
-//
-// // Function to retrieve the last listened show and episode from localStorage
-//     const getLastListenedEpisode = () => {
-//         const lastListenedShowId = localStorage.getItem('last_listened_show');
-//         const lastListenedEpisodeId = localStorage.getItem('last_listened_episode');
-//         return {
-//             showId: lastListenedShowId ? parseInt(lastListenedShowId) : null,
-//             episodeId: lastListenedEpisodeId ? parseInt(lastListenedEpisodeId) : null
-//         };
-//     };
+    // Function to store the last listened show and episode in localStorage
+    const storeLastListenedEpisode = () => {
+        localStorage.setItem('last_listened_url', audioUrl.toString());
+    };
+
 
 
     /**

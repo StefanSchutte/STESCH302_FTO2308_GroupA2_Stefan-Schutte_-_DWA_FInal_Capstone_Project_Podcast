@@ -217,60 +217,60 @@ console.log(episode)
      */
     return (
         <>
-            <div className='flex justify-center items-center text-yellow-400 mt-14'>
+            <div className='flex justify-center items-center text-yellow-400 mt-24'>
                 <h1 className="text-white font-bold text-4xl p-4 mt-1">Favorites</h1>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center mt-2">
+            <div className="flex items-center justify-center mt-2 overflow-x-auto">
                 <button onClick={sortFavoritesByShowAZ}
-                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
-                        title='Select'>Sort A-Z
+                        className='cursor-pointer mr-2 sm:mr-4 bg-gray-600 border border-amber-50 rounded-full p-1 sm:p-2 mt-2 text-yellow-400 text-sm sm:text-base'
+                        title='Sort A-Z'>Sort A-Z
                 </button>
                 <button onClick={sortFavoritesByShowZA}
-                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
-                        title='Select'>Sort Z-A
+                        className='cursor-pointer mr-2 sm:mr-4 bg-gray-600 border border-amber-50 rounded-full p-1 sm:p-2 mt-2 text-yellow-400 text-sm sm:text-base'
+                        title='Sort Z-A'>Sort Z-A
                 </button>
                 <button onClick={sortFavoritesByDateAscending}
-                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
-                        title='Select'>Ascending Date
+                        className='cursor-pointer mr-2 sm:mr-4 bg-gray-600 border border-amber-50 rounded-full p-1 sm:p-2 mt-2 text-yellow-400 text-sm sm:text-base'
+                        title='Ascending Date'>Ascending Date
                 </button>
                 <button onClick={sortFavoritesByDateDescending}
-                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
-                        title='Select'>Descending Date
+                        className='cursor-pointer mr-2 sm:mr-4 bg-gray-600 border border-amber-50 rounded-full p-1 sm:p-2 mt-2 text-yellow-400 text-sm sm:text-base'
+                        title='Descending Date'>Descending Date
                 </button>
                 <button onClick={filterAndGroupBySeason}
-                        className='cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 text-yellow-400'
-                        title='Select'>Group by Season
+                        className='cursor-pointer bg-gray-600 border border-amber-50 rounded-full p-1 sm:p-2 mt-2 text-yellow-400 text-sm sm:text-base'
+                        title='Group by Season'>Group by Season
                 </button>
             </div>
 
             <div className='justify-center items-center text-gray-500 overflow-y-auto max-h-screen'>
                 <ul className='items-center z-[100]'>
-                {favorites.map((episode, index) => (
+                    {favorites.map((episode, index) => (
                         <li key={index}
                             onClick={() => handleEpisodeClick(episode)}
                             className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 cursor-pointer'>
                             {/*{JSON.stringify(episode)}*/}
                             <div className="flex flex-col sm:flex-row items-center">
-                            <div>
-                                <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-4'/>
-                            </div>
-                            <div className="flex flex-col ml-6">
-                                <div className='font-bold m-3 underline'>{episode.season_title}</div>
-                                <div className=' flex items-center m-2'>
-                                    <p className='text-gray-500 pr-4'>Episode:</p>
-                                    {episode.episode_title}
+                                <div>
+                                    <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-4 '/>
                                 </div>
-                                <div className=' flex items-center m-2'>
-                                    <p className='text-gray-500 pr-6'>Season:</p>
-                                    {/*{episode.seasons_titles[index]?.title}*/}
-                                    {episode.seasons_titles && episode.seasons_titles[index]?.title ? episode.seasons_titles[index]?.title : episode.season_title}
+                                <div className="flex flex-col ml-6">
+                                    <div className='font-bold m-3 underline'>{episode.season_title}</div>
+                                    <div className=' flex items-center m-2'>
+                                        <p className='text-gray-500 pr-4'>Episode:</p>
+                                        {episode.episode_title}
+                                    </div>
+                                    <div className=' flex items-center m-2'>
+                                        <p className='text-gray-500 pr-6'>Season:</p>
+                                        {/*{episode.seasons_titles[index]?.title}*/}
+                                        {episode.seasons_titles && episode.seasons_titles[index]?.title ? episode.seasons_titles[index]?.title : episode.season_title}
+                                    </div>
+                                    <div className=' flex items-center m-2 mb-3'>
+                                        <p className='text-gray-500 pr-2'>Date Saved:</p>
+                                        {format(new Date(episode.date_saved), 'dd/MM/yyyy HH:mm')}
+                                    </div>
                                 </div>
-                                <div className=' flex items-center m-2 mb-3'>
-                                    <p className='text-gray-500 pr-2'>Date Saved:</p>
-                                    {format(new Date(episode.date_saved), 'dd/MM/yyyy HH:mm')}
-                                </div>
-                            </div>
                             </div>
                             <div className=' m-3'>
                                 <div>
@@ -298,7 +298,7 @@ console.log(episode)
 
                             </div>
                         </li>
-                ))}
+                    ))}
                 </ul>
             </div>
             {selectedEpisodeForAudio && selectedEpisode && (

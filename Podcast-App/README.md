@@ -271,7 +271,7 @@ Project is deployed to a custom Netlify URL
 
 ✅ Audio player shows current progress and episode length as timestamps
 
- Audio player is always visible, so the user can listen to episodes while they browse
+✅  Audio player is always visible, so the user can listen to episodes while they browse
 
 ✅ User is prompted to confirm they want to close the page when audio is playing
 

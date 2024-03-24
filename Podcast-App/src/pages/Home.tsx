@@ -7,7 +7,6 @@ import {Podcast} from "../types.ts";
 
 /**
  * Home component representing the main page of the application.
- * @returns {JSX.Element} JSX representation of the Home component.
  */
 function Home(): JSX.Element {
     const { podcasts } = useShows();
@@ -25,7 +24,7 @@ function Home(): JSX.Element {
     /**
      * Function to open the overlay with the selected podcast data.
      * Sets the selected podcast.
-     * @param {Podcast} podcast - The podcast data to display in the overlay.
+     * podcast - The podcast data to display in the overlay.
      */
     const openOverlay = (podcast: Podcast) => {
         setSelectedPodcast(podcast);

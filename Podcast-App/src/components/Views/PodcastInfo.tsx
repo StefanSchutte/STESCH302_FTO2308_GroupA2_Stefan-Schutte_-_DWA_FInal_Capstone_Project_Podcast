@@ -229,31 +229,27 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
     const handleCloseOverlay = () => {
         closeOverlay(); // Close the overlay
 
-        setShowAudioPlayer(true);
+
     };
 
     return (
                 <>
-                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[90] overflow-hidden">
-
-                        <div className="text-yellow-400 fixed top-0 left0 w-screen h-full flex  justify-center items-center bg-black bg-opacity-80 z-[100] ">
-
-                            <div className="w-full h-full bg-cover bg-center rounded-t-lg " style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${item.image})`}}>
-
-                                <div className="p-4 m-4 rounded-lg max-w-screen h-screen  overflow-auto scrollbar-hide">
-
-                                        <div className="flex items-center flex-col mb-4 sm:flex-row sm:items-center sm:justify-start">
-                                            <div className="mr-4">
-                                                <img src={item.image} alt='img' className='max-w-40 h-40 object-cover '/>
-                                            </div>
-                                            <div className='font-bold text-yellow-400 flex items-center'>
-                                                <h2 className='text-4xl underline mt-3'>
-                                                    {item.title}
-                                                </h2>
-                                            </div>
+                    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-80 z-[90] overflow-hidden">
+                        <div className="text-yellow-400 bg-black bg-opacity-0 z-[100] rounded-lg overflow-hidden">
+                            <div className="w-[90vw] h-[70vh] bg-cover bg-center rounded-t-lg" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${item.image})` }}>
+                                <div className="p-4 m-4 rounded-lg max-w-screen h-full overflow-auto scrollbar-hide">
+                                    <div className="flex items-center flex-col mb-4 sm:flex-row sm:items-center sm:justify-start">
+                                        <div className="mr-4">
+                                            <img src={item.image} alt='img' className='max-w-40 h-40 object-cover ' />
                                         </div>
+                                        <div className='font-bold text-yellow-400 flex items-center'>
+                                            <h2 className='text-4xl underline mt-3'>
+                                                {item.title}
+                                            </h2>
+                                        </div>
+                                    </div>
 
-                                    <div className='mb-4 '>
+                                    <div className='mb-4'>
                                         <div className='flex items-center mb-4 mt-8'>
                                             <Genres genres={Array.isArray(item.genres) ? item.genres : [item.genres]} />
                                         </div>
@@ -266,7 +262,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                         <div className='text-yellow-400 flex items-center mb-4'>
                                             <p className='text-amber-50'>
                                                 Seasons:
-                                            </p>{item.seasons}</div>
+                                            </p>{item.seasons}
+                                        </div>
                                     </div>
 
                                     {loading ? (
