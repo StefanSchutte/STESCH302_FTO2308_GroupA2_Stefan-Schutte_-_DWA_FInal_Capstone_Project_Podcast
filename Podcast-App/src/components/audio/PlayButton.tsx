@@ -5,9 +5,11 @@ import { useAudioPlayer } from "./AudioPlayerContext.tsx";
 
 interface PlayButtonProps {
     audioUrl: string;
-    showId: string;
+    showId: number;
     episodeId: number;
     seasonId: any;
+    userId: string;
+    episodeProgress: number;
 }
 
 /**.
@@ -23,9 +25,6 @@ const PlayButton: React.FC<PlayButtonProps> = ({
                seasonId,
                userId,
                episodeProgress,
-               selectedSeason,
-               selectedEpisode,
-               podcastData
     }) => {
 
     const { showAudioPlayer, setShowAudioPlayer, setAudioUrl } = useAudioPlayer()
