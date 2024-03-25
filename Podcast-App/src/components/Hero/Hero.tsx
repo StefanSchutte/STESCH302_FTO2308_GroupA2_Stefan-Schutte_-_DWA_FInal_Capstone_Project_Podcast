@@ -37,9 +37,9 @@ function Hero(): JSX.Element {
 
     /**
      * Truncate a string to a specified length.
-     * @param str - The string to truncate.
-     * @param num - The maximum length of the truncated string.
-     * @returns The truncated string.
+     * str - The string to truncate.
+     * num - The maximum length of the truncated string.
+     * Returns the truncated string.
      */
     const truncateString = (str: string, num: number): string => {
         if (str.length > num) {
@@ -51,7 +51,7 @@ function Hero(): JSX.Element {
 
     /**
      * Function to handle the click event on the play button.
-     * Sets the showOverlay state to true.
+     * Sets the 'showOverlay' state to true.
      */
     const handlePlayButtonClick = () => {
         setShowOverlay(true);
@@ -59,7 +59,7 @@ function Hero(): JSX.Element {
 
     /**
      * Function to close the overlay.
-     * Set the showOverlay state to false.
+     * Set the 'showOverlay' state to false.
      */
     const closeOverlay = () => {
         setShowOverlay(false);

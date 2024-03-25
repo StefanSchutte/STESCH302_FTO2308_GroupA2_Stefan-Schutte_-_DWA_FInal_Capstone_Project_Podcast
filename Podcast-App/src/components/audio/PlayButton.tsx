@@ -1,7 +1,7 @@
 import React from 'react';
 import AudioPlayer from "./AudioPlayer.tsx";
 import playFav from '/play-button.png'
-import { useAudioPlayer } from "./AudioPlayerContext.tsx";
+import { useAudioPlayer } from "../../services/AudioPlayerContext.tsx";
 
 interface PlayButtonProps {
     audioUrl: string;
@@ -16,7 +16,7 @@ interface PlayButtonProps {
  * State variable showAudioPlayer initialized with useState.
  * This state tracks whether the audio player should be shown or not.
  * The component renders a button with an image of a play button (playFav). When clicked, it triggers the handlePlayButtonClick function.
- * If showAudioPlayer is true, it renders the AudioPlayer component passing the audioUrl prop and a function to close the player (onClose).
+ * The useAudioPlayer hook from the AudioPlayerContext.tsx service is used to manage the state related to the audio player.
  */
 const PlayButton: React.FC<PlayButtonProps> = ({
                audioUrl,
@@ -26,20 +26,24 @@ const PlayButton: React.FC<PlayButtonProps> = ({
                userId,
                episodeProgress,
     }) => {
-
     const { showAudioPlayer, setShowAudioPlayer, setAudioUrl } = useAudioPlayer()
 
     /**
      * Called when the play button is clicked.
-     * It updates the showAudioPlayer state to true and stores the last listened show and episode in the local storage.
+     * When the play button is clicked, it sets showAudioPlayer to true, indicating that the audio player should be shown.
+     * Sets the audio URL using 'setAudioUrl' to prepare the audio player to play the selected audio file.
      */
     const handlePlayButtonClick = () => {
-        //die is waty  ek print om te sien watse data on nou in hierdietempalte ding het
-        console.log(episodeId, showId, seasonId)
         setShowAudioPlayer(true);
         setAudioUrl(audioUrl);
     };
 
+    /**
+     * Renders a button with an image of a play button.
+     * This button triggers the handlePlayButtonClick function when clicked.
+     * If 'showAudioPlayer' is true, indicating that the audio player should be shown, 'the AudioPlayer' component is rendered.
+     * 'AudioPlayer' component is conditionally rendered based on the showAudioPlayer state.
+     */
     return (
         <>
             <button
@@ -50,7 +54,6 @@ const PlayButton: React.FC<PlayButtonProps> = ({
                 <img src={playFav} alt='Play'/>
             </button>
             {showAudioPlayer && (
-                // hier pass ons nou data wat on indie template ontvang het, af na AudioPlayer
                 <AudioPlayer
                     audioUrl={audioUrl}
                     onClose={() => setShowAudioPlayer(false)}

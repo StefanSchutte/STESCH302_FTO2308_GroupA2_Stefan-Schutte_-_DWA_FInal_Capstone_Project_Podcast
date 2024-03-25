@@ -34,7 +34,9 @@ export const AudioPlayerProvider: React.FC<AudioPlayerProviderProps> = ({ childr
     const [showAudioPlayer, setShowAudioPlayer] = useState(false);
     const [audioUrl, setAudioUrl] = useState('');
 
-    // Function to toggle the audio player visibility
+    /**
+     * Function to toggle the audio player visibility.
+     */
     const toggleAudioPlayer = () => {
         setShowAudioPlayer((prev) => !prev);
     };

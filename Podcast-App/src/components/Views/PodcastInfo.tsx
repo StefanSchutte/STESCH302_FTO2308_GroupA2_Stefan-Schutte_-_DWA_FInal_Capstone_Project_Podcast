@@ -4,7 +4,7 @@ import Genres from "../../helpers/Genres.tsx";
 import supabase from "../../supabase.ts";
 import {useAuth} from "../../services/AuthContext.tsx";
 import {getShowDetailFromApi} from "../../api/API.ts";
-import { useAudioPlayer } from "../audio/AudioPlayerContext.tsx";
+import { useAudioPlayer } from "../../services/AudioPlayerContext.tsx";
 import {OverlayProps} from "../../types.ts";
 import {Podcast} from '../../types.ts'
 import seeMoreFav from '/seeMore.png';
