@@ -25,6 +25,7 @@ Row below that.
 - The 'Browse All Shows' row provided the user the possibility to browse through all the podcasts using the right and left arrow slider.
 - Users can also navigate to the PodcastInfo overlay, the same as with the 'Hero' section.
 
+![Screenshot from 2024-03-25 17-02-14](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone/assets/127427422/d1793bec-e811-4138-ae29-9b5cfb7351bd)
 
 
 #### MENU
@@ -47,6 +48,7 @@ Row below that.
 - Each result (Preview) contains a title, image, amount of seasons, date updated and the genres.
 - When clicking on any of these result previews user navigates to the 'Podcast Info' overlay.
 
+![Screenshot from 2024-03-25 17-10-38](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone/assets/127427422/2879c86c-0229-4f2e-b030-8827c720dd2b)
 
 
 #### PODCAST INFO
@@ -54,6 +56,7 @@ Row below that.
 - In this overlay the Show title and image is rendered as well as a detailed description of the Show is given.
 - The date last updated and amount of seasons are also rendered.
 
+![Screenshot from 2024-03-25 17-02-38](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone/assets/127427422/ce7c2c55-9caf-4eae-97c9-3ffb9b1ff7e3)
 
 
 - In the 'Select Season' dropdown the user can select a Season, or the user can also use the 'See More' button, next to the dropdown.
@@ -63,12 +66,18 @@ Row below that.
 - A description of the Episode is given on hover.
 - After selecting the Episode, user can Play or Save the Episode, using the play button on top right corner, and saving by clicking the save button.
 
+![seemore_podcast_app](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone/assets/127427422/d1c4e182-87d9-4d58-bbf8-ce422e9bf23e)
+
+![Screenshot from 2024-03-25 17-03-20](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone/assets/127427422/ac972d7b-388b-482d-893c-1c9331db03e1)
 
 
 #### PLAY
 - Pressing the play button opens the Audio Player at the bottom of the page.
 - User can navigate through episode on timestamp bar.
 - User can close audio player by clicking close.
+
+![Screenshot from 2024-03-25 17-04-10](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone/assets/127427422/ce325be0-ae67-4b1b-9f55-3e9cad946fc6)
+
 
 #### FAVORITES
 - Users favorites are saved under the Favorites page.
@@ -77,6 +86,8 @@ Row below that.
 - User can click play button to listen to the episode.
 - User can delete episode by clicking the delete button.
 - User can also share their favorite Episodes.
+
+![Screenshot from 2024-03-25 17-04-47](https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone/assets/127427422/27a3836a-4f99-4b89-95f3-a52961b42270)
 
 
 ## Deployment:
