@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import playButtonDub from '/play-button.png';
 import { useShows } from '../../services/ShowsContext.tsx';
 import PodcastInfo from "../Views/PodcastInfo.tsx";
 import Genres from "../../helpers/Genres.tsx";
@@ -68,17 +67,11 @@ function Hero(): JSX.Element {
     return (
 
         <div className="flex">
-            {/*<Menu/> */}
-            <div className="w-full h-[600px] relative">
+            <div className="w-full h-[600px] relative cursor-pointer" onClick={handlePlayButtonClick}>
                 <div className="absolute w-full h-[600px] bg-gradient-to-r from-black"></div>
                 <img className="w-full h-full object-cover" src={podcast?.image} alt={podcast?.title}/>
-
                 <div className="absolute w-full top-[20%] p-4 md:p-8">
-                    <h1 className="text-3xl md:text-5xl font-bold text-yellow-400">{podcast?.title}</h1>
-
-                    <div className="my-4">
-                        <button className="py-2 px-5"><img src={playButtonDub} alt='Play' title='Listen' onClick={handlePlayButtonClick}/></button>
-                    </div>
+                    <h1 className="text-3xl md:text-5xl font-bold text-yellow-400 mb-3">{podcast?.title}</h1>
                     <span className="text-gray-300 text-sm"><Genres genres={(podcast?.genres || []) as string[]} /></span>
                     <p className="w-full md:max-w-[60%] lg:max-w-[70%] xl:max-w-[80%] text-yellow-400 mt-4">
                         {truncateString(podcast?.description || '', 300)}

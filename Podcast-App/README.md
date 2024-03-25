@@ -10,7 +10,7 @@ Author: Stefan Schutte
 
 Application: Podcast App
 
-Github Link: https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_-_DWA_FInal_Capstone_Project_Podcast/tree/master/Podcast-App
+Github Link: https://github.com/StefanSchutte/STESCH302_FTO2308_GroupA2_Stefan-Schutte_DWACapstone
 
 ## Description:
 
@@ -28,9 +28,7 @@ Row below that.
 
 
 #### MENU
-- At the top right corner is the 'Menu' button. 
 - User should use this to navigate through application.
-- After pressing the 'Menu' button, the 'Menu' overlay is rendered. 
 - The 'Menu' includes: 
 - A 'home' button, that navigates user back to the 'Home' page. 
 - A 'filter' button that navigates the user to the 'Filter' page. 
@@ -38,8 +36,6 @@ Row below that.
 - New user can sign up and after confirming via email sent, can log in.
 - Old user will use the 'login' button, that will navigate the user to 'Account' page.
 - If user is logged in instead of seeing a 'login' and 'sign up' button, a 'account' and 'logout' button will be rendered.
-- The 'close' button is used for closing the menu and returning to previous page.
-
 
 
 #### FILTER

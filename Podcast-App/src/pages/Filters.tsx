@@ -151,8 +151,6 @@ const Filters: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-
-
                         <div>
                             <div className="mr-4 flex items-center mb-4">
                                 <div className='text-purple-500 mr-2 pr-4'>Genre:</div>

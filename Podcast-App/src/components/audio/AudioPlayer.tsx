@@ -122,6 +122,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     const handleAudioEnded = () => {
         handleEpisodeCompletion();
         markEpisodeCompleted();
+        storeLastListenedEpisode();
     };
 
     /**
