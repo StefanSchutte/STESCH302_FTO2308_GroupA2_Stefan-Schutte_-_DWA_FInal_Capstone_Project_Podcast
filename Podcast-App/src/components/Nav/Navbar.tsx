@@ -59,7 +59,6 @@ function Navbar(): JSX.Element {
                     </div>
             </Link>
             <ul className="flex gap-1 justify-center mr-3 mt-1">
-
                 <li className='p-2'>
                     <Link to="/filter" >
                         <img src={settingLogo} alt="filter" className='w-12 h-12' title='Filter Search'/>

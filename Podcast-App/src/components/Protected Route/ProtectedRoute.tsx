@@ -10,8 +10,6 @@ interface ProtectedRouteProps {
  * Destructures the children prop, which represents the child components to be rendered within the protected route.
  * Uses the useAuth hook to get the current user information.
  * If there is no user (!user), it returns a Navigate component to redirect the user to the home page.
- * @param children - The child components to be rendered if the user is authenticated.
- * @returns JSX.Element | Navigate
  */
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
 

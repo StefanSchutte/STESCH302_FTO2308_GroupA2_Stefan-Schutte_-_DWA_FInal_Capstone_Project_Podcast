@@ -20,8 +20,10 @@ const Filters: React.FC = () => {
     const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null);
 
     /**
-     * Fetch shows from api on component mount.
-     * Initialize filteredShows with the fetched podcasts
+     * Hook is executed whenever any value in the dependency array ([podcasts]) changes.
+     * Triggers the effect whenever the podcasts array changes.
+     * Sets the state of 'filteredShows' to the current value of the podcasts array.
+     * Initializes the 'filteredShows' state with the latest list of podcasts obtained from the context
      */
     useEffect(() => {
         setFilteredShows(podcasts);
@@ -29,7 +31,10 @@ const Filters: React.FC = () => {
 
     /**
      * Function to handle search input change.
-     * @param {React.ChangeEvent<HTMLInputElement>} e - Change event
+     * setSearchTerm(e.target.value): Updates the searchTerm state variable with the value of the input field.
+     * Contains the current value of the input field, which is the user's search query.
+     * filterShows(e.target.value): Calls the filterShows function, passing the current search query as an argument.
+     * Filtering the list of podcasts based on the search query.
      */
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setSearchTerm(e.target.value);
@@ -39,7 +44,9 @@ const Filters: React.FC = () => {
     /**
      * Function to filter shows based on search term.
      * If search term is empty, show all shows.
-     * @param {string} term - Search term
+     * Create a new instance of Fuse with the list of podcasts and configuration options.
+     * Perform a search using the Fuse instance and the provided search term.
+     * Update the filteredShows state with the search results.
      */
     const filterShows = (term: string): void => {
         if (term === '') {
@@ -53,7 +60,7 @@ const Filters: React.FC = () => {
 
     /**
      * Function to handle podcast item click.
-     * @param {Podcast} podcast - Selected podcast
+     * podcast - Selected podcast
      */
     const handlePodcastClick = (podcast: Podcast): void => {
         setSelectedPodcast(podcast);
@@ -68,7 +75,8 @@ const Filters: React.FC = () => {
 
     /**
      * Function to handle sorting.
-     * @param {React.ChangeEvent<HTMLSelectElement>} e - Change event
+     * Extracts the new value from the event target (e.target.value) and stores it in the value variable.
+     * Creates a copy of the filteredShows array using the spread operator
      */
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         const value = e.target.value;
@@ -89,8 +97,8 @@ const Filters: React.FC = () => {
      * Function to handle genre click.
      * Check if the genre is valid.
      * If 'All' is selected, show all podcasts.
-     * Filter by the selected genre
-     * @param {string} genre - Selected genre
+     * Filter by the selected genre.
+     * genre - Selected genre
      */
     const handleGenreClick = (genre: string): void => {
         const genreIndex = ['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].indexOf(genre);

@@ -5,7 +5,6 @@ import React from 'react';
  */
 interface GenresProps {
     genres: string[];
-
 }
 
 /**

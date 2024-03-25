@@ -4,10 +4,9 @@ import { useAuth } from '../services/AuthContext.tsx';
 import signupFav from '/add-user.png';
 
 /**
-* Functional component representing the signup form.
+ * Functional component representing the signup form.
  * Defies local state variables using the useState hook, including email and password to manage form input.
-* @returns JSX.Element
-*/
+ */
 function Signup(): JSX.Element {
 
     const signUpLogo = 'https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -33,7 +32,6 @@ function Signup(): JSX.Element {
      */
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-console.log('submit')
         try {
             await signUp(email, password);
 

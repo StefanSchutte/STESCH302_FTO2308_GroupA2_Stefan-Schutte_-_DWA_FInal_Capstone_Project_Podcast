@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from "../../services/AuthContext.tsx";
 import supabase from "../../supabase.ts";
+import { format } from 'date-fns'
+import AudioPlayer from "../audio/AudioPlayer.tsx";
 import removeFav from '/remove.png'
 import shareFav from '/share.png'
 import playFav from "/play-button.png";
-import { format } from 'date-fns'
-import AudioPlayer from "../audio/AudioPlayer.tsx";
 import {Podcast, PodcastFavorite} from "../../types.ts";
 
 /**
  * Functional component representing the saved podcasts section.
  * Sets up a state variable favorites using the useState hook to manage the list of saved podcasts.
  * Retrieves the user object from the useAuth hook, which provides information about the authenticated user.
+ * 'useState' hook is used to manage the component's state:
+ * 'favorites': Stores the list of favorite podcasts.
+ * 'selectedEpisode': Keeps track of the selected episode when clicked for further actions.
+ * 'podcastData': Stores the data of the podcast fetched from the API.
+ * 'loading': Indicates whether the component is in a loading state.
+ * 'selectedEpisodeForAudio': Keeps track of the selected episode's audio file for audio playback.
+ * 'shareUrl': Stores the URL generated for sharing a podcast episode.
  */
 function SavedPodcasts(): JSX.Element {
     const [favorites, setFavorites] = useState<PodcastFavorite[]>([]);
@@ -25,6 +32,7 @@ function SavedPodcasts(): JSX.Element {
     /**
      * Fetch the user's favorite podcasts from the database whenever the user object changes.
      * This ensures that the component updates its state when the user logs in or out.
+     * 'useEffect' hook is used to fetch the user's favorite podcasts from the database whenever the user object changes.
      */
     useEffect(() => {
         if (user) {
@@ -34,7 +42,8 @@ function SavedPodcasts(): JSX.Element {
 
     /**
      * Fetches the user's favorite podcasts from the database.
-     * Retrieves the user's favorite podcasts from the database using supabase.
+     * Retrieves the user's favorite podcasts from the database using Supabase.
+     * It calls the 'fetchFavorites' function, which retrieves favorite podcasts using Supabase and updates the favorites state accordingly.
      */
     const fetchFavorites = async () => {
         try {
@@ -71,6 +80,7 @@ function SavedPodcasts(): JSX.Element {
 
     /**
      * Fetch podcast data from the API using the provided season ID.
+     * Sets the podcastData state with the fetched data.
      */
     const fetchPodcastDataFromSupaBase = async (seasonId: string) => {
         setLoading(true);
@@ -111,22 +121,18 @@ function SavedPodcasts(): JSX.Element {
 
     /**
      * Handle clicking on an episode ID.
-     * Set the selectedEpisodeId state to the clicked episode ID.
-     * Function to handle opening the overlay page with the selected episode details.
+     * Set the 'selectedEpisodeId' state to the clicked episode ID.
      * Check if the episode has a nested object with a 'season_id' property.
      * Access the 'season_id' property from the nested object.
      */
     const handleEpisodeClick = (episode: PodcastFavorite ) => {
         setSelectedEpisode(episode);
-console.log(episode)
             if (episode.season_id) {
                 fetchPodcastDataFromSupaBase(episode.season_id);
             } else {
                 console.error('Error: No season_id found in episode:', episode);
             }
     };
-
-//console.log(favorites)
 
     /**
      * Sorts the podcasts alphabetically by season title in ascending order (A-Z).
@@ -159,6 +165,21 @@ console.log(episode)
         setFavorites(sortedFavorites);
     };
 
+    /**
+     * Filtering and grouping the list of favorite podcasts by their seasons.
+     * 'groupedBySeason' is initialized as an empty object.
+     * This object will hold the grouped episodes where the keys represent shows and seasons.
+     * 'map' function iterates over each episode in the 'favorites' array.
+     * Extracts the seasonKey and subSeasonKey based on the episode's properties:
+     * seasonKey: Represents the main show title(seasonKey).
+     * subSeasonKey: Represents the season title(sub-seasonKey).
+     * Checks if the groupedBySeason object already contains a key corresponding to the seasonKey. If not, it initializes an empty object for that key.
+     * Checks if the subSeasonKey exists within the nested object corresponding to the seasonKey. If not, it initializes an empty array for that key.
+     * Finally, it pushes the current episode into the array under the appropriate subSeasonKey.
+     * 'Object.values' method is used to extract the values (grouped episodes) from the groupedBySeason object.
+     * 'flatMap' is used to flatten the array of arrays into a single array.
+     * 'flat' is used to further flatten the array if there are sub-seasons within a season.
+     */
     const filterAndGroupBySeason = () => {
         const groupedBySeason: { [key: string]: { [key: string]: PodcastFavorite[] } } = {};
 
@@ -180,12 +201,10 @@ console.log(episode)
         setFavorites(Object.values(groupedBySeason).flatMap(Object.values).flat());
     };
 
-
     /**
      * Function to handle opening the audio player for the selected episode.
      * Set the selected episode ID for audio playback.
      * Find the episode with the given ID.
-     * @param {string} episodeId - The ID of the episode to be played.
      */
     const openAudioPlayer = (episodeId: string) => {
         const selectedEpisode = favorites.find(episode => episode.id === episodeId);
@@ -198,7 +217,8 @@ console.log(episode)
     };
 
     /**
-     * share
+     * 'generateShareUrl' function generates a unique URL for sharing a podcast episode based on the user's ID or session and the podcast ID.
+     * It sets the 'shareUrl' state with the generated URL.
      */
     const generateShareUrl = (episode) => {
         // Generate a unique share URL based on the user's ID or session and the podcast ID
@@ -206,8 +226,6 @@ console.log(episode)
         const url = `${window.location.origin}/shared-favorites/${uniqueIdentifier}/${episode.id}`;
         setShareUrl(url);
     };
-
-
 
     /**
      * Renders a section titled "Saved for Later" and maps through the favorites array to display each saved podcast item.
@@ -220,7 +238,6 @@ console.log(episode)
             <div className='flex justify-center items-center text-yellow-400 mt-24'>
                 <h1 className="text-white font-bold text-4xl p-4 mt-1">Favorites</h1>
             </div>
-
             <div className="flex items-center justify-center mt-2 overflow-x-auto">
                 <button onClick={sortFavoritesByShowAZ}
                         className='cursor-pointer mr-2 sm:mr-4 bg-gray-600 border border-amber-50 rounded-full p-1 sm:p-2 mt-2 text-yellow-400 text-sm sm:text-base'
@@ -243,14 +260,12 @@ console.log(episode)
                         title='Group by Season'>Group by Season
                 </button>
             </div>
-
             <div className='justify-center items-center text-gray-500 overflow-y-auto max-h-screen'>
                 <ul className='items-center z-[100]'>
                     {favorites.map((episode, index) => (
                         <li key={index}
                             onClick={() => handleEpisodeClick(episode)}
                             className='border bg-black rounded m-4 flex justify-between items-center text-yellow-400 cursor-pointer'>
-                            {/*{JSON.stringify(episode)}*/}
                             <div className="flex flex-col sm:flex-row items-center">
                                 <div>
                                     <img src={episode.season_image} alt={episode.title} className='w-52 h-full ml-4 '/>
@@ -278,7 +293,6 @@ console.log(episode)
                                         <img src={playFav} alt='Play' title='Play' className='w-14 h-14 m-2'/>
                                     </button>
                                 </div>
-
                                 <div>
                                     <img src={shareFav} alt='Share' title='Share' className='w-14 h-14 m-2'
                                          onClick={() => generateShareUrl(episode)}/>
@@ -291,7 +305,6 @@ console.log(episode)
                                         </div>
                                     )}
                                 </div>
-
                                 <button onClick={() => handleDeleteClick(episode.season_id)}>
                                     <img src={removeFav} alt='Remove' title='Remove' className='w-14 h-14 m-2 mt-3'/>
                                 </button>
