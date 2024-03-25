@@ -239,40 +239,6 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
         setTooltipText('');
     };
 
-
-    // // Function to check if all episodes in a season are completed
-    // const isSeasonCompleted = (season: any) => {
-    //     if (!season || !season.episodes) return false;
-    //     return season.episodes.every((episode: any) => {
-    //         const episodeId = episode.id;
-    //         const storedCompletionStatus = localStorage.getItem(`${user?.id}-${item.id}_season_${season.id}_episode_${episodeId}_completed`);
-    //         return storedCompletionStatus === 'true';
-    //     });
-    // };
-    //
-    // // Function to determine the completion status of each season
-    // const getSeasonCompletionStatus = () => {
-    //     if (!podcastData) return [];
-    //     return podcastData.seasons.map((season: any) => ({
-    //         seasonId: season.id,
-    //         completed: isSeasonCompleted(season),
-    //     }));
-    // };
-    //
-    // const renderSeasonCompletion = () => {
-    //     const seasonCompletionStatus = getSeasonCompletionStatus();
-    //     return (
-    //         <div className="flex items-center mt-4">
-    //             {seasonCompletionStatus.map((seasonStatus: any) => (
-    //                 <div key={seasonStatus.seasonId} className="mr-4">
-    //                     <p>Season {seasonStatus.seasonId}: {seasonStatus.completed ? 'Completed' : 'Not Completed'}</p>
-    //                 </div>
-    //             ))}
-    //         </div>
-    //     );
-    // };
-
-
     /**
      * Conditional rendering of the overlay based on the visibility flag.(showOverlay)
      * Renders the podcast details, loading indicator, season/episode selectors, and a button to close the overlay.

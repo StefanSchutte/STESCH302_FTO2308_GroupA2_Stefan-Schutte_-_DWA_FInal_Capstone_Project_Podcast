@@ -29,7 +29,6 @@ function Login(): JSX.Element {
     useEffect(() => {
         if (user) {
             navigate('/account');
-
         }
     }, [user, navigate]);
 
@@ -50,7 +49,6 @@ function Login(): JSX.Element {
         try {
             await logIn(email, password);
             navigate('/');
-            console.log(user)
         } catch (error: any) {
             console.log(error);
             setError(error.message);
