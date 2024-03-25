@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/Protected Route/ProtectedRoute.tsx";
 import {AudioPlayerProvider, useAudioPlayer} from "./services/AudioPlayerContext.tsx";
 import SharedPodcast from "./components/Saved Shows/SharedPodcast.tsx";
 import AudioPlayer from "./components/audio/AudioPlayer.tsx";
+import LastListenedEpisodeManager from './helpers/LastListenedEpisodeManager.tsx';
 
 /**
  * Main application component.
@@ -33,6 +34,7 @@ function App(): JSX.Element {
                           <Route path='/account' element={<ProtectedRoute>{() => <Account />}</ProtectedRoute>} />
                           <Route path="/shared-favorites/:userId/:episodeId" element={<SharedPodcast />} />
                       </Routes>
+                      <LastListenedEpisodeManager />
                       <AudioPlayerComponent />
                   </AudioPlayerProvider>
               </AuthContextProvider>

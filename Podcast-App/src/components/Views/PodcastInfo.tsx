@@ -405,7 +405,8 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                 seasonId={{selectedSeason}}
                                                 setShowAudioPlayer={setShowAudioPlayer}
                                                 setAudioUrl={setAudioUrl}
-                                                />
+                                                episodeTitle={podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.title}
+                                            />
                                         }
                                     </div>
                                 )

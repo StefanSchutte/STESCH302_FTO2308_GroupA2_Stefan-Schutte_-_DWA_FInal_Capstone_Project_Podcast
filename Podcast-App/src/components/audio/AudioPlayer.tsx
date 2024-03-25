@@ -4,6 +4,7 @@ import completedFav from'/checklist.png'
 import incompletedFav from '/incomplete.png'
 import removeFav from "/remove.png";
 import {useAudioPlayer} from "../../services/AudioPlayerContext.tsx";
+import seeMoreFav from "/seeMore.png";
 
 interface AudioPlayerProps {
     audioUrl: string;
@@ -13,6 +14,7 @@ interface AudioPlayerProps {
     showId: number;
     seasonId: number;
     episodeProgress: number | null;
+    episodeTitle: string;
 }
 
 /**
@@ -27,7 +29,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
          episodeId,
          seasonId,
          showId,
-         userId
+         userId,
+    episodeTitle
     }) => {
     /**
      * Uses the useState hook to manage state internally.
@@ -122,7 +125,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     const handleAudioEnded = () => {
         handleEpisodeCompletion();
         markEpisodeCompleted();
-        storeLastListenedEpisode();
+
     };
 
     /**
@@ -167,6 +170,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
      * Function to store the last listened show and episode in localStorage.
      */
     const storeLastListenedEpisode = () => {
+        console.log("Storing last listened episode:", audioUrl);
         localStorage.setItem('last_listened_url', audioUrl.toString());
     };
 
@@ -190,7 +194,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                     <source src={audioUrl} type="audio/mpeg"/>
                 </audio>
                 <button onClick={handleClearLocalStorage}>
-                    <img src={removeFav} alt='Clear Local Storage' title='Clear Local Storage' className='w-10 h-10 m-3'/>
+                    <img src={removeFav} alt='Clear Local Storage' title='Clear Local Storage'
+                         className='w-10 h-10 m-3'/>
                 </button>
                 <div>
                     {isEpisodeCompleted ?
@@ -198,6 +203,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                         : <p><img src={incompletedFav} alt='Not Completed' title='Not Completed'
                                   className='w-10 h-10 m-3'/></p>}
                 </div>
+                <button>
+                    <img src={seeMoreFav} alt='See Name' title={episodeTitle}
+                         className='w-10 h-10 m-3'/>
+                </button>
                 <button onClick={handleClose}>
                     <img src={closeBtnFav} alt='Close' title='Close' className='w-12 h-12 m-3 cursor-pointer'/>
                 </button>

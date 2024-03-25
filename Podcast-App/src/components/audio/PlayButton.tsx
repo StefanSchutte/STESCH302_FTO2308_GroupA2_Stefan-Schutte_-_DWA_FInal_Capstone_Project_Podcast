@@ -10,6 +10,7 @@ interface PlayButtonProps {
     seasonId: any;
     userId: string;
     episodeProgress: number;
+    episodeTitle: string;
 }
 
 /**.
@@ -25,6 +26,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({
                seasonId,
                userId,
                episodeProgress,
+               episodeTitle
     }) => {
     const { showAudioPlayer, setShowAudioPlayer, setAudioUrl } = useAudioPlayer()
 
@@ -62,6 +64,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({
                     episodeId={episodeId}
                     showId={showId}
                     seasonId={seasonId.selectedSeason}
+                    episodeTitle={episodeTitle}
                 />
             )}
         </>
