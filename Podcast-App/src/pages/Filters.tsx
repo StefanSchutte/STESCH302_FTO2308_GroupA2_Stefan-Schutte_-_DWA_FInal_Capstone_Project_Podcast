@@ -54,6 +54,7 @@ const Filters: React.FC = () => {
         } else {
             const fuse = new Fuse(podcasts, { keys: ['title'] });
             const result = fuse.search(term);
+            // @ts-ignore
             setFilteredShows(result.map((item: Fuse.FuseResult<Podcast>) => item.item));
         }
     };
@@ -107,6 +108,7 @@ const Filters: React.FC = () => {
             if (genreIndex === 0) {
                 filteredByGenre = podcasts;
             } else {
+                // @ts-ignore
                 filteredByGenre = podcasts.filter(podcast => podcast.genres.includes(genreIndex));
             }
             setFilteredShows(filteredByGenre);
@@ -212,7 +214,9 @@ const Filters: React.FC = () => {
 
                                             <div className="flex items-center ">
                                                 <p className='text-amber-50 pr-4'>Genres:</p>
-                                                <div className='text-gray-400 text-base flex flex-wrap'><Genres genres={show.genres} /></div>
+                                                <div className='text-gray-400 text-base flex flex-wrap'>{Array.isArray(show.genres) && (
+                                                    <Genres genres={show.genres} />
+                                                )}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -234,3 +238,4 @@ const Filters: React.FC = () => {
 };
 
 export default Filters;
+// <Genres genres={show.genres} />

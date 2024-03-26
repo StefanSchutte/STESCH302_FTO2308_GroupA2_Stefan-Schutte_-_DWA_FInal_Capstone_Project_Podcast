@@ -5,7 +5,7 @@ import React from 'react';
  */
 interface GenresProps {
     //genres: string[];
-    genres: (string | number)[];
+    genres: (string )[];
 }
 
 /**
@@ -18,7 +18,7 @@ const Genres: React.FC<GenresProps> = ({ genres }) => {
         return null;
     }
 
-    const genreMapping: Record<string | number, string> = {
+    const genreMapping: Record<string, string> = {
         '1': 'Personal Growth',
         '2': 'True Crime and Investigative Journalism',
         '3': 'History',
@@ -34,7 +34,8 @@ const Genres: React.FC<GenresProps> = ({ genres }) => {
         <div className='text-gray-400'>
             {genres.map((genreId, index) => (
                 <span key={index}>
-                    {genreMapping[genreId]}
+                    {/*{genreMapping[genreId]}*/}
+                    {genreMapping[String(genreId)]}
                     {index < genres.length - 2 && ', '}
                     {index === genres.length - 2 && ' and '}
                     {index === genres.length - 1 && ''}

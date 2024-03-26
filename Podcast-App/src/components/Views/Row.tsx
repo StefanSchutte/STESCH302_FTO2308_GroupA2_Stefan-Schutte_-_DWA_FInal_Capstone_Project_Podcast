@@ -2,16 +2,17 @@ import React from 'react';
 import Podcast from './Podcast';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import {useShows} from "../../services/ShowsContext.tsx";
+import { Podcast as PodcastType } from '../../types.ts'
 
 interface RowProps {
     /** The title of the row. */
     title: string;
-    /** The URL to fetch data for the row. */
-    fetchURL: string;
+
     /** The unique identifier for the row. */
     rowId: string;
     /** Function to open an overlay for a podcast. */
-    openOverlay: (podcast: typeof Podcast) => void;
+    openOverlay: (podcast: PodcastType) => void;
+    podcasts: PodcastType[];
 }
 
 /**
