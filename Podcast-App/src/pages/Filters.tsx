@@ -100,7 +100,7 @@ const Filters: React.FC = () => {
      * Filter by the selected genre.
      * genre - Selected genre
      */
-    const handleGenreClick = (genre: string): void => {
+    const handleGenreClick = (genre: string ): void => {
         const genreIndex = ['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].indexOf(genre);
         if (genreIndex !== -1) {
             let filteredByGenre: Podcast[];
@@ -151,19 +151,31 @@ const Filters: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+
                         <div>
                             <div className="mr-4 flex items-center mb-4">
                                 <div className='text-purple-500 mr-2 pr-4'>Genre:</div>
-                                <div className='flex flex-wrap text-yellow-400'>
+                                {/* Show dropdown for small screens */}
+                                <div className='flex flex-wrap text-yellow-400 sm:hidden '>
+                                    <select onChange={(e) => handleGenreClick(e.target.value)}
+                                            className="bg-gray-600 border border-amber-50 rounded-full p-2 mt-2 w-[250px]">
+                                        {['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].map(genre => (
+                                            <option key={genre} value={genre}>{genre}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {/* Show labels for larger screens */}
+                                <div className='hidden sm:flex flex-wrap text-yellow-400'>
                                     {['All', 'Personal Growth', 'True Crime and Investigative Journalism', 'History', 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'].map(genre => (
-                                        <label key={genre} onClick={() => handleGenreClick(genre)} className="cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2" title='Select'>
+                                        <label key={genre} onClick={() => handleGenreClick(genre)}
+                                               className="cursor-pointer mr-4 bg-gray-600 border border-amber-50 rounded-full p-2 mt-2"
+                                               title='Select'>
                                             {genre}
                                         </label>
                                     ))}
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     {/* Show list */}
                     <div className='font-bold text-4xl mt-4 text-yellow-400'>Results:</div>
@@ -178,10 +190,10 @@ const Filters: React.FC = () => {
                                         <div className=" col-span-1 aspect-w-1 aspect-h-1 mb-2">
                                             <img src={show.image} alt={show.title}
                                                  className=" object-cover w-40 h-40"
-                                        />
-                                    </div>
+                                            />
+                                        </div>
                                         <div className="col-span-2 flex flex-col justify-between">
-                                        <div className='text-base sm:text-lg md:text-xl xs:text-xs '>
+                                            <div className='text-base sm:text-lg md:text-xl xs:text-xs '>
                                             <div className="flex items-center font-bold">
                                                 <h1 className='text-amber-50 pr-4'>Title:</h1>
                                                 <div >{show.title}</div>

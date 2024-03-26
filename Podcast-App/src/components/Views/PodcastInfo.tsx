@@ -315,7 +315,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                 </button>
                                             </div>
                                             <div className={`w-full ${seasonExpanded ? 'block' : 'hidden'}`}>
-                                                <ul className="p-3 my-2 bg-gray-600 rounded">
+                                                <ul className="p-3 my-2 bg-gray-600 rounded overflow-auto">
                                                     {Array.from({length: item.seasons}, (_, i) => (
                                                         <li key={i + 1}
                                                             className="py-2 px-4 border-b border-gray-700 flex justify-between items-center">
@@ -323,13 +323,13 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                                 <img
                                                                     src={podcastData.seasons[i]?.image}
                                                                     alt={`Season ${i + 1} Image`}
-                                                                    className="w-16 h-16 mr-4"
+                                                                    className="w-16 h-16 mr-4 hidden sm:block"
                                                                 />
                                                                 <button
                                                                     onClick={() => handleSeasonSelect(i + 1)}
                                                                     title='Select Season'>
                                                                     <div className='flex items-center'>
-                                                                        <p className='text-gray-300 pr-3'> Season {i + 1}:</p> {podcastData.seasons[i]?.title || 'Untitled'}
+                                                                        <p className='text-gray-300 pr-3 hidden sm:block'> Season {i + 1}:</p> {podcastData.seasons[i]?.title || 'Untitled'}
                                                                     </div>
                                                                 </button>
                                                             </div>
@@ -406,6 +406,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                 setShowAudioPlayer={setShowAudioPlayer}
                                                 setAudioUrl={setAudioUrl}
                                                 episodeTitle={podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.title}
+                                                userId={user}
                                             />
                                         }
                                     </div>

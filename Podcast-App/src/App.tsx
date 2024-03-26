@@ -34,8 +34,8 @@ function App(): JSX.Element {
                           <Route path='/account' element={<ProtectedRoute>{() => <Account />}</ProtectedRoute>} />
                           <Route path="/shared-favorites/:userId/:episodeId" element={<SharedPodcast />} />
                       </Routes>
-                      <LastListenedEpisodeManager />
                       <AudioPlayerComponent />
+                      <LastListenedEpisodeManager />
                   </AudioPlayerProvider>
               </AuthContextProvider>
           </>
@@ -49,12 +49,17 @@ function App(): JSX.Element {
  * It renders the AudioPlayer component with the provided audioUrl and an onClose callback to toggle the showAudioPlayer state to false.
  */
 const AudioPlayerComponent = () => {
-    const { showAudioPlayer, setShowAudioPlayer, audioUrl } = useAudioPlayer();
-console.log('rendered')
+    const { showAudioPlayer, setShowAudioPlayer, audioUrl,userId, episodeId, showId, seasonId, episodeTitle } = useAudioPlayer();
+
     return showAudioPlayer ? (
         <AudioPlayer
             audioUrl={audioUrl}
             onClose={() => setShowAudioPlayer(false)}
+            episodeId={episodeId}  // Pass episodeId prop
+            showId={showId}  // Pass showId prop
+            seasonId={seasonId}  // Pass seasonId prop
+            episodeTitle={episodeTitle}  // Pass episodeTitle prop
+            userId={userId}
         />
     ) : null;
 };

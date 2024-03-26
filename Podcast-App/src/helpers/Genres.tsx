@@ -4,22 +4,21 @@ import React from 'react';
  * Props interface for the Genres component.
  */
 interface GenresProps {
-    genres: string[];
+    //genres: string[];
+    genres: (string | number)[];
 }
 
 /**
  * Component to render genres based on their IDs.
  * Mapping genre IDs to genre titles
- * @param genres - Array of genre IDs.
- * @returns JSX element representing the rendered genres.
  */
 const Genres: React.FC<GenresProps> = ({ genres }) => {
 
     if (!genres) {
-        return null; // or any fallback UI you prefer
+        return null;
     }
 
-    const genreMapping: Record<string, string> = {
+    const genreMapping: Record<string | number, string> = {
         '1': 'Personal Growth',
         '2': 'True Crime and Investigative Journalism',
         '3': 'History',

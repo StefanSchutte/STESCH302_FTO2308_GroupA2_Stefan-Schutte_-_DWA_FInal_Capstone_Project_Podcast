@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import AudioPlayer from "../audio/AudioPlayer.tsx";
 import removeFav from '/remove.png';
 import shareFav from '/share.png';
-import {Podcast, PodcastFavorite} from "../../types.ts";
+import {FavoriteData, Podcast, PodcastFavorite} from "../../types.ts";
 
 /**
  * Functional component representing the saved podcasts section.
@@ -22,9 +22,8 @@ import {Podcast, PodcastFavorite} from "../../types.ts";
 function SavedPodcasts(): JSX.Element {
     const [favorites, setFavorites] = useState<PodcastFavorite[]>([]);
     const { user } = useAuth();
-    const [selectedEpisode, setSelectedEpisode] = useState<string | null>(null);
+    const [selectedEpisode, setSelectedEpisode] = useState<PodcastFavorite | null>(null);
     const [podcastData, setPodcastData] = useState<Podcast | null>(null);
-    const [loading, setLoading] = useState(false);
     const [selectedEpisodeForAudio, setSelectedEpisodeForAudio] = useState<string | null>(null);
     const [shareUrl, setShareUrl] = useState<string>('');
 
@@ -55,7 +54,7 @@ function SavedPodcasts(): JSX.Element {
                     throw error;
                 }
                 if (data) {
-                const transformedData = data.map((item: any) => ({
+                const transformedData = data.map((item: FavoriteData) => ({
                     id: item.season_id,
                     episode_title: item.episode_title,
                     season_title: item.season_title,
@@ -82,7 +81,6 @@ function SavedPodcasts(): JSX.Element {
      * Sets the podcastData state with the fetched data.
      */
     const fetchPodcastDataFromSupaBase = async (seasonId: string) => {
-        setLoading(true);
 
         try {
             const response = await fetch(`https://podcast-api.netlify.app/id/${seasonId}`);
@@ -90,8 +88,7 @@ function SavedPodcasts(): JSX.Element {
             setPodcastData(data);
         } catch (error) {
             console.error('Error fetching podcast data:', error);
-        } finally {
-            setLoading(false);
+            console.log(podcastData)
         }
     };
 
@@ -219,8 +216,7 @@ function SavedPodcasts(): JSX.Element {
      * 'generateShareUrl' function generates a unique URL for sharing a podcast episode based on the user's ID or session and the podcast ID.
      * It sets the 'shareUrl' state with the generated URL.
      */
-    const generateShareUrl = (episode) => {
-        // Generate a unique share URL based on the user's ID or session and the podcast ID
+    const generateShareUrl = (episode: PodcastFavorite) => {
         const uniqueIdentifier = user ? user.id : Date.now().toString();
         const url = `${window.location.origin}/shared-favorites/${uniqueIdentifier}/${episode.id}`;
         setShareUrl(url);
@@ -312,11 +308,11 @@ function SavedPodcasts(): JSX.Element {
                 <AudioPlayer
                     audioUrl={selectedEpisode.mp3_file}
                     onClose={() => setSelectedEpisodeForAudio(null)}
-                    userId={user.id}
-                    episodeId={selectedEpisode.id}
-                    seasonId={selectedEpisode.season_id}
-                    showId={selectedEpisode.show_id}
-                    episodeProgress={selectedEpisode.progress}
+                    userId={user?.id ?? ''} // Provide the user ID obtained from authentication
+                    episodeId={parseInt(selectedEpisode.id)}  // Provide the episode ID from the selected episode object
+                    showId={parseInt(selectedEpisode.season_id)} // Provide the show ID from the selected episode object
+                    seasonId={parseInt(selectedEpisode.season_id)} // Provide the season ID from the selected episode object
+                    episodeTitle={selectedEpisode.title}
                 />
             )}
         </>

@@ -13,7 +13,6 @@ interface AudioPlayerProps {
     episodeId: number;
     showId: number;
     seasonId: number;
-    episodeProgress: number | null;
     episodeTitle: string;
 }
 
@@ -25,7 +24,6 @@ interface AudioPlayerProps {
 const AudioPlayer: React.FC<AudioPlayerProps> = ({
          audioUrl,
          onClose,
-         episodeProgress,
          episodeId,
          seasonId,
          showId,
@@ -46,12 +44,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
      * Uses the 'useRef' hook to create a reference (audioRef) to the <audio> element.
      * Used to interact with the audio element, such as controlling playback or accessing its properties.
      */
-    useEffect(() => {
-        if (audioRef.current && typeof episodeProgress === 'number' && isFinite(episodeProgress)) {
-            // Set the current playback position of the audio element to the episode progress
-            audioRef.current.currentTime = episodeProgress;
-        }
-    }, [episodeProgress]);
+    // useEffect(() => {
+    //     if (audioRef.current && typeof episodeProgress === 'number' && isFinite(episodeProgress)) {
+    //         audioRef.current.currentTime = episodeProgress;
+    //     }
+    // }, [episodeProgress]);
 
     /**
      * Sets up effects to synchronize the audio playback progress with the stored progress in local storage.
@@ -80,7 +77,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
         if (storedCompletionStatus === 'true') {
             setIsEpisodeCompleted(true);
         }
-        storeLastListenedEpisode();
+        storeLastListenedEpisode(audioUrl, progress);
     }, [episodeId, seasonId, showId, userId]);
 
     /**
@@ -170,13 +167,16 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     /**
      * Function to store the last listened show and episode in localStorage.
      */
-    const storeLastListenedEpisode = () => {
-        console.log("Storing last listened episode:", audioUrl);
-        localStorage.setItem('last_listened_url', audioUrl);
+    const storeLastListenedEpisode = (audioUrl: string, progress: number) => {
+        if (progress) {
+            console.log("Storing last listened episode:", audioUrl);
+            localStorage.setItem('last_listened_url', audioUrl.toString());
+            localStorage.setItem('last_playback_position', progress.toString());
+        }
     };
     useEffect(() => {
-        storeLastListenedEpisode();
-    }, []);
+        storeLastListenedEpisode(audioUrl, progress);
+    }, [audioUrl, progress]);
     /**
      * <audio> element with controls, using the provided audioUrl.
      * Close button represented by an <img> element, which triggers the handleClose function when clicked.
