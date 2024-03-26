@@ -30,7 +30,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
          seasonId,
          showId,
          userId,
-    episodeTitle
+        episodeTitle,
     }) => {
     /**
      * Uses the useState hook to manage state internally.
@@ -74,12 +74,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                 audioRef.current.currentTime = parsedProgress;
             }
         }
-        storeLastListenedEpisode();
+
 
         const storedCompletionStatus = localStorage.getItem(`${userId}-${showId}_season_${seasonId}_episode_${episodeId}_completed`);
         if (storedCompletionStatus === 'true') {
             setIsEpisodeCompleted(true);
         }
+        storeLastListenedEpisode();
     }, [episodeId, seasonId, showId, userId]);
 
     /**
@@ -171,9 +172,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
      */
     const storeLastListenedEpisode = () => {
         console.log("Storing last listened episode:", audioUrl);
-        localStorage.setItem('last_listened_url', audioUrl.toString());
+        localStorage.setItem('last_listened_url', audioUrl);
     };
-
+    useEffect(() => {
+        storeLastListenedEpisode();
+    }, []);
     /**
      * <audio> element with controls, using the provided audioUrl.
      * Close button represented by an <img> element, which triggers the handleClose function when clicked.

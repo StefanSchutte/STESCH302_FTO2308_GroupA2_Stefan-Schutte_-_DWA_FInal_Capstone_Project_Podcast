@@ -11,6 +11,8 @@ interface PlayButtonProps {
     userId: string;
     episodeProgress: number;
     episodeTitle: string;
+    setShowAudioPlayer: (value: boolean) => void;
+    setAudioUrl: (url: string | null) => void;
 }
 
 /**.

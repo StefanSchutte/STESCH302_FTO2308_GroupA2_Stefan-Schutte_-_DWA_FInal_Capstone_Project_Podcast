@@ -50,7 +50,7 @@ function App(): JSX.Element {
  */
 const AudioPlayerComponent = () => {
     const { showAudioPlayer, setShowAudioPlayer, audioUrl } = useAudioPlayer();
-
+console.log('rendered')
     return showAudioPlayer ? (
         <AudioPlayer
             audioUrl={audioUrl}

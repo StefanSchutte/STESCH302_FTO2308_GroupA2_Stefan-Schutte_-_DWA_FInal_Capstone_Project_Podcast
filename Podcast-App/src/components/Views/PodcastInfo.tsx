@@ -384,7 +384,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                                                     <div
                                                                         className="absolute left-0 mt-8 ml-2 bg-black text-amber-50 p-2 rounded z-20"
                                                                         style={{top: '50%', left: '0'}}>
-                                                                        {/*{tooltipText}*/}
+                                                                        {tooltipText}
                                                                         {episode.description ? episode.description : "No description available."}
                                                                     </div>
                                                                 )}
@@ -400,7 +400,7 @@ const PodcastInfo: React.FC<OverlayProps> = ({ item, showOverlay, closeOverlay})
                                         {showOverlay &&  selectedSeason && selectedEpisode &&
                                             <PlayButton
                                                 audioUrl={podcastData.seasons[selectedSeason - 1]?.episodes[selectedEpisode - 1]?.file}
-                                                showId={item.id}
+                                                showId={parseInt(item.id)}
                                                 episodeId={selectedEpisode}
                                                 seasonId={{selectedSeason}}
                                                 setShowAudioPlayer={setShowAudioPlayer}
